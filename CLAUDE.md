@@ -2,6 +2,13 @@
 
 这是vibe-coding的拓展集合，主要面向claudecode和opencode进行拓展，增强用户使用体验，主要包含各式专业的 command、skill、subagent、rule、mcp
 
+## 脚本工具
+
+| 名称        | 描述                                                           |
+| ----------- | -------------------------------------------------------------- |
+| publish.sh  | 发布脚本：将本地配置同步到 `~/.claude` 和 `~/.config/opencode` |
+| rollback.sh | 回滚脚本：从备份恢复 Claude Code 和 OpenCode 配置              |
+
 ## 目录结构
 
 ```
@@ -53,4 +60,3 @@ vibe-coding-kit/
 ### Plugins 开发
 
 详见 [docs/plugin-development.md](docs/plugin-development.md)
-

@@ -31,52 +31,69 @@ echo ""
 
 # ==================== 备份阶段 ====================
 TIMED_BACKUP_DIR="$BACKUP_DIR/$TIMESTAMP"
-mkdir -p "$TIMED_BACKUP_DIR"
+CLAUDE_BACKUP_DIR="$TIMED_BACKUP_DIR/claudecode"
+OPENCODE_BACKUP_DIR="$TIMED_BACKUP_DIR/opencode"
+mkdir -p "$CLAUDE_BACKUP_DIR"
+mkdir -p "$OPENCODE_BACKUP_DIR"
 
 backup_if_exists() {
     local src="$1"
-    local name="$2"
+    local dest="$2"
+    local name="$3"
     if [ -d "$src" ]; then
         echo "[备份] $name..."
-        mkdir -p "$TIMED_BACKUP_DIR/$(basename "$src")"
-        cp -r "$src/"* "$TIMED_BACKUP_DIR/$(basename "$src")/" 2>/dev/null || true
+        mkdir -p "$dest/$(basename "$src")"
+        cp -r "$src/"* "$dest/$(basename "$src")/" 2>/dev/null || true
     fi
 }
 
-backup_if_exists "$CLAUDE_DIR/hooks" "~/.claude/hooks"
-backup_if_exists "$CLAUDE_DIR/agents" "~/.claude/agents"
-backup_if_exists "$CLAUDE_DIR/commands" "~/.claude/commands"
-backup_if_exists "$CLAUDE_DIR/skills" "~/.claude/skills"
-# 备份 plugins 目录（排除系统目录）
-if [ -d "$CLAUDE_DIR/plugins" ]; then
-    echo "[备份] ~/.claude/plugins (排除系统目录)..."
-    mkdir -p "$TIMED_BACKUP_DIR/plugins"
-    for item in "$CLAUDE_DIR/plugins"/*/; do
-        item_name=$(basename "$item")
-        # 跳过系统目录
-        if [ "$item_name" != "cache" ] && [ "$item_name" != "marketplaces" ]; then
-            cp -r "$item" "$TIMED_BACKUP_DIR/plugins/" 2>/dev/null || true
-        fi
-    done
-fi
+# 备份 Claude Code (~/.claude) 配置
+backup_if_exists "$CLAUDE_DIR/agents" "$CLAUDE_BACKUP_DIR" "~/.claude/agents"
+backup_if_exists "$CLAUDE_DIR/commands" "$CLAUDE_BACKUP_DIR" "~/.claude/commands"
+backup_if_exists "$CLAUDE_DIR/skills" "$CLAUDE_BACKUP_DIR" "~/.claude/skills"
 # 备份 marketplace（如果存在）
 if [ -d "$CLAUDE_DIR/plugins/marketplaces/local" ]; then
     echo "[备份] ~/.claude/plugins/marketplaces/local..."
-    mkdir -p "$TIMED_BACKUP_DIR/plugins/marketplaces"
-    cp -r "$CLAUDE_DIR/plugins/marketplaces/local" "$TIMED_BACKUP_DIR/plugins/marketplaces/" 2>/dev/null || true
-fi
-# 备份 claudecode settings.json（如果存在）
-if [ -f "$CLAUDE_DIR/settings.json" ]; then
-    cp "$CLAUDE_DIR/settings.json" "$TIMED_BACKUP_DIR/settings.json"
+    mkdir -p "$CLAUDE_BACKUP_DIR/plugins/marketplaces"
+    cp -r "$CLAUDE_DIR/plugins/marketplaces/local" "$CLAUDE_BACKUP_DIR/plugins/marketplaces/" 2>/dev/null || true
 fi
 
-backup_if_exists "$OPENCODE_DIR/agents" "~/.config/opencode/agents"
-backup_if_exists "$OPENCODE_DIR/commands" "~/.config/opencode/commands"
-backup_if_exists "$OPENCODE_DIR/skills" "~/.config/opencode/skills"
+# 备份 claudecode plugins 相关 JSON 文件
+if [ -f "$CLAUDE_DIR/plugins/installed_plugins.json" ]; then
+    echo "[备份] ~/.claude/plugins/installed_plugins.json..."
+    mkdir -p "$CLAUDE_BACKUP_DIR/plugins"
+    cp "$CLAUDE_DIR/plugins/installed_plugins.json" "$CLAUDE_BACKUP_DIR/plugins/installed_plugins.json"
+fi
+
+if [ -f "$CLAUDE_DIR/plugins/known_marketplaces.json" ]; then
+    echo "[备份] ~/.claude/plugins/known_marketplaces.json..."
+    mkdir -p "$CLAUDE_BACKUP_DIR/plugins"
+    cp "$CLAUDE_DIR/plugins/known_marketplaces.json" "$CLAUDE_BACKUP_DIR/plugins/known_marketplaces.json"
+fi
+
+# 备份 claudecode plugins cache/local 目录
+if [ -d "$CLAUDE_DIR/plugins/cache/local" ]; then
+    echo "[备份] ~/.claude/plugins/cache/local..."
+    mkdir -p "$CLAUDE_BACKUP_DIR/plugins/cache"
+    cp -r "$CLAUDE_DIR/plugins/cache/local" "$CLAUDE_BACKUP_DIR/plugins/cache/" 2>/dev/null || true
+fi
+
+# 备份 claudecode settings.json（如果存在）
+if [ -f "$CLAUDE_DIR/settings.json" ]; then
+    echo "[备份] ~/.claude/settings.json..."
+    cp "$CLAUDE_DIR/settings.json" "$CLAUDE_BACKUP_DIR/settings.json"
+fi
+
+# 备份 OpenCode (~/.config/opencode) 配置
+backup_if_exists "$OPENCODE_DIR/agents" "$OPENCODE_BACKUP_DIR" "~/.config/opencode/agents"
+backup_if_exists "$OPENCODE_DIR/commands" "$OPENCODE_BACKUP_DIR" "~/.config/opencode/commands"
+backup_if_exists "$OPENCODE_DIR/skills" "$OPENCODE_BACKUP_DIR" "~/.config/opencode/skills"
+backup_if_exists "$OPENCODE_DIR/plugins" "$OPENCODE_BACKUP_DIR" "~/.config/opencode/plugins"
 
 # 备份 opencode.json（如果存在）
 if [ -f "$OPENCODE_DIR/opencode.json" ]; then
-    cp "$OPENCODE_DIR/opencode.json" "$TIMED_BACKUP_DIR/opencode.json"
+    echo "[备份] ~/.config/opencode/opencode.json..."
+    cp "$OPENCODE_DIR/opencode.json" "$OPENCODE_BACKUP_DIR/opencode.json"
 fi
 
 echo ""
@@ -86,6 +103,7 @@ echo "=== 发布到 Claude Code (~/.claude) ==="
 
 mkdir -p "$CLAUDE_DIR/agents"
 mkdir -p "$CLAUDE_DIR/commands"
+mkdir -p "$CLAUDE_DIR/skills"
 
 if [ -d "$LOCAL_AGENT_DIR" ]; then
     echo "[claude] 发布 agents..."
