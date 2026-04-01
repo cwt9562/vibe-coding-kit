@@ -1,0 +1,5 @@
+{
+  "name": "comment-checker",
+  "description": "检测 Write/Edit 写入代码中的 AI 风格注释，提醒移除",
+  "version": "1.0.0"
+}

@@ -1,0 +1,5 @@
+{
+  "name": "question-label-truncator",
+  "description": "在 AskUserQuestion 执行前自动截断过长的 option label",
+  "version": "1.0.0"
+}

@@ -1,0 +1,5 @@
+{
+  "name": "edit-error-recovery",
+  "description": "监听 Edit 工具错误，注入即时恢复提醒",
+  "version": "1.0.0"
+}

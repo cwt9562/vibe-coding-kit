@@ -1,0 +1,5 @@
+{
+  "name": "delegate-task-retry",
+  "description": "监听 Task 工具错误，注入即时重试指导",
+  "version": "1.0.0"
+}

@@ -1,0 +1,6 @@
+backup/
+dist/
+node_modules/
+reference/
+CLAUDE.local.md
+.claude/

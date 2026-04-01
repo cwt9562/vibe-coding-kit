@@ -1,0 +1,127 @@
+{
+  "agent": {
+    "captain": {
+      "description": "主控调度，理解意图、拆解任务、委派执行",
+      "mcps": [],
+      "mode": "primary",
+      "model": "kimi/kimi-for-coding",
+      "permission": {
+        "bash": "deny",
+        "edit": "deny",
+        "read": "allow",
+        "write": "deny",
+        "glob": "allow",
+        "grep": "allow",
+        "task": "allow"
+      },
+      "prompt": "{file:./agents/captain.md}",
+      "temperature": 0.1
+    },
+    "designer": {
+      "description": "体验设计，UI/UX 设计和前端实现指导",
+      "mcps": [],
+      "mode": "subagent",
+      "model": "kimi/kimi-for-coding",
+      "permission": {
+        "bash": "deny",
+        "edit": "deny",
+        "read": "allow",
+        "write": "deny",
+        "glob": "allow",
+        "grep": "allow",
+        "task": "allow"
+      },
+      "prompt": "{file:./agents/designer.md}",
+      "temperature": 0.7
+    },
+    "developer": {
+      "description": "代码实现，自主完成代码和单元测试",
+      "mcps": [
+        "context7"
+      ],
+      "mode": "subagent",
+      "model": "minimax/MiniMax-M2.7",
+      "permission": {
+        "bash": "allow",
+        "edit": "allow",
+        "read": "allow",
+        "write": "allow",
+        "glob": "allow",
+        "grep": "allow",
+        "lsp_*": "allow",
+        "skill": "allow",
+        "task": "deny",
+        "websearch": "deny"
+      },
+      "prompt": "{file:./agents/developer.md}",
+      "temperature": 0.2
+    },
+    "explorer": {
+      "description": "代码探索，定位文件、理解结构",
+      "mcps": [],
+      "mode": "subagent",
+      "model": "minimax/MiniMax-M2.7-highspeed",
+      "permission": {
+        "bash": "deny",
+        "edit": "deny",
+        "read": "allow",
+        "write": "deny",
+        "ast_grep_search": "allow",
+        "glob": "allow",
+        "grep": "allow",
+        "lsp_*": "allow",
+        "task": "deny"
+      },
+      "prompt": "{file:./agents/explorer.md}",
+      "temperature": 0.1
+    },
+    "librarian": {
+      "description": "知识检索，获取外部知识和技术信息",
+      "mcps": [
+        "context7",
+        "websearch"
+      ],
+      "mode": "subagent",
+      "model": "minimax/MiniMax-M2.7-highspeed",
+      "permission": {
+        "bash": "deny",
+        "edit": "deny",
+        "read": "allow",
+        "write": "deny",
+        "glob": "allow",
+        "grep": "allow",
+        "task": "deny"
+      },
+      "prompt": "{file:./agents/librarian.md}",
+      "temperature": 0.1
+    },
+    "oracle": {
+      "description": "守护监察，架构评审、风险评估、问题诊断",
+      "mcps": [
+        "context7",
+        "websearch"
+      ],
+      "mode": "subagent",
+      "model": "kimi/kimi-for-coding",
+      "permission": {
+        "bash": "deny",
+        "edit": "deny",
+        "read": "allow",
+        "write": "deny",
+        "glob": "allow",
+        "grep": "allow",
+        "task": "deny"
+      },
+      "prompt": "{file:./agents/oracle.md}",
+      "temperature": 0.1
+    }
+  },
+  "plugin": [
+    "./plugins/user-agent.js",
+    "./plugins/edit-error-recovery.js",
+    "./plugins/comment-checker.js",
+    "./plugins/compaction-context-injector.js",
+    "./plugins/delegate-task-retry.js",
+    "./plugins/question-label-truncator.js"
+  ]
+}

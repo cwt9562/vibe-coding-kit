@@ -1,0 +1,28 @@
+{
+  "name": "local",
+  "owner": {
+    "name": "me"
+  },
+  "plugins": [
+    {
+      "name": "comment-checker",
+      "source": "./comment-checker",
+      "description": "检测 Write/Edit 写入代码中的 AI 风格注释"
+    },
+    {
+      "name": "edit-error-recovery",
+      "source": "./edit-error-recovery",
+      "description": "监听 Edit 工具错误，注入即时恢复提醒"
+    },
+    {
+      "name": "delegate-task-retry",
+      "source": "./delegate-task-retry",
+      "description": "监听 Task 工具错误，注入即时重试指导"
+    },
+    {
+      "name": "question-label-truncator",
+      "source": "./question-label-truncator",
+      "description": "在 AskUserQuestion 执行前自动截断过长的 option label"
+    }
+  ]
+}
