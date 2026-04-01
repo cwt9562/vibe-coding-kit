@@ -123,9 +123,9 @@ cd ~/vibe-coding-kit
 
 ## 特别感谢
 
-[everything-claude-code](https://github.com/affaan-m/everything-claude-code)
-[oh-my-openagent](https://github.com/code-yeongyu/oh-my-openagent)
-[oh-my-opencode-slim](https://github.com/alvinunreal/oh-my-opencode-slim)
+[everything-claude-code](https://github.com/affaan-m/everything-claude-code)  
+[oh-my-openagent](https://github.com/code-yeongyu/oh-my-openagent)  
+[oh-my-opencode-slim](https://github.com/alvinunreal/oh-my-opencode-slim)  
 
 ---
 
