@@ -9,12 +9,12 @@ description: 创建符合内部规范的 git 提交
 1. **查看暂存变更**：`git status` + `git diff --staged`，只看已暂存内容
 2. **可执行 git add**：可帮用户暂存文件，但必须先告知用户拟暂存的文件，不可静默暂存
 3. **原子提交**：每个提交只包含一个逻辑变更；多个逻辑变更须拆分为多次提交
-4. **遵循规范格式**：`type(scope): subject`
+4. **遵循规范格式**：`type(scope): subject`，**强制中文**
 5. **Header 优先**：Body 和 Footer 非必要不写，只有破坏性变更、关联 issue 等关键情况才写
 6. **禁止提交敏感信息**：.env、credentials.json 等
 7. **禁止提交本地调试代码**：console.log、debugger、断点、临时注释、hardcode 的调试地址等，提交前须移除
-7. **禁止推送后 amend**：已推送的提交禁止修改
-8. **多仓库命名一致**：跨仓库提交时，scope 和 subject 中的业务术语必须保持一致
+8. **禁止推送后 amend**：已推送的提交禁止修改
+9. **多仓库命名一致**：跨仓库提交时，scope 和 subject 中的业务术语必须保持一致
 
 ---
 
@@ -65,12 +65,18 @@ description: 创建符合内部规范的 git 提交
 
 每个提交代表**一个逻辑变更**。自问："如果回退，我希望回退所有这些变更吗？"若否，则拆分。
 
+**放宽原则**（避免过度拆分）：
+- 同一功能模块内的紧密关联变更（如一个接口 + 对应的测试文件 + 类型定义）可合并为一个提交
+- 3~4 个文件的轻度关联变更，若能用一句话说明共同目的，也可作为一个提交
+- 仅在变更涉及明显不同领域、或混合了格式化/重构与功能代码时，才强制拆分
+
 | 信号                    | 动作                     |
 | ----------------------- | ------------------------ |
 | 变更涉及不同功能领域    | 按领域拆分               |
 | 基础设施 + 功能代码混合 | 分开提交                 |
 | 新依赖 + 使用它的功能   | 可合并（依赖服务于功能） |
 | 格式化 + 功能变更混合   | 分开提交                 |
+| 同一模块的紧密关联变更  | 可合并                   |
 
 ---
 
@@ -145,3 +151,28 @@ git reset --hard HEAD~1
 # 跳过 hooks 提交（慎用）
 git commit --no-verify -m "wip: work in progress"
 ```
+
+---
+
+## 历史搜索
+
+```bash
+# 代码何时被添加/删除
+git log -S "代码片段" --oneline
+git log -S "代码片段" --all --oneline   # 含已删除的分支
+
+# diff 匹配正则（何时动过相关行）
+git log -G "TODO|FIXME" --oneline
+
+# 行级追溯
+git blame -L 10,20 path/to/file.py     # 指定行号
+git blame -C path/to/file.py           # 忽略代码移动
+
+# 文件历史/重命名追踪
+git log --follow --oneline -- path/to/file.py
+
+# 二分定位 bug 引入提交
+git bisect start && git bisect bad && git bisect good <tag>
+```
+
+> `-S` 查字符串增减次数；`-G` 查 diff 是否匹配正则。

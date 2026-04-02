@@ -1,3 +1,3 @@
 - [x] weeklog记录并读取历史周报以保证任务连贯
-- [ ] 当找不到weeklog.config.yaml时/weeklog默认取当前目录及其一级子目录
-- [ ] 参考omo的git-master更新/commit
+- [x] 当找不到weeklog.config.yaml时/weeklog默认取当前目录及其一级子目录
+- [x] 参考omo的git-master更新/commit
