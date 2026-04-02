@@ -131,6 +131,7 @@ if [ -d "$LOCAL_CC_MARKETPLACE_DIR" ]; then
     claude plugin install edit-error-recovery@local 2>/dev/null || true
     claude plugin install delegate-task-retry@local 2>/dev/null || true
     claude plugin install question-label-truncator@local 2>/dev/null || true
+    claude plugin install ralph-loop@local 2>/dev/null || true
 fi
 
 # 合并 settings.json 配置

@@ -1,0 +1,5 @@
+{
+  "name": "ralph-loop",
+  "source": "./ralph-loop",
+  "description": "自引用开发循环，让 Agent 自动继续工作直到输出 <ralph>DONE</ralph>"
+}

@@ -17,7 +17,7 @@
       "prompt": "{file:./agents/captain.md}",
       "temperature": 0.1
     },
-        "assistant": {
+    "assistant": {
       "description": "轻量快速任务执行，处理简单配置和文本任务",
       "mcps": [],
       "mode": "subagent",
@@ -34,7 +34,7 @@
       "prompt": "{file:./agents/assistant.md}",
       "temperature": 0.1
     },
-        "developer": {
+    "developer": {
       "description": "代码实现，自主完成代码和单元测试",
       "mcps": [
         "context7"
@@ -139,6 +139,7 @@
     "./plugins/comment-checker.js",
     "./plugins/compaction-context-injector.js",
     "./plugins/delegate-task-retry.js",
-    "./plugins/question-label-truncator.js"
+    "./plugins/question-label-truncator.js",
+    "./plugins/ralph-loop.js"
   ]
 }

@@ -23,6 +23,11 @@
       "name": "question-label-truncator",
       "source": "./question-label-truncator",
       "description": "在 AskUserQuestion 执行前自动截断过长的 option label"
+    },
+    {
+      "name": "ralph-loop",
+      "source": "./ralph-loop",
+      "description": "自引用开发循环，让 Agent 自动继续工作直到输出 <ralph>DONE</ralph>"
     }
   ]
 }
