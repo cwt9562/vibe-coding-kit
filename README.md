@@ -89,6 +89,28 @@ cd ~/vibe-coding-kit
 | [commit](commands/commit.md)   | 创建符合内部规范的 git 提交                   |
 | [weeklog](commands/weeklog.md) | 本周工作总结：查询 git 提交记录，梳理工作成果 |
 
+> **关于 `/weeklog` 的 YAML 配置**
+> 
+> 命令依赖 `weeklog.config.yaml` 文件来识别要统计的 git 仓库。
+> 
+> 配置格式示例：
+> ```yaml
+> projects:
+>   - name: 项目名称A
+>     repos:
+>       - /path/to/repo1
+>       - /path/to/repo2
+> ```
+> 
+> 文件按以下优先级查找：
+> 1) 当前工程根目录 → 2) 当前工程 `.claude/` → 3) 当前工程 `.opencode/` → 4) `~/.claude/` → 5) `~/.config/opencode/`
+> 
+> 若未找到配置文件，命令会自动检测：
+> - 当前目录是否为 git 仓库 → 直接使用
+> - 一级子目录中是否有 git 仓库 → 让用户选择
+> - 最终在当前根目录自动生成 `weeklog.config.yaml`
+> 
+
 ---
 
 ## Skills
