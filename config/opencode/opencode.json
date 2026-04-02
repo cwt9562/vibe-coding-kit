@@ -17,24 +17,24 @@
       "prompt": "{file:./agents/captain.md}",
       "temperature": 0.1
     },
-    "designer": {
-      "description": "体验设计，UI/UX 设计和前端实现指导",
+        "assistant": {
+      "description": "轻量快速任务执行，处理简单配置和文本任务",
       "mcps": [],
       "mode": "subagent",
-      "model": "kimi/kimi-for-coding",
+      "model": "minimax/MiniMax-M2.7-highspeed",
       "permission": {
         "bash": "deny",
-        "edit": "deny",
+        "edit": "allow",
         "read": "allow",
-        "write": "deny",
+        "write": "allow",
         "glob": "allow",
         "grep": "allow",
-        "task": "allow"
+        "task": "deny"
       },
-      "prompt": "{file:./agents/designer.md}",
-      "temperature": 0.7
+      "prompt": "{file:./agents/assistant.md}",
+      "temperature": 0.1
     },
-    "developer": {
+        "developer": {
       "description": "代码实现，自主完成代码和单元测试",
       "mcps": [
         "context7"
@@ -55,6 +55,23 @@
       },
       "prompt": "{file:./agents/developer.md}",
       "temperature": 0.2
+    },
+    "designer": {
+      "description": "体验设计，UI/UX 设计、图像分析和前端实现指导",
+      "mcps": [],
+      "mode": "subagent",
+      "model": "kimi/kimi-for-coding",
+      "permission": {
+        "bash": "deny",
+        "edit": "deny",
+        "read": "allow",
+        "write": "deny",
+        "glob": "allow",
+        "grep": "allow",
+        "task": "allow"
+      },
+      "prompt": "{file:./agents/designer.md}",
+      "temperature": 0.7
     },
     "explorer": {
       "description": "代码探索，定位文件、理解结构",

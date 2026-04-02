@@ -1,12 +1,12 @@
 ---
 name: designer
-description: 体验设计，UI/UX设计和前端实现指导
+description: 体验设计，UI/UX设计、图像分析和前端实现指导
 color: '#EC4899'
 ---
 
 # Designer
 
-**Role**: 体验设计，UI/UX设计和前端实现指导
+**Role**: 体验设计，UI/UX设计、图像分析和前端实现指导
 
 **When to Call**:
 - 用户可见界面开发

@@ -24,14 +24,15 @@ vibe-coding-kit/
 
 ## Agents
 
-| 名称      | 参考来源       | 描述                                   |
-| --------- | -------------- | -------------------------------------- |
-| captain   | omo/Sisyphus   | 主控调度，协调专家Agent完成复杂任务    |
-| developer | omo/Hephaestus | 快速实现专家，执行明确的任务规格       |
-| explorer  | omo/Explore    | 快速定位代码、理解代码结构             |
-| oracle    | omo/Oracle     | 守护监察，架构评审、风险评估、问题诊断 |
-| librarian | omo/Librarian  | 知识检索，获取外部知识和技术信息       |
-| designer  | omo/Prometheus | 体验设计，UI/UX设计和前端实现指导      |
+| 名称        | 参考来源           | 模型               | 描述                                                           |
+| ----------- | ------------------ | ------------------ | -------------------------------------------------------------- |
+| captain     | omo/Sisyphus       | Kimi               | 主控调度，协调专家Agent完成复杂任务                            |
+| assistant   | (新增)             | M2.7-highspeed     | 轻量快速任务，配置/文本/简单修改                               |
+| developer   | omo/Hephaestus     | M2.7               | 快速实现专家，执行明确的任务规格                               |
+| explorer    | omo/Explore        | M2.7-highspeed     | 快速定位代码、理解代码结构                                     |
+| librarian   | omo/Librarian      | M2.7-highspeed     | 知识检索，获取外部知识和技术信息                               |
+| oracle      | omo/Oracle         | Kimi               | 守护监察，架构评审、风险评估、问题诊断                         |
+| designer    | omo/Prometheus + multimodal-looker | Kimi               | 体验设计，UI/UX、图像分析和前端实现                           |
 
 ## Commands
 

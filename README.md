@@ -7,7 +7,7 @@
 ## 特性
 
 - **双端同步**：一套配置，同时发布到 Claude Code (`~/.claude`) 和 OpenCode (`~/.config/opencode`)
-- **专业 Agent**：6 个预设子 Agent，覆盖调度、实现、探索、监察、检索、设计
+- **专业 Agent**：7 个预设子 Agent，覆盖调度、执行、探索、监察、检索、设计
 - **实用 Commands**：内置 `commit`、`weeklog` 等高频 CLI 增强命令
 - **增强 Plugins**：集成多模型 Hook 插件，修复、提示、拦截一应俱全
 - **安全发布**：自动备份当前配置，支持一键回滚
@@ -71,14 +71,15 @@ cd ~/vibe-coding-kit
 
 ## Agents
 
-| Agent                            | 描述                                   |
-| -------------------------------- | -------------------------------------- |
-| [captain](agents/captain.md)     | 主控调度，协调专家 Agent 完成复杂任务  |
-| [developer](agents/developer.md) | 快速实现专家，执行明确的任务规格       |
-| [explorer](agents/explorer.md)   | 快速定位代码、理解代码结构             |
-| [oracle](agents/oracle.md)       | 守护监察，架构评审、风险评估、问题诊断 |
-| [librarian](agents/librarian.md) | 知识检索，获取外部知识和技术信息       |
-| [designer](agents/designer.md)   | 体验设计，UI/UX 设计和前端实现指导     |
+| Agent                              | 模型                  | 描述                                   |
+| ---------------------------------- | --------------------- | -------------------------------------- |
+| [captain](agents/captain.md)       | Kimi                  | 主控调度，协调专家 Agent 完成复杂任务  |
+| [assistant](agents/assistant.md)   | M2.7-highspeed        | 轻量快速任务，配置/文本/简单修改      |
+| [developer](agents/developer.md)   | M2.7                  | 快速实现专家，执行明确的任务规格        |
+| [explorer](agents/explorer.md)     | M2.7-highspeed        | 快速定位代码、理解代码结构             |
+| [oracle](agents/oracle.md)         | Kimi                  | 守护监察，架构评审、风险评估、问题诊断 |
+| [librarian](agents/librarian.md)   | M2.7-highspeed        | 知识检索，获取外部知识和技术信息       |
+| [designer](agents/designer.md)     | Kimi                  | 体验设计，UI/UX、图像分析和前端实现    |
 
 ---
 
