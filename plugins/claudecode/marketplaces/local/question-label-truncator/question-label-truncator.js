@@ -50,7 +50,6 @@ process.stdin.on("end", () => {
   const output = {
     hookSpecificOutput: {
       hookEventName: "PreToolUse",
-      permissionDecision: "allow",
       updatedInput: {
         ...toolInput,
         questions: updatedQuestions,
