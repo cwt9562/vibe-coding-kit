@@ -11,32 +11,20 @@
  * 触发时机：session.idle
  */
 
+import fs from "fs";
+import path from "path";
+
 // 完成信号，默认 <ralph>DONE</ralph>
 const DEFAULT_COMPLETION_SIGNAL = "DONE";
-
-// 状态存储
-let loopState = {
-  active: false,
-  iteration: 0,
-  maxIterations: 100,
-  prompt: "",
-  completionSignal: DEFAULT_COMPLETION_SIGNAL,
-};
-
-// 状态文件路径
+const DEFAULT_MAX_ITERATIONS = 100;
 const STATE_FILE = ".vibe/ralph-loop.state.json";
 
-const fs = require("fs");
-const path = require("path");
-
-function getStateDir() {
-  return ".vibe";
-}
-
+// 获取状态文件路径
 function getStateFile() {
-  return path.join(getStateDir(), "ralph-loop.state.json");
+  return STATE_FILE;
 }
 
+// 读取状态
 function readState() {
   try {
     const stateFile = getStateFile();
@@ -47,9 +35,10 @@ function readState() {
   return null;
 }
 
+// 写入状态
 function writeState(state) {
   try {
-    const stateDir = getStateDir();
+    const stateDir = path.dirname(getStateFile());
     if (!fs.existsSync(stateDir)) {
       fs.mkdirSync(stateDir, { recursive: true });
     }
@@ -59,6 +48,7 @@ function writeState(state) {
   }
 }
 
+// 清除状态
 function clearState() {
   try {
     const stateFile = getStateFile();
@@ -92,59 +82,49 @@ Original task:
 ${state.prompt}`;
 }
 
-// 注入 continuation prompt
-async function injectContinuation(ctx, sessionID, prompt) {
-  try {
-    await ctx.client.session.promptAsync({
-      path: { id: sessionID },
-      body: {
-        parts: [{ type: "text", text: prompt }],
-      },
-    });
-    console.log(`[ralph-loop] Continuation injected to session ${sessionID}`);
-  } catch (e) {
-    console.error("[ralph-loop] Failed to inject continuation:", e);
-  }
-}
-
-// Start Ralph Loop
+// 启动 Ralph Loop
 function startLoop(prompt, options = {}) {
-  loopState = {
+  const state = {
     active: true,
     iteration: 0,
-    maxIterations: options.maxIterations || 100,
+    maxIterations: options.maxIterations || DEFAULT_MAX_ITERATIONS,
     prompt: prompt,
     completionSignal: options.completionSignal || DEFAULT_COMPLETION_SIGNAL,
+    sessionID: options.sessionID || null,
   };
-  writeState(loopState);
-  console.log(`[ralph-loop] Loop started with prompt: "${prompt.slice(0, 50)}..."`);
+  writeState(state);
+  console.log(`[ralph-loop] Loop started: "${prompt.slice(0, 50)}..."`);
+  return state;
 }
 
-// Cancel Ralph Loop
+// 取消 Ralph Loop
 function cancelLoop() {
-  loopState.active = false;
   clearState();
   console.log("[ralph-loop] Loop cancelled");
 }
 
-// 插件主函数
-export const RalphLoopPlugin = async () => {
-  return {
-    // Agent 空闲时触发
-    "session.idle": async (event) => {
-      const props = event?.properties || {};
-      const sessionID = props?.sessionID;
+// 插件主函数 - 接收 ctx 参数
+export const RalphLoopPlugin = async (ctx) => {
+  // 使用 event 处理器处理 session.idle 和 session.deleted
+  const event = async ({ event }) => {
+    const props = event?.properties || {};
+    const sessionID = props?.sessionID;
+
+    if (event.type === "session.idle") {
       if (!sessionID) return;
 
       // 检查 loop 状态
       const state = readState();
       if (!state || !state.active) return;
 
+      // 检查 sessionID 匹配
+      if (state.sessionID && state.sessionID !== sessionID) return;
+
       // 获取 session 输出
-      const output = props?.lastMessage || "";
+      const lastMessage = props?.lastMessage || "";
 
       // 检测完成信号
-      if (detectCompletion(output, state.completionSignal)) {
+      if (detectCompletion(lastMessage, state.completionSignal)) {
         console.log(`[ralph-loop] Completion detected! Stopping loop.`);
         cancelLoop();
         return;
@@ -154,45 +134,86 @@ export const RalphLoopPlugin = async () => {
       if (state.iteration >= state.maxIterations) {
         console.log(`[ralph-loop] Max iterations (${state.maxIterations}) reached. Stopping.`);
         cancelLoop();
+        if (ctx?.client?.tui?.showToast) {
+          await ctx.client.tui.showToast({
+            body: {
+              title: "Ralph Loop Stopped",
+              message: `Max iterations (${state.maxIterations}) reached`,
+              variant: "warning",
+              duration: 5000,
+            },
+          }).catch(() => {});
+        }
         return;
       }
 
       // 继续循环
       state.iteration += 1;
+      state.sessionID = sessionID;
       writeState(state);
 
-      const continuationPrompt = buildContinuationPrompt(state);
-      await injectContinuation(ctx, sessionID, continuationPrompt);
-    },
+      console.log(`[ralph-loop] Continuing iteration ${state.iteration}/${state.maxIterations}`);
 
-    // Session 删除时清理状态
-    "session.deleted": async (event) => {
-      const props = event?.properties || {};
-      const sessionID = props?.sessionID;
+      if (ctx?.client?.tui?.showToast) {
+        await ctx.client.tui.showToast({
+          body: {
+            title: "Ralph Loop",
+            message: `Iteration ${state.iteration}/${state.maxIterations}`,
+            variant: "info",
+            duration: 2000,
+          },
+        }).catch(() => {});
+      }
+
+      // 构建 continuation prompt 并注入
+      const continuationPrompt = buildContinuationPrompt(state);
+
+      try {
+        await ctx.client.session.promptAsync({
+          path: { id: sessionID },
+          body: {
+            parts: [{ type: "text", text: continuationPrompt }],
+          },
+        });
+        console.log(`[ralph-loop] Continuation injected to session ${sessionID}`);
+      } catch (e) {
+        console.error("[ralph-loop] Failed to inject continuation:", e);
+      }
+    }
+
+    if (event.type === "session.deleted") {
       if (!sessionID) return;
 
       const state = readState();
       if (state && state.sessionID === sessionID) {
+        console.log(`[ralph-loop] Session ${sessionID} deleted, clearing loop state`);
         cancelLoop();
       }
-    },
+    }
+  };
 
-    // 手动启动 loop 的 command
-    "command.executed": async (command, args) => {
-      if (command === "/ralph-loop" || command === "ralph-loop") {
-        const prompt = args?.[0] || "Continue working";
-        const options = {};
-        startLoop(prompt, options);
-        return { content: `Ralph Loop started: "${prompt}"` };
-      }
+  // command.executed 使用标准 (input, output) 格式
+  const commandExecuted = async (input, output) => {
+    const command = input?.command;
+    const args = input?.args || [];
+    const sessionID = input?.sessionID;
 
-      if (command === "/cancel-ralph" || command === "cancel-ralph") {
-        cancelLoop();
-        return { content: "Ralph Loop cancelled" };
-      }
-    },
+    if (command === "/ralph-loop" || command === "ralph-loop") {
+      const prompt = args?.[0] || "Continue working";
+      startLoop(prompt, { sessionID });
+      output.output = `Ralph Loop started: "${prompt}"`;
+      return;
+    }
+
+    if (command === "/cancel-ralph" || command === "cancel-ralph") {
+      cancelLoop();
+      output.output = "Ralph Loop cancelled";
+      return;
+    }
+  };
+
+  return {
+    event,
+    "command.executed": commandExecuted,
   };
 };
-
-// 导出 start/cancel 函数供外部调用
-export { startLoop, cancelLoop };
