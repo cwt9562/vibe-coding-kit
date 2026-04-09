@@ -171,6 +171,15 @@ process.stdin.on("end", () => {
     return;
   }
 
+  // 检查是否是用户主动取消（通过判断 lastMessage 是否为空或特定取消标记）
+  const isUserCancelled = !lastMessage || lastMessage === "" || input?.cancelled === true;
+  if (isUserCancelled) {
+    console.error("[ralph-loop] User cancelled, stopping loop.");
+    clearState();
+    process.stdout.write(raw);
+    return;
+  }
+
   // 没有完成，阻止停止，继续循环
   state.iteration += 1;
   writeState(state);

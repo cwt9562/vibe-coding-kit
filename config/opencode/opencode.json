@@ -138,8 +138,6 @@
     "./plugins/edit-error-recovery.js",
     "./plugins/comment-checker.js",
     "./plugins/compaction-context-injector.js",
-    "./plugins/delegate-task-retry.js",
-    "./plugins/question-label-truncator.js",
-    "./plugins/ralph-loop.js"
+    "./plugins/delegate-task-retry.js"
   ]
 }

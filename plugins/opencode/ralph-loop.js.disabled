@@ -1,0 +1,243 @@
+/**
+ * Ralph Loop Plugin for OpenCode
+ *
+ * 功能：自引用开发循环，直到 Agent 输出完成信号才停止
+ *
+ * 核心机制：
+ * 1. 监听 session.idle 事件（Agent 空闲时触发）
+ * 2. 检测输出中是否包含 <ralph>DONE</ralph> 完成信号
+ * 3. 如果没有，注入 continuation prompt 让 Agent 继续工作
+ *
+ * 触发时机：session.idle
+ */
+
+import fs from "fs";
+import path from "path";
+
+// 完成信号，默认 <ralph>DONE</ralph>
+const DEFAULT_COMPLETION_SIGNAL = "DONE";
+const DEFAULT_MAX_ITERATIONS = 100;
+const STATE_FILE = ".vibe/ralph-loop.state.json";
+
+// 获取状态文件路径
+function getStateFile() {
+  return STATE_FILE;
+}
+
+// 读取状态
+function readState() {
+  try {
+    const stateFile = getStateFile();
+    if (fs.existsSync(stateFile)) {
+      return JSON.parse(fs.readFileSync(stateFile, "utf-8"));
+    }
+  } catch {}
+  return null;
+}
+
+// 写入状态
+function writeState(state) {
+  try {
+    const stateDir = path.dirname(getStateFile());
+    if (!fs.existsSync(stateDir)) {
+      fs.mkdirSync(stateDir, { recursive: true });
+    }
+    fs.writeFileSync(getStateFile(), JSON.stringify(state, null, 2));
+  } catch (e) {
+    console.error("[ralph-loop] Failed to write state:", e);
+  }
+}
+
+// 清除状态
+function clearState() {
+  try {
+    const stateFile = getStateFile();
+    if (fs.existsSync(stateFile)) {
+      fs.unlinkSync(stateFile);
+    }
+  } catch {}
+}
+
+// 检测输出中是否包含完成信号
+function detectCompletion(output, signal) {
+  if (!output) return false;
+  const pattern = new RegExp(`<ralph>\\s*${signal}\\s*</ralph>`, "i");
+  return pattern.test(output);
+}
+
+// 构建 continuation prompt
+function buildContinuationPrompt(state) {
+  return `[RALPH LOOP ${state.iteration}/${state.maxIterations}]
+
+Your previous response did not include the completion signal <ralph>DONE</ralph>.
+Continue working on the task.
+
+IMPORTANT:
+- Review your progress so far
+- Continue from where you left off
+- When FULLY complete, output: <ralph>DONE</ralph>
+- Do NOT stop until the task is truly done
+
+Original task:
+${state.prompt}`;
+}
+
+// 启动 Ralph Loop
+function startLoop(prompt, options = {}) {
+  const state = {
+    active: true,
+    iteration: 0,
+    maxIterations: options.maxIterations || DEFAULT_MAX_ITERATIONS,
+    prompt: prompt,
+    completionSignal: options.completionSignal || DEFAULT_COMPLETION_SIGNAL,
+    sessionID: options.sessionID || null,
+  };
+  writeState(state);
+  console.log(`[ralph-loop] Loop started: "${prompt.slice(0, 50)}..."`);
+  return state;
+}
+
+// 取消 Ralph Loop
+function cancelLoop() {
+  clearState();
+  console.log("[ralph-loop] Loop cancelled");
+}
+
+// 跟踪已处理的 session，防止重复触发
+const processedSessions = new Set();
+
+// 插件主函数 - 接收 ctx 参数
+export const RalphLoopPlugin = async (ctx) => {
+  // 使用 event 处理器处理 session.idle 和 session.deleted
+  const event = async ({ event }) => {
+    const props = event?.properties || {};
+    const sessionID = props?.sessionID;
+
+    if (event.type === "session.idle") {
+      if (!sessionID) return;
+
+      // 检查 loop 状态
+      const state = readState();
+      if (!state || !state.active) return;
+
+      // 防止同一 session 被重复处理
+      if (processedSessions.has(sessionID)) {
+        return;
+      }
+      processedSessions.add(sessionID);
+      // 清理旧记录（保留最近100个）
+      if (processedSessions.size > 100) {
+        const first = processedSessions.values().next().value;
+        processedSessions.delete(first);
+      }
+
+      // 检查 sessionID 匹配
+      if (state.sessionID && state.sessionID !== sessionID) return;
+
+      // 获取 session 输出
+      const lastMessage = props?.lastMessage || "";
+
+      // 检测完成信号
+      if (detectCompletion(lastMessage, state.completionSignal)) {
+        console.log(`[ralph-loop] Completion detected! Stopping loop.`);
+        cancelLoop();
+        return;
+      }
+
+      // 检测用户主动取消（lastMessage 为空表示用户中断）
+      if (!lastMessage || lastMessage.trim() === "") {
+        console.log(`[ralph-loop] User cancelled (empty response), stopping loop.`);
+        cancelLoop();
+        return;
+      }
+
+      // 检查是否达到最大迭代次数
+      if (state.iteration >= state.maxIterations) {
+        console.log(`[ralph-loop] Max iterations (${state.maxIterations}) reached. Stopping.`);
+        cancelLoop();
+        if (ctx?.client?.tui?.showToast) {
+          await ctx.client.tui.showToast({
+            body: {
+              title: "Ralph Loop Stopped",
+              message: `Max iterations (${state.maxIterations}) reached`,
+              variant: "warning",
+              duration: 5000,
+            },
+          }).catch(() => {});
+        }
+        return;
+      }
+
+      // 继续循环
+      state.iteration += 1;
+      state.sessionID = sessionID;
+      writeState(state);
+
+      console.log(`[ralph-loop] Continuing iteration ${state.iteration}/${state.maxIterations}`);
+
+      if (ctx?.client?.tui?.showToast) {
+        await ctx.client.tui.showToast({
+          body: {
+            title: "Ralph Loop",
+            message: `Iteration ${state.iteration}/${state.maxIterations}`,
+            variant: "info",
+            duration: 2000,
+          },
+        }).catch(() => {});
+      }
+
+      // 构建 continuation prompt 并注入
+      const continuationPrompt = buildContinuationPrompt(state);
+
+      try {
+        await ctx.client.session.promptAsync({
+          path: { id: sessionID },
+          body: {
+            parts: [{ type: "text", text: continuationPrompt }],
+          },
+        });
+        console.log(`[ralph-loop] Continuation injected to session ${sessionID}`);
+      } catch (e) {
+        console.error("[ralph-loop] Failed to inject continuation:", e);
+      }
+    }
+
+    if (event.type === "session.deleted") {
+      if (!sessionID) return;
+
+      // 清理已处理记录
+      processedSessions.delete(sessionID);
+
+      const state = readState();
+      if (state && state.sessionID === sessionID) {
+        console.log(`[ralph-loop] Session ${sessionID} deleted, clearing loop state`);
+        cancelLoop();
+      }
+    }
+  };
+
+  // command.executed 使用标准 (input, output) 格式
+  const commandExecuted = async (input, output) => {
+    const command = input?.command;
+    const args = input?.args || [];
+    const sessionID = input?.sessionID;
+
+    if (command === "/ralph-loop" || command === "ralph-loop") {
+      const prompt = args?.[0] || "Continue working";
+      startLoop(prompt, { sessionID });
+      output.output = `Ralph Loop started: "${prompt}"`;
+      return;
+    }
+
+    if (command === "/cancel-ralph" || command === "cancel-ralph") {
+      cancelLoop();
+      output.output = "Ralph Loop cancelled";
+      return;
+    }
+  };
+
+  return {
+    event,
+    "command.executed": commandExecuted,
+  };
+};
