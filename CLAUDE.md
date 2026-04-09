@@ -26,9 +26,9 @@ vibe-coding-kit/
 
 | 名称        | 参考来源           | 模型               | 描述                                                           |
 | ----------- | ------------------ | ------------------ | -------------------------------------------------------------- |
-| captain     | omo/Sisyphus       | Kimi               | 主控调度，协调专家Agent完成复杂任务                            |
-| assistant   | (新增)             | M2.7-highspeed     | 轻量快速任务，配置/文本/简单修改                               |
-| developer   | omo/Hephaestus     | M2.7               | 快速实现专家，执行明确的任务规格                               |
+| captain     | omo/Sisyphus       | Kimi               | 主控调度，协调专家Agent完成复杂任务；验证执行者输出             |
+| assistant   | omo/Sisyphus-junior   | M2.7-highspeed     | 执行者，处理所有非代码任务（配置/文本/格式/文档）              |
+| developer   | omo/Hephaistus     | M2.7               | 执行者，专注代码实现，处理所有代码任务                          |
 | explorer    | omo/Explore        | M2.7-highspeed     | 快速定位代码、理解代码结构                                     |
 | librarian   | omo/Librarian      | M2.7-highspeed     | 知识检索，获取外部知识和技术信息                               |
 | oracle      | omo/Oracle         | Kimi               | 守护监察，架构评审、风险评估、问题诊断                         |
