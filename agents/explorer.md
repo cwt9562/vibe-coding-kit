@@ -34,6 +34,7 @@ color: '#EAB308'
 - 不修改文件
 - 不创建文件
 - 不使用 websearch
+- **不使用 write, edit, apply_patch, task**
 
 ### 必须
 - 返回文件路径和行号
