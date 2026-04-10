@@ -6,30 +6,43 @@
       "mode": "primary",
       "model": "kimi/kimi-for-coding",
       "permission": {
-        "bash": "deny",
-        "edit": "deny",
         "read": "allow",
-        "write": "deny",
+        "edit": "deny",
         "glob": "allow",
         "grep": "allow",
-        "task": "allow"
+        "list": "allow",
+        "bash": "deny",
+        "task": "allow",
+        "skill": "allow",
+        "lsp": "deny",
+        "webfetch": "deny",
+        "websearch": "deny",
+        "codesearch": "deny"
       },
       "prompt": "{file:./agents/captain.md}",
       "temperature": 0.1
     },
     "assistant": {
       "description": "轻量快速任务执行，处理简单配置和文本任务",
-      "mcps": [],
+      "mcps": [
+        "context7",
+        "mysql"
+      ],
       "mode": "subagent",
       "model": "minimax/MiniMax-M2.7-highspeed",
       "permission": {
-        "bash": "deny",
-        "edit": "allow",
         "read": "allow",
-        "write": "allow",
+        "edit": "allow",
         "glob": "allow",
         "grep": "allow",
-        "task": "deny"
+        "list": "allow",
+        "bash": "allow",
+        "task": "deny",
+        "skill": "allow",
+        "lsp": "allow",
+        "webfetch": "deny",
+        "websearch": "deny",
+        "codesearch": "deny"
       },
       "prompt": "{file:./agents/assistant.md}",
       "temperature": 0.1
@@ -37,21 +50,24 @@
     "developer": {
       "description": "代码实现，自主完成代码和单元测试",
       "mcps": [
-        "context7"
+        "context7",
+        "mysql"
       ],
       "mode": "subagent",
       "model": "minimax/MiniMax-M2.7",
       "permission": {
-        "bash": "allow",
-        "edit": "allow",
         "read": "allow",
-        "write": "allow",
+        "edit": "allow",
         "glob": "allow",
         "grep": "allow",
-        "lsp_*": "allow",
-        "skill": "allow",
+        "list": "allow",
+        "bash": "allow",
         "task": "deny",
-        "websearch": "deny"
+        "skill": "allow",
+        "lsp": "allow",
+        "webfetch": "deny",
+        "websearch": "deny",
+        "codesearch": "deny"
       },
       "prompt": "{file:./agents/developer.md}",
       "temperature": 0.2
@@ -62,13 +78,18 @@
       "mode": "subagent",
       "model": "kimi/kimi-for-coding",
       "permission": {
-        "bash": "deny",
-        "edit": "deny",
         "read": "allow",
-        "write": "deny",
+        "edit": "deny",
         "glob": "allow",
         "grep": "allow",
-        "task": "allow"
+        "list": "allow",
+        "bash": "deny",
+        "task": "deny",
+        "skill": "allow",
+        "lsp": "deny",
+        "webfetch": "deny",
+        "websearch": "deny",
+        "codesearch": "deny"
       },
       "prompt": "{file:./agents/designer.md}",
       "temperature": 0.7
@@ -79,15 +100,18 @@
       "mode": "subagent",
       "model": "minimax/MiniMax-M2.7-highspeed",
       "permission": {
-        "bash": "deny",
-        "edit": "deny",
         "read": "allow",
-        "write": "deny",
-        "ast_grep_search": "allow",
+        "edit": "deny",
         "glob": "allow",
         "grep": "allow",
-        "lsp_*": "allow",
-        "task": "deny"
+        "list": "allow",
+        "bash": "deny",
+        "task": "deny",
+        "skill": "allow",
+        "lsp": "deny",
+        "webfetch": "deny",
+        "websearch": "deny",
+        "codesearch": "allow"
       },
       "prompt": "{file:./agents/explorer.md}",
       "temperature": 0.1
@@ -101,13 +125,18 @@
       "mode": "subagent",
       "model": "minimax/MiniMax-M2.7-highspeed",
       "permission": {
-        "bash": "deny",
-        "edit": "deny",
         "read": "allow",
-        "write": "deny",
+        "edit": "deny",
         "glob": "allow",
         "grep": "allow",
-        "task": "deny"
+        "list": "allow",
+        "bash": "deny",
+        "task": "deny",
+        "skill": "allow",
+        "lsp": "deny",
+        "webfetch": "allow",
+        "websearch": "allow",
+        "codesearch": "deny"
       },
       "prompt": "{file:./agents/librarian.md}",
       "temperature": 0.1
@@ -116,18 +145,24 @@
       "description": "守护监察，架构评审、风险评估、问题诊断",
       "mcps": [
         "context7",
-        "websearch"
+        "websearch",
+        "mysql"
       ],
       "mode": "subagent",
       "model": "kimi/kimi-for-coding",
       "permission": {
-        "bash": "deny",
-        "edit": "deny",
         "read": "allow",
-        "write": "deny",
+        "edit": "deny",
         "glob": "allow",
         "grep": "allow",
-        "task": "deny"
+        "list": "allow",
+        "bash": "deny",
+        "task": "deny",
+        "skill": "allow",
+        "lsp": "deny",
+        "webfetch": "allow",
+        "websearch": "allow",
+        "codesearch": "allow"
       },
       "prompt": "{file:./agents/oracle.md}",
       "temperature": 0.1
