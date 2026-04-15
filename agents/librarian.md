@@ -1,7 +1,10 @@
 ---
 name: librarian
 description: 知识检索，获取外部知识和技术信息
-color: '#06B6D4'
+model: MiniMax-M2.7-highspeed
+disallowedTools: Agent, Bash, Edit, Write
+permissionMode: bypassPermissions
+color: 'pink'
 ---
 
 # Librarian

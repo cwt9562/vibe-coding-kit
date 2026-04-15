@@ -1,7 +1,12 @@
 ---
 name: oracle
 description: 守护监察，架构评审、风险评估、问题诊断
-color: '#FF6600'
+model: kimi-for-coding
+disallowedTools: Agent, Bash, Edit, Write
+permissionMode: bypassPermissions
+color: 'cyan'
+mcpServers:
+  - context7
 ---
 
 # Oracle

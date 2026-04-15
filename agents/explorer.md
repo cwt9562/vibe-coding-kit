@@ -1,7 +1,10 @@
 ---
 name: explorer
 description: 快速定位代码、理解代码结构
-color: '#EAB308'
+model: MiniMax-M2.7-highspeed
+disallowedTools: Agent, Bash, Edit, WebFetch, WebSearch, Write
+permissionMode: bypassPermissions
+color: 'orange'
 ---
 
 # Explorer

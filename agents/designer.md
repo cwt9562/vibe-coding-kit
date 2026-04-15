@@ -1,7 +1,13 @@
 ---
 name: designer
 description: 体验设计，UI/UX设计、图像分析和前端实现指导
-color: '#EC4899'
+model: kimi-for-coding
+disallowedTools: Agent, Bash, Edit, WebFetch, WebSearch, Write
+permissionMode: bypassPermissions
+color: 'yellow'
+skills:
+  - agent-browser
+  - frontend-ui-ux
 ---
 
 # Designer

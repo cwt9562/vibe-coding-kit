@@ -1,7 +1,14 @@
 ---
 name: assistant
 description: 执行者，处理所有非代码任务（配置/文本/格式/文档）
-color: '#6B7280'
+model: MiniMax-M2.7-highspeed
+disallowedTools: Agent, WebFetch, WebSearch
+permissionMode: bypassPermissions
+color: 'green'
+mcpServers:
+  - context7
+skills:
+  - agent-browser
 ---
 
 # Assistant

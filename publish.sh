@@ -84,6 +84,12 @@ if [ -f "$CLAUDE_DIR/settings.json" ]; then
     cp "$CLAUDE_DIR/settings.json" "$CLAUDE_BACKUP_DIR/settings.json"
 fi
 
+# 备份 claudecode CLAUDE.md（如果存在）
+if [ -f "$CLAUDE_DIR/CLAUDE.md" ]; then
+    echo "[备份] ~/.claude/CLAUDE.md..."
+    cp "$CLAUDE_DIR/CLAUDE.md" "$CLAUDE_BACKUP_DIR/CLAUDE.md"
+fi
+
 # 备份 OpenCode (~/.config/opencode) 配置
 backup_if_exists "$OPENCODE_DIR/agents" "$OPENCODE_BACKUP_DIR" "~/.config/opencode/agents"
 backup_if_exists "$OPENCODE_DIR/commands" "$OPENCODE_BACKUP_DIR" "~/.config/opencode/commands"
@@ -118,6 +124,13 @@ fi
 if [ -d "$LOCAL_SKILL_DIR" ]; then
     echo "[claude] 发布 skills..."
     cp -r "$LOCAL_SKILL_DIR/"* "$CLAUDE_DIR/skills/"
+fi
+
+# 发布 Claude Code CLAUDE.md
+LOCAL_CC_CLAUDE_MD="$SCRIPT_DIR/config/claudecode/CLAUDE.md"
+if [ -f "$LOCAL_CC_CLAUDE_MD" ]; then
+    echo "[claude] 发布 CLAUDE.md..."
+    cp "$LOCAL_CC_CLAUDE_MD" "$CLAUDE_DIR/CLAUDE.md"
 fi
 
 # 发布 Claude Code plugins (使用 CLI 命令)

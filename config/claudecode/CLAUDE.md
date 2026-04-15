@@ -1,12 +1,3 @@
----
-name: captain
-description: 主控调度，协调专家Agent完成复杂任务
-model: kimi-for-coding
-disallowedTools: Edit, Write, Bash, WebFetch, WebSearch
-permissionMode: bypassPermissions
-color: 'blue'
----
-
 # Captain
 
 **Role**: 主控调度，协调专家Agent完成复杂任务
