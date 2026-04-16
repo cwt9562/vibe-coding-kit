@@ -17,7 +17,8 @@ CLAUDE_DIR="$HOME/.claude"
 OPENCODE_DIR="$HOME/.config/opencode"
 
 # 本地配置
-LOCAL_AGENT_DIR="$SCRIPT_DIR/agents"
+LOCAL_AGENT_CC_DIR="$SCRIPT_DIR/agents/claudecode"
+LOCAL_AGENT_OC_DIR="$SCRIPT_DIR/agents/opencode"
 LOCAL_COMMAND_DIR="$SCRIPT_DIR/commands"
 LOCAL_PLUGIN_DIR="$SCRIPT_DIR/plugins/opencode"
 LOCAL_CC_PLUGIN_DIR="$SCRIPT_DIR/plugins/claudecode"
@@ -111,9 +112,9 @@ mkdir -p "$CLAUDE_DIR/agents"
 mkdir -p "$CLAUDE_DIR/commands"
 mkdir -p "$CLAUDE_DIR/skills"
 
-if [ -d "$LOCAL_AGENT_DIR" ]; then
+if [ -d "$LOCAL_AGENT_CC_DIR" ]; then
     echo "[claude] 发布 agents..."
-    cp -r "$LOCAL_AGENT_DIR/"* "$CLAUDE_DIR/agents/"
+    cp -r "$LOCAL_AGENT_CC_DIR/"* "$CLAUDE_DIR/agents/"
 fi
 
 if [ -d "$LOCAL_COMMAND_DIR" ]; then
@@ -202,9 +203,9 @@ mkdir -p "$OPENCODE_DIR/plugins"
 mkdir -p "$OPENCODE_DIR/skills"
 
 # 发布 agents
-if [ -d "$LOCAL_AGENT_DIR" ]; then
+if [ -d "$LOCAL_AGENT_OC_DIR" ]; then
     echo "[opencode] 发布 agents..."
-    cp -r "$LOCAL_AGENT_DIR/"* "$OPENCODE_DIR/agents/"
+    cp -r "$LOCAL_AGENT_OC_DIR/"* "$OPENCODE_DIR/agents/"
 fi
 
 # 发布 commands
