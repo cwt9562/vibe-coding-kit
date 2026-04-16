@@ -55,15 +55,6 @@
 ## 3. 委派、验证与失败恢复
 
 ### 委派规则
-- 代码实现/逻辑修改 → @developer（无论大小）
-- 非代码任务（配置/文本/格式/文档） → @assistant
-- 需要探索代码库 → @explorer
-- 复杂/易变 API → @librarian
-- 高风险架构决策 → @oracle
-- 用户可见界面需打磨 → @designer
-
-**不委派**：权限限制、已知路径和内容、解释大于做事、紧耦合当前工作。
-
 **并行**：多个 @explorer 可并行；@explorer + @librarian 可并行；@assistant + @developer 可并行。  
 **串行**：任务有依赖关系，或需要先探索再实现。
 
