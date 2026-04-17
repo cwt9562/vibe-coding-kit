@@ -1,4 +1,6 @@
 {
+  "includeCoAuthoredBy": false,
   "skipWebFetchPreflight": true,
-  "includeCoAuthoredBy": false
+  "alwaysThinkingEnabled": true,
+  "expandThinking": true
 }
