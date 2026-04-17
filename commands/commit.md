@@ -122,17 +122,19 @@ description: 创建符合内部规范的 git 提交
 **单仓库**（当前目录是 git 仓库）：
 1. `git status` + `git diff --staged` — 查看暂存变更
 2. 若暂存区有文件，直接分析；若为空，自动扫描未暂存文件并识别应提交的文件
-3. 分析变更语义，规划提交分组，生成提交信息
-4. **展示提交计划（文件 + 提交信息），询问用户确认或调整**
-5. 用户确认后，按需 `git add` 并执行 `git commit -m "..."`
-6. `git log --oneline -5` — 展示结果
+3. 探查历史提交风格：优先 `git log --author="$(git config user.name)" --oneline -20`，无结果时降级为 `git log --oneline -20`
+4. 结合历史风格，分析变更语义，规划提交分组，生成提交信息
+5. **展示提交计划（文件 + 提交信息），询问用户确认或调整**
+6. 用户确认后，按需 `git add` 并执行 `git commit -m "..."`
+7. `git log --oneline -5` — 展示结果
 
 **多仓库**（当前目录非 git 仓库）：
 1. 扫描子目录，对每个仓库查看暂存变更
-2. 跨仓库整体分析，对齐术语，汇总提交计划
-3. **展示所有仓库的提交计划（文件 + 提交信息），询问用户确认或调整**
-4. 用户确认后，按需 `git add` 并逐仓库执行 `git -C <repo> commit -m "..."`
-5. `git -C <repo> log --oneline -3` — 展示结果
+2. 探查历史提交风格：优先 `git -C <repo> log --author="$(git config user.name)" --oneline -20`，无结果时降级为 `git -C <repo> log --oneline -20`
+3. 结合历史风格，跨仓库整体分析，对齐术语，汇总提交计划
+4. **展示所有仓库的提交计划（文件 + 提交信息），询问用户确认或调整**
+5. 用户确认后，按需 `git add` 并逐仓库执行 `git -C <repo> commit -m "..."`
+6. `git -C <repo> log --oneline -3` — 展示结果
 
 ---
 
