@@ -1,7 +1,7 @@
 ---
 name: designer
 description: 体验设计，UI/UX设计、图像分析和前端实现指导
-model: kimi-for-coding
+model: opus
 disallowedTools: Agent, Bash, Edit, WebFetch, WebSearch, Write
 permissionMode: bypassPermissions
 color: 'yellow'

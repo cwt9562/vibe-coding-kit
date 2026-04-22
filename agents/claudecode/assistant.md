@@ -1,12 +1,13 @@
 ---
 name: assistant
 description: 执行者，处理所有非代码任务（配置/文本/格式/文档）
-model: MiniMax-M2.7-highspeed
+model: haiku
 disallowedTools: Agent, WebFetch, WebSearch
 permissionMode: bypassPermissions
-color: 'green'
+color: 'blue'
 mcpServers:
   - context7
+  - mcp_server_mysql
 skills:
   - agent-browser
 ---

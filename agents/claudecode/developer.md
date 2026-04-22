@@ -1,12 +1,13 @@
 ---
 name: developer
 description: 执行者，专注代码实现，处理所有代码任务
-model: MiniMax-M2.7
+model: sonnet
 disallowedTools: Agent, WebFetch, WebSearch
 permissionMode: bypassPermissions
 color: 'purple'
 mcpServers:
   - context7
+  - mcp_server_mysql
 skills:
   - agent-browser
 ---

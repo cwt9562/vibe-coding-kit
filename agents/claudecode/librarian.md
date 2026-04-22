@@ -1,7 +1,7 @@
 ---
 name: librarian
 description: 知识检索，获取外部知识和技术信息
-model: MiniMax-M2.7-highspeed
+model: haiku
 disallowedTools: Agent, Bash, Edit, Write
 permissionMode: bypassPermissions
 color: 'pink'

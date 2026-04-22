@@ -2,5 +2,12 @@
   "includeCoAuthoredBy": false,
   "skipWebFetchPreflight": true,
   "alwaysThinkingEnabled": true,
-  "expandThinking": true
+  "expandThinking": true,
+  "defaultShell": "bash",
+  "agent": "captain",
+  "model": "opus",
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  }
 }
