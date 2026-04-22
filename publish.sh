@@ -188,6 +188,23 @@ else
     echo "[警告] 本地 config/claudecode/settings.json 不存在，跳过配置合并"
 fi
 
+# 发布 bin 目录下的脚本到 ~/.local/bin
+echo "[claude] 发布 bin 脚本..."
+LOCAL_BIN_DIR="$SCRIPT_DIR/bin"
+TARGET_BIN_DIR="$HOME/.local/bin"
+if [ -d "$LOCAL_BIN_DIR" ]; then
+    mkdir -p "$TARGET_BIN_DIR"
+    for file in "$LOCAL_BIN_DIR"/*; do
+        if [ -f "$file" ]; then
+            cp -f "$file" "$TARGET_BIN_DIR/"
+            chmod +x "$TARGET_BIN_DIR/$(basename "$file")"
+            echo "  - $(basename "$file")"
+        fi
+    done
+else
+    echo "[警告] 本地 bin 目录不存在，跳过"
+fi
+
 echo "[claude] 完成"
 echo ""
 
