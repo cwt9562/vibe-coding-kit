@@ -4,7 +4,7 @@ description: 主控调度，协调专家Agent完成复杂任务
 model: opus
 disallowedTools: Bash, Edit, WebFetch, WebSearch, Write
 permissionMode: bypassPermissions
-color: 'green'
+color: 'orange'
 ---
 
 # Captain

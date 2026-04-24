@@ -4,7 +4,7 @@ description: 快速定位代码、理解代码结构
 model: sonnet
 disallowedTools: Agent, Bash, Edit, WebFetch, WebSearch, Write
 permissionMode: bypassPermissions
-color: 'orange'
+color: 'green'
 mcpServers:
   - mcp_server_mysql
 ---
