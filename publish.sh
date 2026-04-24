@@ -134,6 +134,13 @@ if [ -f "$LOCAL_CC_CLAUDE_MD" ]; then
     cp "$LOCAL_CC_CLAUDE_MD" "$CLAUDE_DIR/CLAUDE.md"
 fi
 
+# 发布 notify.ps1
+LOCAL_CC_NOTIFY_PS1="$SCRIPT_DIR/config/claudecode/windows-notification.ps1"
+if [ -f "$LOCAL_CC_NOTIFY_PS1" ]; then
+    echo "[claude] 发布 windows-notification.ps1..."
+    cp "$LOCAL_CC_NOTIFY_PS1" "$CLAUDE_DIR/windows-notification.ps1"
+fi
+
 # 发布 Claude Code plugins (使用 CLI 命令)
 LOCAL_CC_MARKETPLACE_DIR="$SCRIPT_DIR/plugins/claudecode/marketplaces/local"
 if [ -d "$LOCAL_CC_MARKETPLACE_DIR" ]; then

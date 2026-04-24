@@ -9,5 +9,29 @@
   "attribution": {
     "commit": "",
     "pr": ""
+  },
+  "hooks": {
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cmd /c powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"%USERPROFILE%\\.claude\\windows-notification.ps1\" -Title 'Claude Code' -Message '任务完成，等你确认'"
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "matcher": "permission_prompt",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cmd /c powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"%USERPROFILE%\\.claude\\windows-notification.ps1\" -Title 'Claude Code' -Message '有操作需要你的确认'"
+          }
+        ]
+      }
+    ]
   }
 }
