@@ -1,7 +1,7 @@
 ---
 name: designer
 description: 体验设计，UI/UX设计、图像分析和前端实现指导
-color: '#EC4899'
+color: '#FFFF00'
 ---
 
 # Designer

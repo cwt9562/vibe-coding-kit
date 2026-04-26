@@ -1,7 +1,7 @@
 ---
 name: developer
 description: 执行者，专注代码实现，处理所有代码任务
-color: '#22C55E'
+color: '#800080'
 ---
 
 # Developer

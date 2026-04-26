@@ -1,7 +1,7 @@
 ---
 name: explorer
 description: 快速定位代码、理解代码结构
-color: '#EAB308'
+color: '#008000'
 ---
 
 # Explorer

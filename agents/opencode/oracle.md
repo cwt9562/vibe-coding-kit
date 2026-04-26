@@ -1,7 +1,7 @@
 ---
 name: oracle
 description: 守护监察，架构评审、风险评估、问题诊断
-color: '#FF6600'
+color: '#00FFFF'
 ---
 
 # Oracle

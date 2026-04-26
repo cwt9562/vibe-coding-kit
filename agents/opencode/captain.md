@@ -1,7 +1,7 @@
 ---
 name: captain
 description: 主控调度，协调专家Agent完成复杂任务
-color: '#9333EA'
+color: '#FFA500'
 ---
 
 # Captain

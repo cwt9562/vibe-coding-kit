@@ -1,7 +1,7 @@
 ---
 name: assistant
 description: 执行者，处理所有非代码任务（配置/文本/格式/文档）
-color: '#6B7280'
+color: '#0000FF'
 ---
 
 # Assistant
