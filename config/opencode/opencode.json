@@ -29,7 +29,7 @@
         "mysql"
       ],
       "mode": "subagent",
-      "model": "minimax/MiniMax-M2.7-highspeed",
+      "model": "deepseek/deepseek-v4-flash",
       "permission": {
         "read": "allow",
         "edit": "allow",
@@ -98,7 +98,7 @@
       "description": "代码探索，定位文件、理解结构",
       "mcps": [],
       "mode": "subagent",
-      "model": "minimax/MiniMax-M2.7-highspeed",
+      "model": "deepseek/deepseek-v4-pro",
       "permission": {
         "read": "allow",
         "edit": "deny",
@@ -123,7 +123,7 @@
         "websearch"
       ],
       "mode": "subagent",
-      "model": "minimax/MiniMax-M2.7-highspeed",
+      "model": "deepseek/deepseek-v4-pro",
       "permission": {
         "read": "allow",
         "edit": "deny",
@@ -149,7 +149,7 @@
         "mysql"
       ],
       "mode": "subagent",
-      "model": "kimi/kimi-for-coding",
+      "model": "glm/GLM-5.1",
       "permission": {
         "read": "allow",
         "edit": "deny",
