@@ -123,7 +123,8 @@ if ($body  -eq "") { $body  = "-" }
 function Send-ToastViaBurntToast {
     param($t, $b)
     Import-Module BurntToast -ErrorAction Stop
-    New-BurntToastNotification -Text $t, $b -Silent
+    $dismissBtn = New-BTButton -Content "已阅" -Dismiss
+    New-BurntToastNotification -Text $t, $b -Silent -Scenario Reminder -Button $dismissBtn
 }
 
 # =========================
@@ -137,17 +138,21 @@ function Send-ToastViaWinRT {
 
     # 使用单引号包裹，避免大括号被解析器误判
     $appId = '{1AC14E77-02E7-4E5D-B744-2EB1AE5198B7}\WindowsPowerShell\v1.0\powershell.exe'
-    $safeTitle = [System.Security.SecurityElement]::Escape($t)
-    $safeBody  = [System.Security.SecurityElement]::Escape($b)
+    $safeTitle  = [System.Security.SecurityElement]::Escape($t)
+    $safeBody   = [System.Security.SecurityElement]::Escape($b)
+    $safeAction = [System.Security.SecurityElement]::Escape("已阅")
 
     # 废弃 @"..."@ 语法，改用普通多行字符串，彻底避免编辑器行尾空格导致的解析灾难
-    $xml = "<toast>
+    $xml = "<toast scenario='reminder'>
     <visual>
         <binding template='ToastGeneric'>
             <text>$safeTitle</text>
             <text>$safeBody</text>
         </binding>
     </visual>
+    <actions>
+        <action content='$safeAction' arguments='dismiss'/>
+    </actions>
     <audio silent='true'/>
 </toast>"
 
@@ -170,7 +175,7 @@ function Send-ToastViaBalloon {
     $notify.Icon = [System.Drawing.SystemIcons]::Information
     $notify.Visible = $true
     $notify.ShowBalloonTip(8000, $t, $b, [System.Windows.Forms.ToolTipIcon]::Info)
-    Start-Sleep -Seconds 3
+    Start-Sleep -Seconds 10
     $notify.Dispose()
 }
 

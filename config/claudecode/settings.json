@@ -32,6 +32,17 @@
           }
         ]
       }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "AskUserQuestion",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cmd /c powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"%USERPROFILE%\\.claude\\windows-notification.ps1\" -Title 'Claude Code' -Message '有提问需要你的回答'"
+          }
+        ]
+      }
     ]
   }
 }
