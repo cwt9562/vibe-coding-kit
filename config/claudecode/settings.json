@@ -5,7 +5,7 @@
   "expandThinking": true,
   "defaultShell": "bash",
   "agent": "captain",
-  "model": "opus",
+  "model": "opus[1m]",
   "attribution": {
     "commit": "",
     "pr": ""
