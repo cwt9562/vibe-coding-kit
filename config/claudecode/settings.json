@@ -17,7 +17,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -Command \"\\$p = Join-Path \\$env:USERPROFILE .claude\\windows-notification.ps1; & \\$p -Title 'Claude Code' -Message '任务完成，等你确认'\""
+            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -Command \"\\$p = Join-Path \\$env:USERPROFILE .claude\\windows-notification.ps1; & \\$p -Event 'Stop'\""
           }
         ]
       }
@@ -28,7 +28,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -Command \"\\$p = Join-Path \\$env:USERPROFILE .claude\\windows-notification.ps1; & \\$p -Title 'Claude Code' -Message '有操作需要你的确认'\""
+            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -Command \"\\$p = Join-Path \\$env:USERPROFILE .claude\\windows-notification.ps1; & \\$p -Event 'Notification'\""
           }
         ]
       }
@@ -39,7 +39,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -Command \"\\$p = Join-Path \\$env:USERPROFILE .claude\\windows-notification.ps1; & \\$p -Title 'Claude Code' -Message '有提问需要你的回答'\""
+            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -Command \"\\$p = Join-Path \\$env:USERPROFILE .claude\\windows-notification.ps1; & \\$p -Event 'AskUserQuestion'\""
           }
         ]
       }
