@@ -1,2 +1,2 @@
 #!/bin/bash
-claude --dangerously-skip-permissions --verbose
+claude --dangerously-skip-permissions --verbose "$@"

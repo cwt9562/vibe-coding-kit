@@ -1,2 +1,2 @@
 #!/bin/bash
-opencode web
+opencode web "$@"
