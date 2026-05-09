@@ -1,59 +1,14 @@
 {
-  "includeCoAuthoredBy": false,
-  "skipWebFetchPreflight": true,
-  "alwaysThinkingEnabled": true,
-  "expandThinking": true,
-  "defaultShell": "bash",
   "agent": "captain",
-  "model": "opus[1m]",
+  "alwaysThinkingEnabled": true,
   "attribution": {
     "commit": "",
     "pr": ""
   },
-  "hooks": {
-    "Notification": [
-      {
-        "matcher": "idle_prompt",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -Command \"\\$p = Join-Path \\$env:USERPROFILE .claude\\windows-notification.ps1; & \\$p \""
-          }
-        ]
-      }
-    ],
-    "Stop": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -Command \"\\$p = Join-Path \\$env:USERPROFILE .claude\\windows-notification.ps1; & \\$p \""
-          }
-        ]
-      }
-    ],
-    "StopFailure": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -Command \"\\$p = Join-Path \\$env:USERPROFILE .claude\\windows-notification.ps1; & \\$p \""
-          }
-        ]
-      }
-    ],
-    "PreToolUse": [
-      {
-        "matcher": "AskUserQuestion",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -Command \"\\$p = Join-Path \\$env:USERPROFILE .claude\\windows-notification.ps1; & \\$p \""
-          }
-        ]
-      }
-    ]
-  }
+  "defaultShell": "bash",
+  "expandThinking": true,
+  "includeCoAuthoredBy": false,
+  "model": "opus[1m]",
+  "skipDangerousModePermissionPrompt": true,
+  "skipWebFetchPreflight": true
 }

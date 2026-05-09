@@ -134,13 +134,6 @@ if [ -f "$LOCAL_CC_CLAUDE_MD" ]; then
     cp "$LOCAL_CC_CLAUDE_MD" "$CLAUDE_DIR/CLAUDE.md"
 fi
 
-# 发布 notify.ps1
-LOCAL_CC_NOTIFY_PS1="$SCRIPT_DIR/config/claudecode/windows-notification.ps1"
-if [ -f "$LOCAL_CC_NOTIFY_PS1" ]; then
-    echo "[claude] 发布 windows-notification.ps1..."
-    cp "$LOCAL_CC_NOTIFY_PS1" "$CLAUDE_DIR/windows-notification.ps1"
-fi
-
 # 发布 Claude Code plugins (使用 CLI 命令)
 LOCAL_CC_MARKETPLACE_DIR="$SCRIPT_DIR/plugins/claudecode/marketplaces/local"
 if [ -d "$LOCAL_CC_MARKETPLACE_DIR" ]; then
@@ -151,6 +144,7 @@ if [ -d "$LOCAL_CC_MARKETPLACE_DIR" ]; then
     claude plugin install comment-checker@local 2>/dev/null || true
     claude plugin install edit-error-recovery@local 2>/dev/null || true
     claude plugin install delegate-task-retry@local 2>/dev/null || true
+    claude plugin install windows-notification@local 2>/dev/null || true
     # claude plugin install ralph-loop@local 2>/dev/null || true
 fi
 
@@ -189,7 +183,19 @@ if [ -f "$LOCAL_CC_CONFIG" ]; then
         // 只替换本地配置中存在的字段，保留其他所有配置
         Object.assign(settings, localSettings);
 
-        fs.writeFileSync(settingsPath, JSON.stringify(settings, null, 2));
+        // 递归排序对象的键（数组元素顺序保持不变）
+        function sortKeys(obj) {
+            if (Array.isArray(obj)) return obj.map(sortKeys);
+            if (obj && typeof obj === 'object') {
+                return Object.keys(obj).sort().reduce((acc, k) => {
+                    acc[k] = sortKeys(obj[k]);
+                    return acc;
+                }, {});
+            }
+            return obj;
+        }
+
+        fs.writeFileSync(settingsPath, JSON.stringify(sortKeys(settings), null, 2));
     "
 else
     echo "[警告] 本地 config/claudecode/settings.json 不存在，跳过配置合并"

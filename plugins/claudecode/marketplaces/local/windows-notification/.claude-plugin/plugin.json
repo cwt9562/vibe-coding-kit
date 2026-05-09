@@ -1,0 +1,5 @@
+{
+  "name": "windows-notification",
+  "description": "在 Stop/StopFailure/PreToolUse/Notification 事件时弹出 Windows 系统通知",
+  "version": "1.0.0"
+}
