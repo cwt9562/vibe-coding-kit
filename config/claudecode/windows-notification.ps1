@@ -1,4 +1,4 @@
-# Force UTF-8
+﻿# Force UTF-8
 [Console]::InputEncoding = [System.Text.Encoding]::UTF8
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
