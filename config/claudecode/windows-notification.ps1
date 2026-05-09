@@ -57,7 +57,7 @@ if ($data) {
     # =========================
     if ($data.hook_event_name -and $data.hook_event_name -eq "StopFailure") {
         $errorType = if ($data.error -and $data.error.Trim() -ne "") { $data.error.Trim() } else { "unknown" }
-        $title = "$projectName - 错误: $errorType"
+        $title = "$projectName - 遇到错误: $errorType"
 
         if ($data.last_assistant_message -and $data.last_assistant_message.Trim() -ne "") {
             $body = $data.last_assistant_message.Trim()
@@ -84,7 +84,7 @@ if ($data) {
     # =========================
     } elseif ($data.hook_event_name -and $data.hook_event_name -eq "Stop") {
         # Use unified $projectName extracted earlier
-        $title = $projectName
+        $title = "$projectName - 已完成"
 
         # Use last_assistant_message as body, with fallback
         if ($data.last_assistant_message -and $data.last_assistant_message.Trim() -ne "") {
@@ -93,8 +93,8 @@ if ($data) {
             $body = "任务完成，请查看结果"
         }
 
-        if ($body.Length -gt 150) {
-            $body = $body.Substring(0, 147) + "..."
+        if ($body.Length -gt 50) {
+            $body = $body.Substring(0, 47) + "..."
         }
 
         $needsAction = $false
@@ -103,17 +103,17 @@ if ($data) {
         $notificationType = $data.notification_type
         $typeDisplay = $notificationType
         switch ($notificationType) {
-            "permission_prompt"   { $typeDisplay = "权限请求" }
-            "idle_prompt"         { $typeDisplay = "空闲提示" }
-            "auth_success"        { $typeDisplay = "认证成功" }
-            "elicitation_dialog"  { $typeDisplay = "引导对话框" }
-            "elicitation_complete" { $typeDisplay = "引导完成" }
-            "elicitation_response" { $typeDisplay = "引导响应" }
+            "permission_prompt"   { $typeDisplay = "需要授权" }
+            "idle_prompt"         { $typeDisplay = "等待继续" }
+            "auth_success"        { $typeDisplay = "登录成功" }
+            "elicitation_dialog"  { $typeDisplay = "想确认一下" }
+            "elicitation_complete" { $typeDisplay = "已了解" }
+            "elicitation_response" { $typeDisplay = "收到回复" }
         }
         if ($typeDisplay -and $typeDisplay.Trim() -ne "") {
             $title = "$projectName - $typeDisplay"
         } else {
-            $title = $projectName
+            $title = "$projectName - 新消息"
         }
 
         # Use message from stdin
@@ -129,8 +129,7 @@ if ($data) {
             $title = "$projectName - $($data.title)"
         }
 
-        # Determine if action button needed
-        $needsAction = $data.notification_type -eq "permission_prompt"
+        $needsAction = $false
     }
 }
 
