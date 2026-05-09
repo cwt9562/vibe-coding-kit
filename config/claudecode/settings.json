@@ -11,24 +11,35 @@
     "pr": ""
   },
   "hooks": {
+    "Notification": [
+      {
+        "matcher": "idle_prompt",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -Command \"\\$p = Join-Path \\$env:USERPROFILE .claude\\windows-notification.ps1; & \\$p \""
+          }
+        ]
+      }
+    ],
     "Stop": [
       {
         "matcher": "",
         "hooks": [
           {
             "type": "command",
-            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -Command \"\\$p = Join-Path \\$env:USERPROFILE .claude\\windows-notification.ps1; & \\$p -Event 'Stop'\""
+            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -Command \"\\$p = Join-Path \\$env:USERPROFILE .claude\\windows-notification.ps1; & \\$p \""
           }
         ]
       }
     ],
-    "Notification": [
+    "StopFailure": [
       {
-        "matcher": "permission_prompt",
+        "matcher": "",
         "hooks": [
           {
             "type": "command",
-            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -Command \"\\$p = Join-Path \\$env:USERPROFILE .claude\\windows-notification.ps1; & \\$p -Event 'Notification'\""
+            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -Command \"\\$p = Join-Path \\$env:USERPROFILE .claude\\windows-notification.ps1; & \\$p \""
           }
         ]
       }
@@ -39,7 +50,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -Command \"\\$p = Join-Path \\$env:USERPROFILE .claude\\windows-notification.ps1; & \\$p -Event 'AskUserQuestion'\""
+            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -Command \"\\$p = Join-Path \\$env:USERPROFILE .claude\\windows-notification.ps1; & \\$p \""
           }
         ]
       }

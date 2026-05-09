@@ -1,9 +1,3 @@
-﻿param(
-    [string]$Event = "Stop",
-    [string]$Title = "",
-    [string]$Message = ""
-)
-
 # Force UTF-8
 [Console]::InputEncoding = [System.Text.Encoding]::UTF8
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
@@ -41,91 +35,104 @@ if ($hasStdin) {
 }
 
 # =========================
-# Helper: extract text from transcript JSON line
+# Build title & body from stdin
 # =========================
-function Get-TextFromLine {
-    param([string]$line)
-    try {
-        $entry = $line | ConvertFrom-Json
-        if ($entry.message) {
-            $content = $entry.message.content
-            if ($content -is [string]) { return $content }
-            elseif ($content -is [array]) {
-                $textBlock = $content | Where-Object { $_.type -eq "text" } | Select-Object -First 1
-                if ($textBlock) { return $textBlock.text }
-            }
-        }
-    } catch {}
-    return ""
+$title = $toastTitle
+$body  = "-"
+$needsAction = $false
+
+# Unified project name extraction
+$projectName = ""
+if ($data -and $data.cwd) {
+    $projectName = Split-Path $data.cwd -Leaf
 }
 
-# =========================
-# Build title & body
-# =========================
-$title = ""
-$body  = ""
+if ($projectName -eq "") {
+    $projectName = $toastTitle
+}
 
-if ($Title -ne "") { $title = $Title }
-if ($Message -ne "") { $body = $Message }
+if ($data) {
+    # =========================
+    # Handle StopFailure event
+    # =========================
+    if ($data.hook_event_name -and $data.hook_event_name -eq "StopFailure") {
+        $errorType = if ($data.error -and $data.error.Trim() -ne "") { $data.error.Trim() } else { "unknown" }
+        $title = "$projectName - 错误: $errorType"
 
-if ($title -eq "" -and $body -eq "") {
-
-    if ($Event -eq "Stop") {
-
-        $projectName = ""
-        if ($data -and $data.cwd) {
-            $projectName = Split-Path $data.cwd -Leaf
-        }
-        $title = if ($projectName -ne "") { "$toastTitle - $projectName" } else { $toastTitle }
-
-        if ($data -and $data.transcript_path -and $data.transcript_path -ne "" -and (Test-Path $data.transcript_path)) {
-            try {
-                $lines = Get-Content $data.transcript_path -Encoding UTF8
-                if ($lines.Count -ge 2) {
-                    $first = Get-TextFromLine $lines[0]
-                    $last = Get-TextFromLine $lines[$lines.Count - 1]
-                    if ($first -ne "" -and $last -ne "") {
-                        $body = "$first`n......`n$last"
-                    }
-                }
-                elseif ($lines.Count -eq 1) {
-                    $body = Get-TextFromLine $lines[0]
-                }
-            } catch { }
+        if ($data.last_assistant_message -and $data.last_assistant_message.Trim() -ne "") {
+            $body = $data.last_assistant_message.Trim()
+        } elseif ($data.error_details -and $data.error_details.Trim() -ne "") {
+            $body = $data.error_details.Trim()
+        } else {
+            $body = "对话因 API 错误异常结束"
         }
 
-        if ($body.Trim() -eq "") {
-            $body = "任务完成，请查看结果"
-        }
-        elseif ($body.Length -gt 150) {
+        if ($body.Length -gt 150) {
             $body = $body.Substring(0, 147) + "..."
         }
 
-    }
-    elseif ($Event -eq "Notification") {
-        $title = "$toastTitle - 需要确认"
-        if ($data -and $data.message -and $data.message.Trim() -ne "") {
-            $body = $data.message
-            if ($body.Length -gt 150) { $body = $body.Substring(0, 147) + "..." }
-        }
-        else {
-            $body = "等待你的输入或确认"
-        }
-    }
-    elseif ($Event -eq "AskUserQuestion") {
-        $projectName = if ($data -and $data.cwd) { Split-Path $data.cwd -Leaf } else { "" }
-        $title = if ($projectName -ne "") { "$toastTitle - $projectName" } else { $toastTitle }
+        $needsAction = $true
+    # =========================
+    # Handle PreToolUse event (AskUserQuestion)
+    # =========================
+    } elseif ($data.hook_event_name -and $data.hook_event_name -eq "PreToolUse" -and $data.tool_name -and $data.tool_name -match "AskUserQuestion") {
+        $title = "$projectName - 需要你的回答"
         $body = "有提问需要你的回答"
-    }
-    else {
-        $title = $toastTitle
-        $body = "收到事件: $Event"
+        $needsAction = $true
+    # =========================
+    # Handle Stop event
+    # =========================
+    } elseif ($data.hook_event_name -and $data.hook_event_name -eq "Stop") {
+        # Use unified $projectName extracted earlier
+        $title = $projectName
+
+        # Use last_assistant_message as body, with fallback
+        if ($data.last_assistant_message -and $data.last_assistant_message.Trim() -ne "") {
+            $body = $data.last_assistant_message.Trim()
+        } else {
+            $body = "任务完成，请查看结果"
+        }
+
+        if ($body.Length -gt 150) {
+            $body = $body.Substring(0, 147) + "..."
+        }
+
+        $needsAction = $false
+    } else {
+        # Use notification_type for title prefix
+        $notificationType = $data.notification_type
+        $typeDisplay = $notificationType
+        switch ($notificationType) {
+            "permission_prompt"   { $typeDisplay = "权限请求" }
+            "idle_prompt"         { $typeDisplay = "空闲提示" }
+            "auth_success"        { $typeDisplay = "认证成功" }
+            "elicitation_dialog"  { $typeDisplay = "引导对话框" }
+            "elicitation_complete" { $typeDisplay = "引导完成" }
+            "elicitation_response" { $typeDisplay = "引导响应" }
+        }
+        if ($typeDisplay -and $typeDisplay.Trim() -ne "") {
+            $title = "$projectName - $typeDisplay"
+        } else {
+            $title = $projectName
+        }
+
+        # Use message from stdin
+        if ($data.message -and $data.message.Trim() -ne "") {
+            $body = $data.message
+            if ($body.Length -gt 150) {
+                $body = $body.Substring(0, 147) + "..."
+            }
+        }
+
+        # Use title from stdin if available (prepend project name)
+        if ($data.title -and $data.title.Trim() -ne "") {
+            $title = "$projectName - $($data.title)"
+        }
+
+        # Determine if action button needed
+        $needsAction = $data.notification_type -eq "permission_prompt"
     }
 }
-
-# 兜底值 (去掉了特殊长破折号，改为普通短横线)
-if ($title -eq "") { $title = $toastTitle }
-if ($body  -eq "") { $body  = "-" }
 
 # =========================
 # WinRT Toast
@@ -193,9 +200,6 @@ function Send-ToastViaBalloon {
 # =========================
 # Send Notification
 # =========================
-$needsAction = ($Event -eq "AskUserQuestion")
-$title = "$title [$Event]"
-
 try {
     Send-ToastViaWinRT $title $body $needsAction
 }
