@@ -1,1 +1,2 @@
-﻿claude --dangerously-skip-permissions --verbose @args
+﻿Clear-Host
+claude --dangerously-skip-permissions --verbose @args
