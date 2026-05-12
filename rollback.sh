@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# 回滚脚本：从备份恢复 Claude Code 和 OpenCode 配置
+# 回滚脚本：从备份恢复 Claude Code 配置
 #
 # 用法: ./rollback.sh [timestamp]
 #   不带参数: 交互式选择备份
@@ -13,7 +13,6 @@ BACKUP_DIR="$SCRIPT_DIR/backup"
 
 # 目标路径
 CLAUDE_DIR="$HOME/.claude"
-OPENCODE_DIR="$HOME/.config/opencode"
 
 # 颜色输出
 RED='\033[0;31m'
@@ -41,16 +40,12 @@ list_backups() {
     local i=1
     for backup in "${backups[@]}"; do
         local claudecode_mark=""
-        local opencode_mark=""
 
         if [ -d "$BACKUP_DIR/$backup/claudecode" ]; then
             claudecode_mark="[claudecode]"
         fi
-        if [ -d "$BACKUP_DIR/$backup/opencode" ]; then
-            opencode_mark="[opencode]"
-        fi
 
-        printf "  %2d. %s %s %s\n" "$i" "$backup" "$claudecode_mark" "$opencode_mark"
+        printf "  %2d. %s %s\n" "$i" "$backup" "$claudecode_mark"
         ((i++))
     done
 
@@ -80,7 +75,6 @@ confirm_restore() {
 
     # 显示将要恢复的内容
     local claudecode_backup="$BACKUP_DIR/$backup_name/claudecode"
-    local opencode_backup="$BACKUP_DIR/$backup_name/opencode"
 
     if [ -d "$claudecode_backup" ]; then
         echo "[Claude Code] 将恢复:"
@@ -92,15 +86,6 @@ confirm_restore() {
         [ -f "$claudecode_backup/plugins/installed_plugins.json" ] && echo "  - installed_plugins.json"
         [ -f "$claudecode_backup/plugins/known_marketplaces.json" ] && echo "  - known_marketplaces.json"
         [ -d "$claudecode_backup/plugins/cache/local" ] && echo "  - plugins/cache/local"
-    fi
-
-    if [ -d "$opencode_backup" ]; then
-        echo "[OpenCode] 将恢复:"
-        [ -d "$opencode_backup/agents" ] && echo "  - agents"
-        [ -d "$opencode_backup/commands" ] && echo "  - commands"
-        [ -d "$opencode_backup/skills" ] && echo "  - skills"
-        [ -d "$opencode_backup/plugins" ] && echo "  - plugins"
-        [ -f "$opencode_backup/opencode.json" ] && echo "  - opencode.json"
     fi
 
     echo ""
@@ -175,50 +160,6 @@ restore_claudecode() {
     echo -e "${GREEN}[claudecode] 恢复完成${NC}"
 }
 
-restore_opencode() {
-    local src="$1"
-
-    if [ ! -d "$src" ]; then
-        return 0
-    fi
-
-    echo ""
-    echo "=== 恢复 OpenCode 配置 ==="
-
-    mkdir -p "$OPENCODE_DIR"
-
-    if [ -d "$src/agents" ]; then
-        echo "[opencode] 恢复 agents..."
-        rm -rf "$OPENCODE_DIR/agents"
-        cp -r "$src/agents" "$OPENCODE_DIR/"
-    fi
-
-    if [ -d "$src/commands" ]; then
-        echo "[opencode] 恢复 commands..."
-        rm -rf "$OPENCODE_DIR/commands"
-        cp -r "$src/commands" "$OPENCODE_DIR/"
-    fi
-
-    if [ -d "$src/skills" ]; then
-        echo "[opencode] 恢复 skills..."
-        rm -rf "$OPENCODE_DIR/skills"
-        cp -r "$src/skills" "$OPENCODE_DIR/"
-    fi
-
-    if [ -d "$src/plugins" ]; then
-        echo "[opencode] 恢复 plugins..."
-        rm -rf "$OPENCODE_DIR/plugins"
-        cp -r "$src/plugins" "$OPENCODE_DIR/"
-    fi
-
-    if [ -f "$src/opencode.json" ]; then
-        echo "[opencode] 恢复 opencode.json..."
-        cp "$src/opencode.json" "$OPENCODE_DIR/opencode.json"
-    fi
-
-    echo -e "${GREEN}[opencode] 恢复完成${NC}"
-}
-
 show_backup_detail() {
     local backup_name="$1"
     local backup_path="$BACKUP_DIR/$backup_name"
@@ -228,7 +169,6 @@ show_backup_detail() {
     echo "================================"
 
     local claudecode_backup="$backup_path/claudecode"
-    local opencode_backup="$backup_path/opencode"
 
     if [ -d "$claudecode_backup" ]; then
         echo ""
@@ -242,22 +182,11 @@ show_backup_detail() {
         [ -f "$claudecode_backup/plugins/known_marketplaces.json" ] && echo "  - known_marketplaces.json: 存在"
         [ -d "$claudecode_backup/plugins/cache/local" ] && echo "  - plugins/cache/local: 存在"
     fi
-
-    if [ -d "$opencode_backup" ]; then
-        echo ""
-        echo "[OpenCode]"
-        echo "  路径: $opencode_backup"
-        [ -d "$opencode_backup/agents" ] && echo "  - agents: $(find "$opencode_backup/agents" -type f 2>/dev/null | wc -l) 个文件"
-        [ -d "$opencode_backup/commands" ] && echo "  - commands: $(find "$opencode_backup/commands" -type f 2>/dev/null | wc -l) 个文件"
-        [ -d "$opencode_backup/skills" ] && echo "  - skills: $(find "$opencode_backup/skills" -type f 2>/dev/null | wc -l) 个文件"
-        [ -d "$opencode_backup/plugins" ] && echo "  - plugins: $(find "$opencode_backup/plugins" -type f 2>/dev/null | wc -l) 个文件"
-        [ -f "$opencode_backup/opencode.json" ] && echo "  - opencode.json: 存在"
-    fi
 }
 
 # ==================== 主程序 ====================
 
-echo "=== Claude Code / OpenCode 回滚脚本 ==="
+echo "=== Claude Code 回滚脚本 ==="
 echo ""
 
 # 检查是否有备份目录
@@ -308,7 +237,6 @@ confirm_restore "$SELECTED_BACKUP"
 BACKUP_PATH="$BACKUP_DIR/$SELECTED_BACKUP"
 
 restore_claudecode "$BACKUP_PATH/claudecode"
-restore_opencode "$BACKUP_PATH/opencode"
 
 echo ""
 echo "================================"
@@ -317,4 +245,3 @@ echo "从备份恢复: $SELECTED_BACKUP"
 echo ""
 echo "当前配置位置:"
 echo "  - Claude Code:  $CLAUDE_DIR"
-echo "  - OpenCode:     $OPENCODE_DIR"

@@ -18,18 +18,30 @@
 
 ```
 vibe-coding-kit/
-├── agents/          # 子 Agent 定义
-├── commands/        # Command 定义（CLI 增强）
-├── config/          # 工具配置（claudecode / opencode）
-├── mcp/             # MCP (Model Context Protocol) 扩展
-├── plugins/         # 插件扩展
-│   ├── claudecode/  # Claude Code 插件
-│   └── opencode/    # OpenCode 插件
-├── rules/           # 代码规则与约束
-├── skills/          # Skill 定义（扩展 AI 能力）
-├── docs/            # 文档
-├── publish.sh       # 发布脚本
-└── rollback.sh      # 回滚脚本
+├── claudecode/          # Claude Code 配置
+│   ├── agents/          # SubAgent 定义（专业角色）
+│   ├── bin/             # 启动脚本
+│   ├── commands/        # Command 定义（CLI 增强）
+│   ├── config/          # Claude Code 设置
+│   ├── mcp/             # MCP (Model Context Protocol) 扩展
+│   ├── plugins/         # 插件扩展
+│   ├── rules/           # 代码规则与约束
+│   └── skills/          # Skill 定义（扩展 AI 能力）
+├── docs/                # 文档
+├── opencode/            # OpenCode 配置
+│   ├── agents/          # SubAgent 定义（专业角色）
+│   ├── bin/             # 启动脚本
+│   ├── commands/        # Command 定义（CLI 增强）
+│   ├── config/          # OpenCode 设置
+│   ├── mcp/             # MCP (Model Context Protocol) 扩展
+│   ├── plugins/         # 插件扩展
+│   ├── rules/           # 代码规则与约束
+│   └── skills/          # Skill 定义（扩展 AI 能力）
+├── CLAUDE.md
+├── publish.sh           # 发布脚本（Claude Code）
+├── publish-opencode.sh  # 发布脚本（OpenCode）
+├── rollback.sh          # 回滚脚本（Claude Code）
+└── rollback-opencode.sh # 回滚脚本（OpenCode）
 ```
 
 ---
@@ -46,25 +58,74 @@ cd ~/vibe-coding-kit
 ### 2. 发布配置
 
 ```bash
+# 发布 Claude Code 配置
 ./publish.sh
+
+# 发布 OpenCode 配置
+./publish-opencode.sh
 ```
 
 脚本会自动：
-- 备份现有的 `~/.claude` 和 `~/.config/opencode` 配置到 `backup/<timestamp>/`
+- 备份现有配置到 `backup/<timestamp>/`
 - 将 `agents`、`commands`、`skills`、`plugins`、`config` 同步到对应目标目录
-- 合并 `settings.json` / `opencode.json`，保留已有的其他配置
+- 合并 `settings.json`（Claude Code）或 `opencode.json`（OpenCode），保留已有配置
 
-### 3. 回滚配置
+### 3. 开始使用
+
+发布完成后，启动脚本已安装到 `~/.local/bin`，直接在终端中使用：
 
 ```bash
-# 交互式选择备份回滚
-./rollback.sh
+# 启动 Claude Code，并默认开启 --dangerously-skip-permissions
+cc
 
-# 或指定时间戳直接回滚
+# 启动 OpenCode
+oc
+```
+
+
+## 回滚配置
+
+每次发布前会自动备份当前配置到 `backup/<timestamp>/` 目录。如需回退：
+
+### 交互式回滚
+
+```bash
+# 列出可用备份并选择恢复
+./rollback.sh               # Claude Code
+./rollback-opencode.sh      # OpenCode
+```
+
+### 指定时间戳回滚
+
+```bash
 ./rollback.sh 20250401_234052
+./rollback-opencode.sh 20250401_234052
+```
 
-# 列出所有可用备份
+### 列出所有可用备份
+
+```bash
 ./rollback.sh -l
+./rollback-opencode.sh -l
+```
+
+### 备份目录结构
+
+```
+backup/
+└── 20250401_234052/
+    ├── claudecode/          # Claude Code 备份
+    │   ├── agents/
+    │   ├── commands/
+    │   ├── skills/
+    │   ├── plugins/
+    │   └── settings.json
+    └── opencode/            # OpenCode 备份
+        ├── agents/
+        ├── commands/
+        ├── skills/
+        ├── plugins/
+        └── opencode.json
 ```
 
 ---
@@ -126,19 +187,24 @@ cd ~/vibe-coding-kit
 
 ### Claude Code Plugins
 
-| Plugin                      | 来源                                         | 描述                                                 |
-| --------------------------- | -------------------------------------------- | ---------------------------------------------------- |
-| comment-checker             | [omo](https://github.com/omo/oh-my-opencode) | 检测 Java/Vue/Shell 代码中的 AI 风格注释             |
-| edit-error-recovery         | omo                                          | 监听 Edit 工具错误，注入恢复提醒                     |
-| delegate-task-retry         | omo                                          | 监听 Task 工具错误，注入即时重试指导                 |
-| question-label-truncator    | omo                                          | 在 AskUserQuestion 执行前自动截断过长的 option label |
-| compaction-context-injector | omo                                          | 在 session compaction 时注入结构化摘要提示词         |
+| Plugin                      | 来源                                         | 描述                                                     |
+| --------------------------- | -------------------------------------------- | ------------------------------------------------------- |
+| comment-checker             | [omo](https://github.com/omo/oh-my-opencode) | 检测 Java/Vue/Shell 代码中的 AI 风格注释                |
+| edit-error-recovery         | omo                                          | 监听 Edit 工具错误，注入恢复提醒                         |
+| delegate-task-retry         | omo                                          | 监听 Task 工具错误，注入即时重试指导                     |
+| question-label-truncator    | omo                                          | 在 AskUserQuestion 执行前自动截断过长的 option label     |
+| windows-notification        | 本地开发                                     | 在事件触发时弹出 Windows 系统通知                         |
+| ralph-loop                  | omo                                          | 自引用开发循环，让 Agent 自动继续工作（实验性）          |
 
 ### OpenCode Plugins
 
-| Plugin     | 来源                                                 | 描述                                  |
-| ---------- | ---------------------------------------------------- | ------------------------------------- |
-| user-agent | [elfgzp](https://github.com/elfgzp/opencode-configs) | 模拟 KimiCLI 请求头以支持用量翻倍活动 |
+| Plugin                      | 来源                                                 | 描述                                              |
+| --------------------------- | ---------------------------------------------------- | ------------------------------------------------- |
+| user-agent                  | [elfgzp](https://github.com/elfgzp/opencode-configs) | 模拟 KimiCLI 请求头以支持用量翻倍活动             |
+| edit-error-recovery         | omo                                                  | 监听 Edit 工具错误，注入恢复提醒                   |
+| comment-checker             | omo                                                  | 检测 Java/Vue/Shell 代码中的 AI 风格注释           |
+| compaction-context-injector | omo                                                  | 在 session compaction 时注入结构化摘要提示词       |
+| delegate-task-retry         | omo                                                  | 监听 Task 工具错误，注入即时重试指导               |
 
 > 更多插件开发细节请参考 [docs/plugin-development.md](docs/plugin-development.md)。
 

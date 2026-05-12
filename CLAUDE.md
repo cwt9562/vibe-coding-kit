@@ -4,10 +4,12 @@
 
 ## 脚本工具
 
-| 名称        | 描述                                                           |
-| ----------- | -------------------------------------------------------------- |
-| publish.sh  | 发布脚本：将本地配置同步到 `~/.claude` 和 `~/.config/opencode` |
-| rollback.sh | 回滚脚本：从备份恢复 Claude Code 和 OpenCode 配置              |
+| 名称                  | 描述                                                |
+| --------------------- | --------------------------------------------------- |
+| publish.sh            | 发布脚本：将本地配置同步到 `~/.claude`              |
+| publish-opencode.sh   | 发布脚本：将本地配置同步到 `~/.config/opencode`     |
+| rollback.sh           | 回滚脚本：从备份恢复 Claude Code 配置               |
+| rollback-opencode.sh  | 回滚脚本：从备份恢复 OpenCode 配置                  |
 
 ## 目录结构
 
@@ -35,7 +37,9 @@ vibe-coding-kit/
 ├── CLAUDE.md
 ├── CLAUDE.local.md
 ├── publish.sh
-└── rollback.sh
+├── publish-opencode.sh
+├── rollback.sh
+└── rollback-opencode.sh
 ```
 
 ## Agents
@@ -73,6 +77,8 @@ vibe-coding-kit/
 | comment-checker             | omo/comment-checker             | 检测 Java/Vue/Shell 代码中的 AI 风格注释，纯 JS 重写        |
 | compaction-context-injector | omo/compaction-context-injector | 在 OpenCode 的 session compaction 时注入结构化摘要提示词    |
 | delegate-task-retry         | omo/delegate-task-retry         | 监听 Task 工具错误，注入即时重试指导                        |
+| ralph-loop                  | omo                             | 自引用开发循环，让 Agent 自动继续工作（实验性）             |
+| windows-notification        | 本地开发                         | 在事件触发时弹出 Windows 系统通知                           |
 | question-label-truncator    | omo/question-label-truncator    | 在 AskUserQuestion 执行前自动截断过长的 option label        |
 
 ### Plugins 开发
