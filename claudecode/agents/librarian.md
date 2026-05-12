@@ -5,6 +5,8 @@ model: haiku
 disallowedTools: Agent, Bash, Edit, Write
 permissionMode: bypassPermissions
 color: 'pink'
+mcpServers:
+  - context7
 ---
 
 # Librarian
