@@ -17,14 +17,16 @@ CLAUDE_DIR="$HOME/.claude"
 OPENCODE_DIR="$HOME/.config/opencode"
 
 # 本地配置
-LOCAL_AGENT_CC_DIR="$SCRIPT_DIR/agents/claudecode"
-LOCAL_AGENT_OC_DIR="$SCRIPT_DIR/agents/opencode"
-LOCAL_COMMAND_DIR="$SCRIPT_DIR/commands"
-LOCAL_PLUGIN_DIR="$SCRIPT_DIR/plugins/opencode"
-LOCAL_CC_PLUGIN_DIR="$SCRIPT_DIR/plugins/claudecode"
-LOCAL_SKILL_DIR="$SCRIPT_DIR/skills"
-LOCAL_CONFIG="$SCRIPT_DIR/config/opencode/opencode.json"
-LOCAL_CC_CONFIG="$SCRIPT_DIR/config/claudecode/settings.json"
+LOCAL_AGENT_CC_DIR="$SCRIPT_DIR/claudecode/agents"
+LOCAL_AGENT_OC_DIR="$SCRIPT_DIR/opencode/agents"
+LOCAL_COMMAND_CC_DIR="$SCRIPT_DIR/claudecode/commands"
+LOCAL_COMMAND_OC_DIR="$SCRIPT_DIR/opencode/commands"
+LOCAL_PLUGIN_OC_DIR="$SCRIPT_DIR/opencode/plugins"
+LOCAL_PLUGIN_CC_DIR="$SCRIPT_DIR/claudecode/plugins"
+LOCAL_SKILL_CC_DIR="$SCRIPT_DIR/claudecode/skills"
+LOCAL_SKILL_OC_DIR="$SCRIPT_DIR/opencode/skills"
+LOCAL_CONFIG="$SCRIPT_DIR/opencode/config/opencode.json"
+LOCAL_CC_CONFIG="$SCRIPT_DIR/claudecode/config/settings.json"
 
 echo "=== Claude Code / OpenCode 发布脚本 ==="
 echo "时间戳: $TIMESTAMP"
@@ -117,25 +119,25 @@ if [ -d "$LOCAL_AGENT_CC_DIR" ]; then
     cp -r "$LOCAL_AGENT_CC_DIR/"* "$CLAUDE_DIR/agents/"
 fi
 
-if [ -d "$LOCAL_COMMAND_DIR" ]; then
+if [ -d "$LOCAL_COMMAND_CC_DIR" ]; then
     echo "[claude] 发布 commands..."
-    cp -r "$LOCAL_COMMAND_DIR/"* "$CLAUDE_DIR/commands/"
+    cp -r "$LOCAL_COMMAND_CC_DIR/"* "$CLAUDE_DIR/commands/"
 fi
 
-if [ -d "$LOCAL_SKILL_DIR" ]; then
+if [ -d "$LOCAL_SKILL_CC_DIR" ]; then
     echo "[claude] 发布 skills..."
-    cp -r "$LOCAL_SKILL_DIR/"* "$CLAUDE_DIR/skills/"
+    cp -r "$LOCAL_SKILL_CC_DIR/"* "$CLAUDE_DIR/skills/"
 fi
 
 # 发布 Claude Code CLAUDE.md
-LOCAL_CC_CLAUDE_MD="$SCRIPT_DIR/config/claudecode/CLAUDE.md"
+LOCAL_CC_CLAUDE_MD="$SCRIPT_DIR/claudecode/config/CLAUDE.md"
 if [ -f "$LOCAL_CC_CLAUDE_MD" ]; then
     echo "[claude] 发布 CLAUDE.md..."
     cp "$LOCAL_CC_CLAUDE_MD" "$CLAUDE_DIR/CLAUDE.md"
 fi
 
 # 发布 Claude Code plugins (使用 CLI 命令)
-LOCAL_CC_MARKETPLACE_DIR="$SCRIPT_DIR/plugins/claudecode/marketplaces/local"
+LOCAL_CC_MARKETPLACE_DIR="$SCRIPT_DIR/claudecode/plugins/marketplaces/local"
 if [ -d "$LOCAL_CC_MARKETPLACE_DIR" ]; then
     echo "[claude] 注册 local marketplace..."
     claude plugin marketplace remove local 2>/dev/null || true
@@ -161,7 +163,7 @@ if [ -f "$LOCAL_CC_CONFIG" ]; then
         if(scriptDir.startsWith('/d/')) scriptDir = 'D:/' + scriptDir.slice(3);
 
         // 读取本地配置
-        const localSettings = JSON.parse(fs.readFileSync(path.resolve(scriptDir, 'config', 'claudecode', 'settings.json'), 'utf8'));
+        const localSettings = JSON.parse(fs.readFileSync(path.resolve(scriptDir, 'claudecode', 'config', 'settings.json'), 'utf8'));
 
         // 目标路径
         const claudeDir = path.join(os.homedir(), '.claude');
@@ -198,16 +200,16 @@ if [ -f "$LOCAL_CC_CONFIG" ]; then
         fs.writeFileSync(settingsPath, JSON.stringify(sortKeys(settings), null, 2));
     "
 else
-    echo "[警告] 本地 config/claudecode/settings.json 不存在，跳过配置合并"
+    echo "[警告] 本地 claudecode/config/settings.json 不存在，跳过配置合并"
 fi
 
-# 发布 bin 目录下的脚本到 ~/.local/bin
+# 发布 claudecode/bin/ 脚本到 ~/.local/bin
 echo "[claude] 发布 bin 脚本..."
-LOCAL_BIN_DIR="$SCRIPT_DIR/bin"
+LOCAL_CC_BIN_DIR="$SCRIPT_DIR/claudecode/bin"
 TARGET_BIN_DIR="$HOME/.local/bin"
-if [ -d "$LOCAL_BIN_DIR" ]; then
+if [ -d "$LOCAL_CC_BIN_DIR" ]; then
     mkdir -p "$TARGET_BIN_DIR"
-    for file in "$LOCAL_BIN_DIR"/*; do
+    for file in "$LOCAL_CC_BIN_DIR"/*; do
         if [ -f "$file" ]; then
             cp -f "$file" "$TARGET_BIN_DIR/"
             chmod +x "$TARGET_BIN_DIR/$(basename "$file")"
@@ -215,7 +217,7 @@ if [ -d "$LOCAL_BIN_DIR" ]; then
         fi
     done
 else
-    echo "[警告] 本地 bin 目录不存在，跳过"
+    echo "[警告] 本地 claudecode/bin 目录不存在，跳过"
 fi
 
 echo "[claude] 完成"
@@ -239,23 +241,40 @@ if [ -d "$LOCAL_AGENT_OC_DIR" ]; then
 fi
 
 # 发布 commands
-if [ -d "$LOCAL_COMMAND_DIR" ]; then
+if [ -d "$LOCAL_COMMAND_OC_DIR" ]; then
     echo "[opencode] 发布 commands..."
-    cp -r "$LOCAL_COMMAND_DIR/"* "$OPENCODE_DIR/commands/"
+    cp -r "$LOCAL_COMMAND_OC_DIR/"* "$OPENCODE_DIR/commands/"
 fi
 
 # 发布 plugins
-if [ -d "$LOCAL_PLUGIN_DIR" ]; then
+if [ -d "$LOCAL_PLUGIN_OC_DIR" ]; then
     echo "[opencode] 发布 plugins..."
     mkdir -p "$OPENCODE_DIR/plugins"
-    cp -r "$LOCAL_PLUGIN_DIR/"* "$OPENCODE_DIR/plugins/"
+    cp -r "$LOCAL_PLUGIN_OC_DIR/"* "$OPENCODE_DIR/plugins/"
 fi
 
 # 发布 skills
-if [ -d "$LOCAL_SKILL_DIR" ]; then
+if [ -d "$LOCAL_SKILL_OC_DIR" ]; then
     echo "[opencode] 发布 skills..."
     mkdir -p "$OPENCODE_DIR/skills"
-    cp -r "$LOCAL_SKILL_DIR/"* "$OPENCODE_DIR/skills/"
+    cp -r "$LOCAL_SKILL_OC_DIR/"* "$OPENCODE_DIR/skills/"
+fi
+
+# 发布 opencode/bin/ 脚本到 ~/.local/bin
+echo "[opencode] 发布 bin 脚本..."
+LOCAL_OC_BIN_DIR="$SCRIPT_DIR/opencode/bin"
+TARGET_BIN_DIR="$HOME/.local/bin"
+if [ -d "$LOCAL_OC_BIN_DIR" ]; then
+    mkdir -p "$TARGET_BIN_DIR"
+    for file in "$LOCAL_OC_BIN_DIR"/*; do
+        if [ -f "$file" ]; then
+            cp -f "$file" "$TARGET_BIN_DIR/"
+            chmod +x "$TARGET_BIN_DIR/$(basename "$file")"
+            echo "  - $(basename "$file")"
+        fi
+    done
+else
+    echo "[警告] 本地 opencode/bin 目录不存在，跳过"
 fi
 
 # 合并 opencode.json 的 agent 和 plugins 配置
@@ -273,7 +292,7 @@ if [ -f "$LOCAL_CONFIG" ]; then
         if(scriptDir.startsWith('/d/')) scriptDir = 'D:/' + scriptDir.slice(3);
 
         // 读取本地配置
-        const localConfig = JSON.parse(fs.readFileSync(path.resolve(scriptDir, 'config', 'opencode', 'opencode.json'), 'utf8'));
+        const localConfig = JSON.parse(fs.readFileSync(path.resolve(scriptDir, 'opencode', 'config', 'opencode.json'), 'utf8'));
         const localAgents = localConfig.agent || {};
         const localPlugins = localConfig.plugin || {};
 
@@ -301,7 +320,7 @@ if [ -f "$LOCAL_CONFIG" ]; then
         fs.writeFileSync(configPath, JSON.stringify(config, null, 2));
     "
 else
-    echo "[警告] 本地 config/opencode/opencode.json 不存在，跳过配置合并"
+    echo "[警告] 本地 opencode/config/opencode.json 不存在，跳过配置合并"
 fi
 
 echo ""

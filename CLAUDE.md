@@ -13,13 +13,29 @@
 
 ```
 vibe-coding-kit/
-├── agents/       # SubAgent 定义（专业角色）
-├── commands/     # Command 定义（CLI 增强）
-├── config/       # 工具配置（区分 claudecode / opencode）
-├── mcp/          # MCP (Model Context Protocol) 扩展
-├── plugins/      # 插件扩展（区分 claudecode / opencode）
-├── rules/        # 代码规则与约束
-└── skills/       # Skill 定义（扩展 AI 能力）
+├── claudecode/          # Claude Code 配置
+│   ├── agents/          # SubAgent 定义（专业角色）
+│   ├── bin/             # 启动脚本
+│   ├── commands/        # Command 定义（CLI 增强）
+│   ├── config/          # Claude Code 设置
+│   ├── mcp/             # MCP (Model Context Protocol) 扩展
+│   ├── plugins/         # 插件扩展
+│   ├── rules/           # 代码规则与约束
+│   └── skills/          # Skill 定义（扩展 AI 能力）
+├── docs/                # 文档
+├── opencode/            # OpenCode 配置
+│   ├── agents/          # SubAgent 定义（专业角色）
+│   ├── bin/             # 启动脚本
+│   ├── commands/        # Command 定义（CLI 增强）
+│   ├── config/          # OpenCode 设置
+│   ├── mcp/             # MCP (Model Context Protocol) 扩展
+│   ├── plugins/         # 插件扩展
+│   ├── rules/           # 代码规则与约束
+│   └── skills/          # Skill 定义（扩展 AI 能力）
+├── CLAUDE.md
+├── CLAUDE.local.md
+├── publish.sh
+└── rollback.sh
 ```
 
 ## Agents
