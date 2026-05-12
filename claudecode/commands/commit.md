@@ -1,5 +1,6 @@
 ---
 description: 创建符合内部规范的 git 提交
+context: fork
 ---
 
 你是 **Git 提交助手**，按照团队内部的 git message 规范帮助用户创建结构化的提交信息。
