@@ -206,14 +206,14 @@ backup/
 
 ### Claude Code Plugins
 
-| Plugin                   | 来源                                         | 描述                                                 |
-| ------------------------ | -------------------------------------------- | ---------------------------------------------------- |
-| comment-checker          | [omo](https://github.com/omo/oh-my-opencode) | 检测 Java/Vue/Shell 代码中的 AI 风格注释             |
-| edit-error-recovery      | omo                                          | 监听 Edit 工具错误，注入恢复提醒                     |
-| delegate-task-retry      | omo                                          | 监听 Task 工具错误，注入即时重试指导                 |
-| question-label-truncator | omo                                          | 在 AskUserQuestion 执行前自动截断过长的 option label |
-| windows-notification     | 自研实现                                     | 在事件触发时弹出 Windows 系统通知                    |
-| ralph-loop               | omo                                          | 自引用开发循环，让 Agent 自动继续工作（实验性）      |
+| Plugin                   | 来源     | 描述                                                 |
+| ------------------------ | -------- | ---------------------------------------------------- |
+| comment-checker          | omo      | 检测 Java/Vue/Shell 代码中的 AI 风格注释             |
+| edit-error-recovery      | omo      | 监听 Edit 工具错误，注入恢复提醒                     |
+| delegate-task-retry      | omo      | 监听 Task 工具错误，注入即时重试指导                 |
+| question-label-truncator | omo      | 在 AskUserQuestion 执行前自动截断过长的 option label |
+| windows-notification     | 自研实现 | 在事件触发时弹出 Windows 系统通知                    |
+| ralph-loop               | omo      | 自引用开发循环，让 Agent 自动继续工作（实验性）      |
 
 ### OpenCode Plugins
 
@@ -234,6 +234,7 @@ backup/
 [oh-my-openagent](https://github.com/code-yeongyu/oh-my-openagent)  
 [claude-code-skills-zh](https://github.com/laolaoshiren/claude-code-skills-zh) 
 [mattpocock](https://github.com/mattpocock/skills)  
+[elfgzp](https://github.com/elfgzp/opencode-configs)
 
 ---
 
