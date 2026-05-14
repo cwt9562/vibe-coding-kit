@@ -18,7 +18,6 @@ vibe-coding-kit/
 ├── claudecode/          # Claude Code 配置
 │   ├── agents/          # SubAgent 定义（专业角色）
 │   ├── bin/             # 启动脚本
-│   ├── commands/        # Command 定义（CLI 增强）
 │   ├── config/          # Claude Code 设置
 │   ├── mcp/             # MCP (Model Context Protocol) 扩展
 │   ├── plugins/         # 插件扩展
@@ -54,19 +53,14 @@ vibe-coding-kit/
 | oracle      | omo/Oracle         | Kimi               | 守护监察，架构评审、风险评估、问题诊断                         |
 | designer    | omo/Prometheus + multimodal-looker | Kimi               | 体验设计，UI/UX、图像分析和前端实现                           |
 
-## Commands
-
-| 名称    | 描述                                          |
-| ------- | --------------------------------------------- |
-| commit  | 创建符合内部规范的 git 提交                   |
-| weeklog | 本周工作总结：查询 git 提交记录，梳理本周工作 |
-
 ## Skills
 
 | 名称            | 描述                                                     |
 | --------------- | -------------------------------------------------------- |
 | agent-browser   | 浏览器自动化 CLI，用于网页交互、表单填写、数据抓取等任务 |
 | frontend-ui-ux  | 无稿设计师型开发者，即使没有设计稿也能创建精美 UI/UX    |
+| commit          | 创建符合内部规范的 git 提交                              |
+| weeklog         | 本周工作总结：查询 git 仓库提交记录，梳理本周工作成果   |
 
 ## Plugins
 

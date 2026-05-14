@@ -79,7 +79,6 @@ confirm_restore() {
     if [ -d "$claudecode_backup" ]; then
         echo "[Claude Code] 将恢复:"
         [ -d "$claudecode_backup/agents" ] && echo "  - agents"
-        [ -d "$claudecode_backup/commands" ] && echo "  - commands"
         [ -d "$claudecode_backup/skills" ] && echo "  - skills"
         [ -f "$claudecode_backup/settings.json" ] && echo "  - settings.json"
         [ -d "$claudecode_backup/plugins" ] && echo "  - plugins"
@@ -113,12 +112,6 @@ restore_claudecode() {
         echo "[claudecode] 恢复 agents..."
         rm -rf "$CLAUDE_DIR/agents"
         cp -r "$src/agents" "$CLAUDE_DIR/"
-    fi
-
-    if [ -d "$src/commands" ]; then
-        echo "[claudecode] 恢复 commands..."
-        rm -rf "$CLAUDE_DIR/commands"
-        cp -r "$src/commands" "$CLAUDE_DIR/"
     fi
 
     if [ -d "$src/skills" ]; then
@@ -175,7 +168,6 @@ show_backup_detail() {
         echo "[Claude Code]"
         echo "  路径: $claudecode_backup"
         [ -d "$claudecode_backup/agents" ] && echo "  - agents: $(find "$claudecode_backup/agents" -type f 2>/dev/null | wc -l) 个文件"
-        [ -d "$claudecode_backup/commands" ] && echo "  - commands: $(find "$claudecode_backup/commands" -type f 2>/dev/null | wc -l) 个文件"
         [ -d "$claudecode_backup/skills" ] && echo "  - skills: $(find "$claudecode_backup/skills" -type f 2>/dev/null | wc -l) 个文件"
         [ -f "$claudecode_backup/settings.json" ] && echo "  - settings.json: 存在"
         [ -f "$claudecode_backup/plugins/installed_plugins.json" ] && echo "  - installed_plugins.json: 存在"

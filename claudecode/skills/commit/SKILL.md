@@ -1,5 +1,6 @@
 ---
-description: 创建符合内部规范的 git 提交
+name: commit
+description: 创建符合内部规范的 git 提交。当用户需要"提交代码"、"创建 commit"、"git commit"、"生成提交信息"、"暂存并提交"、"git add"、"暂存变更"、"推送提交"等涉及 git 提交相关任务时自动触发
 ---
 
 你是 **Git 提交助手**，按照团队内部的 git message 规范帮助用户创建结构化的提交信息。
@@ -196,5 +197,3 @@ git log --follow --oneline -- path/to/file.py
 # 二分定位 bug 引入提交
 git bisect start && git bisect bad && git bisect good <tag>
 ```
-
-> `-S` 查字符串增减次数；`-G` 查 diff 是否匹配正则。

@@ -3,7 +3,7 @@
 # 同步脚本：发布 Claude Code 配置到 ~/.claude
 #
 # 目标：
-#   ~/.claude/           - agents + commands + skills + plugins (Claude Code 原生)
+#   ~/.claude/           - agents + skills + plugins (Claude Code 原生)
 
 set -e
 
@@ -16,7 +16,6 @@ CLAUDE_DIR="$HOME/.claude"
 
 # 本地配置
 LOCAL_AGENT_CC_DIR="$SCRIPT_DIR/claudecode/agents"
-LOCAL_COMMAND_CC_DIR="$SCRIPT_DIR/claudecode/commands"
 LOCAL_PLUGIN_CC_DIR="$SCRIPT_DIR/claudecode/plugins"
 LOCAL_SKILL_CC_DIR="$SCRIPT_DIR/claudecode/skills"
 LOCAL_CC_CONFIG="$SCRIPT_DIR/claudecode/config/settings.json"
@@ -43,7 +42,6 @@ backup_if_exists() {
 
 # 备份 Claude Code (~/.claude) 配置
 backup_if_exists "$CLAUDE_DIR/agents" "$CLAUDE_BACKUP_DIR" "~/.claude/agents"
-backup_if_exists "$CLAUDE_DIR/commands" "$CLAUDE_BACKUP_DIR" "~/.claude/commands"
 backup_if_exists "$CLAUDE_DIR/skills" "$CLAUDE_BACKUP_DIR" "~/.claude/skills"
 # 备份 marketplace（如果存在）
 if [ -d "$CLAUDE_DIR/plugins/marketplaces/local" ]; then
@@ -90,17 +88,11 @@ echo ""
 echo "=== 发布到 Claude Code (~/.claude) ==="
 
 mkdir -p "$CLAUDE_DIR/agents"
-mkdir -p "$CLAUDE_DIR/commands"
 mkdir -p "$CLAUDE_DIR/skills"
 
 if [ -d "$LOCAL_AGENT_CC_DIR" ]; then
     echo "[claude] 发布 agents..."
     cp -r "$LOCAL_AGENT_CC_DIR/"* "$CLAUDE_DIR/agents/"
-fi
-
-if [ -d "$LOCAL_COMMAND_CC_DIR" ]; then
-    echo "[claude] 发布 commands..."
-    cp -r "$LOCAL_COMMAND_CC_DIR/"* "$CLAUDE_DIR/commands/"
 fi
 
 if [ -d "$LOCAL_SKILL_CC_DIR" ]; then
