@@ -6,11 +6,10 @@
 
 ## 特性
 
-- **双端同步**：一套配置，同时发布到 Claude Code (`~/.claude`) 和 OpenCode (`~/.config/opencode`)
-- **专业 Agent**：7 个预设子 Agent，覆盖调度、执行、探索、监察、检索、设计
-- **实用 Commands**：内置 `commit`、`weeklog` 等高频 CLI 增强命令
-- **增强 Plugins**：集成多模型 Hook 插件，修复、提示、拦截一应俱全
-- **安全发布**：自动备份当前配置，支持一键回滚
+- **多 Agent 协作**：主对话 Agent 只读不写，由子 Agent 负责写代码，节省上下文空间，避免主对话上下文污染
+- **Windows 消息提醒**：集成 Windows 系统通知，任务完成、出错等场景自动弹窗提示
+- **固定 settings.json 配置**：预设并锁定 `.claude/settings.json` 中的关键配置项，保持体验一致
+- **智能 Git 提交**：自定义 `/commit` 指令，自动生成符合规范的 git 提交信息，并支持自动拆分多个提交
 
 ---
 
