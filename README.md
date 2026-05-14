@@ -156,15 +156,18 @@ backup/
 
 ---
 
-## Commands
+## Skills
 
-| Command                        | 描述                                          |
-| ------------------------------ | --------------------------------------------- |
-| [commit](commands/commit.md)   | 创建符合内部规范的 git 提交                   |
-| [weeklog](commands/weeklog.md) | 本周工作总结：查询 git 提交记录，梳理工作成果 |
+| Skill                                                  | 描述                                                     |
+| ------------------------------------------------------ | -------------------------------------------------------- |
+| [agent-browser](skills/agent-browser/SKILL.md)         | 浏览器自动化 CLI，用于网页交互、表单填写、数据抓取等任务 |
+| [frontend-ui-ux](skills/frontend-ui-ux/SKILL.md)       | 无稿设计师型开发者，即使没有设计稿也能创建精美 UI/UX    |
+| [commit](commands/commit.md)                           | 创建符合内部规范的 git 提交                              |
+| [weeklog](commands/weeklog.md)                         | 本周工作总结：查询 git 提交记录，梳理工作成果           |
+| [code-review](skills/code-review/SKILL.md)             | 中文代码审查专家，多维度全面评估代码质量                 |
 
-> **关于 `/weeklog` 的 YAML 配置**
-> 
+### 关于 `/weeklog` 的 YAML 配置
+
 > 命令依赖 `weeklog.config.yaml` 文件来识别要统计的 git 仓库。
 > 
 > 配置格式示例：
@@ -183,15 +186,6 @@ backup/
 > - 当前目录是否为 git 仓库 → 直接使用
 > - 一级子目录中是否有 git 仓库 → 让用户选择
 > - 最终在当前根目录自动生成 `weeklog.config.yaml`
-> 
-
----
-
-## Skills
-
-| Skill                                          | 描述                                                     |
-| ---------------------------------------------- | -------------------------------------------------------- |
-| [agent-browser](skills/agent-browser/SKILL.md) | 浏览器自动化 CLI，用于网页交互、表单填写、数据抓取等任务 |
 
 ---
 
@@ -224,10 +218,8 @@ backup/
 
 ## 特别感谢
 
-[everything-claude-code](https://github.com/affaan-m/everything-claude-code)  
 [oh-my-openagent](https://github.com/code-yeongyu/oh-my-openagent)  
-[oh-my-opencode-slim](https://github.com/alvinunreal/oh-my-opencode-slim)  
-
+[claude-code-skills-zh](https://github.com/laolaoshiren/claude-code-skills-zh)  
 ---
 
 ## License
