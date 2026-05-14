@@ -142,6 +142,14 @@ backup/
 
 ---
 
+## Models
+
+模型推荐
+
+- opus级别: kimi2.6 ≈ deepseek-v4-pro[1m] > glm5.1
+- sonnet级别: deepseek-v4-pro[1m] > glm5.1 > minimax2.7
+- haiku级别: deepseek-v4-flash > minimax2.7-highspeed
+
 ## Agents
 
 | Agent                            | 来源                | 模型   | 描述                                         |
@@ -151,21 +159,25 @@ backup/
 | [developer](agents/developer.md) | omo/Hephaestus      | sonnet | 执行者，专注代码实现，处理所有代码任务       |
 | [explorer](agents/explorer.md)   | omo/Explore         | haiku  | 快速定位代码、理解代码结构                   |
 | [oracle](agents/oracle.md)       | omo/Oracle          | opus   | 守护监察，架构评审、风险评估、问题诊断       |
-| [librarian](agents/librarian.md) | omo/Librarian       | haiku  | 知识检索，获取外部知识和技术信息             |
+| [librarian](agents/librarian.md) | omo/Librarian       | sonnet | 知识检索，获取外部知识和技术信息             |
 | [designer](agents/designer.md)   | omo/Prometheus      | opus   | 体验设计，UI/UX、图像分析和前端实现          |
 
 ---
 
 ## Skills
 
-| Skill                                                  | 描述                                                     |
-| ------------------------------------------------------ | -------------------------------------------------------- |
-| [agent-browser](skills/agent-browser/SKILL.md)         | 浏览器自动化 CLI，用于网页交互、表单填写、数据抓取等任务 |
-| [frontend-ui-ux](skills/frontend-ui-ux/SKILL.md)       | 无稿设计师型开发者，即使没有设计稿也能创建精美 UI/UX    |
-| [commit](commands/commit.md)                           | 创建符合内部规范的 git 提交                              |
-| [weeklog](commands/weeklog.md)                         | 本周工作总结：查询 git 提交记录，梳理工作成果           |
-| [code-review](skills/code-review/SKILL.md)             | 中文代码审查专家，多维度全面评估代码质量                 |
-| [write-readme](skills/write-readme/SKILL.md)           | 中文 README 生成器，先分析项目类型再选择对应模板生成     |
+| Skill                                            | 描述                                                     | 来源                  |
+| ------------------------------------------------ | -------------------------------------------------------- | --------------------- |
+| [agent-browser](skills/agent-browser/SKILL.md)   | 浏览器自动化 CLI，用于网页交互、表单填写、数据抓取等任务 | agent-browser.dev     |
+| [frontend-ui-ux](skills/frontend-ui-ux/SKILL.md) | 无稿设计师型开发者，即使没有设计稿也能创建精美 UI/UX     | omo                   |
+| [commit](commands/commit.md)                     | 创建符合内部规范的 git 提交                              | 自研实现              |
+| [weeklog](commands/weeklog.md)                   | 本周工作总结：查询 git 提交记录，梳理工作成果            | 自研实现              |
+| [code-review](skills/code-review/SKILL.md)       | 中文代码审查专家，多维度全面评估代码质量                 | claude-code-skills-zh |
+| [write-readme](skills/write-readme/SKILL.md)     | 中文 README 生成器，先分析项目类型再选择对应模板生成     | claude-code-skills-zh |
+| [caveman](skills/caveman/SKILL.md)               | 超压缩通信模式，砍掉填充词和客套话，保持完整技术准确度   | matt                  |
+| [tdd](skills/tdd/SKILL.md)                       | 测试驱动开发，遵循 red-green-refactor 循环               | matt                  |
+| [to-prd](skills/to-prd/SKILL.md)                 | 将当前对话上下文转化为 PRD 并发布到项目 issue 跟踪器     | matt                  |
+| [to-issues](skills/to-issues/SKILL.md)           | 将计划或 PRD 分解为可独立领取的垂直切片问题              | matt                  |
 
 ### 关于 `/weeklog` 的 YAML 配置
 
@@ -200,7 +212,7 @@ backup/
 | edit-error-recovery      | omo                                          | 监听 Edit 工具错误，注入恢复提醒                     |
 | delegate-task-retry      | omo                                          | 监听 Task 工具错误，注入即时重试指导                 |
 | question-label-truncator | omo                                          | 在 AskUserQuestion 执行前自动截断过长的 option label |
-| windows-notification     | 本地开发                                     | 在事件触发时弹出 Windows 系统通知                    |
+| windows-notification     | 自研实现                                     | 在事件触发时弹出 Windows 系统通知                    |
 | ralph-loop               | omo                                          | 自引用开发循环，让 Agent 自动继续工作（实验性）      |
 
 ### OpenCode Plugins
@@ -220,7 +232,9 @@ backup/
 ## 特别感谢
 
 [oh-my-openagent](https://github.com/code-yeongyu/oh-my-openagent)  
-[claude-code-skills-zh](https://github.com/laolaoshiren/claude-code-skills-zh)  
+[claude-code-skills-zh](https://github.com/laolaoshiren/claude-code-skills-zh) 
+[mattpocock](https://github.com/mattpocock/skills)  
+
 ---
 
 ## License
