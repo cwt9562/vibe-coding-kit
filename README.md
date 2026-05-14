@@ -18,6 +18,12 @@
 ### 智能 Git 提交
 自定义 `/commit` 指令，自动生成符合规范的 git 提交信息，并支持按文件自动拆分为多个提交。
 
+### 安全发布与一键回滚
+每次发布前自动备份现有配置到 `backup/<timestamp>/`，支持按时间戳精准回滚，改错了也能一键恢复。
+
+### 快捷启动脚本
+发布时自动安装 `cc` / `oc` 命令到 `~/.local/bin`，一键启动 Claude Code 或 OpenCode，默认带上常用参数。
+
 ---
 
 ## 目录结构
@@ -138,15 +144,15 @@ backup/
 
 ## Agents
 
-| Agent                              | 来源                   | 模型                  | 描述                                        |
-| ---------------------------------- | ---------------------- | --------------------- | ------------------------------------------- |
-| [captain](agents/captain.md)       | omo/Sisyphus           | Kimi                  | 主控调度，协调专家 Agent 完成复杂任务        |
-| [assistant](agents/assistant.md)    | omo/Sisyphus-junior    | M2.7-highspeed        | 执行者，处理所有非代码任务（配置/文本/文档） |
-| [developer](agents/developer.md)    | omo/Hephaestus         | M2.7                  | 执行者，专注代码实现，处理所有代码任务        |
-| [explorer](agents/explorer.md)     | omo/Explore            | M2.7-highspeed        | 快速定位代码、理解代码结构                   |
-| [oracle](agents/oracle.md)         | omo/Oracle             | Kimi                  | 守护监察，架构评审、风险评估、问题诊断       |
-| [librarian](agents/librarian.md)   | omo/Librarian          | M2.7-highspeed        | 知识检索，获取外部知识和技术信息             |
-| [designer](agents/designer.md)     | omo/Prometheus         | Kimi                  | 体验设计，UI/UX、图像分析和前端实现         |
+| Agent                            | 来源                | 模型   | 描述                                         |
+| -------------------------------- | ------------------- | ------ | -------------------------------------------- |
+| [captain](agents/captain.md)     | omo/Sisyphus        | opus   | 主控调度，协调专家 Agent 完成复杂任务        |
+| [assistant](agents/assistant.md) | omo/Sisyphus-junior | haiku  | 执行者，处理所有非代码任务（配置/文本/文档） |
+| [developer](agents/developer.md) | omo/Hephaestus      | sonnet | 执行者，专注代码实现，处理所有代码任务       |
+| [explorer](agents/explorer.md)   | omo/Explore         | haiku  | 快速定位代码、理解代码结构                   |
+| [oracle](agents/oracle.md)       | omo/Oracle          | opus   | 守护监察，架构评审、风险评估、问题诊断       |
+| [librarian](agents/librarian.md) | omo/Librarian       | haiku  | 知识检索，获取外部知识和技术信息             |
+| [designer](agents/designer.md)   | omo/Prometheus      | opus   | 体验设计，UI/UX、图像分析和前端实现          |
 
 ---
 
@@ -193,24 +199,24 @@ backup/
 
 ### Claude Code Plugins
 
-| Plugin                      | 来源                                         | 描述                                                     |
-| --------------------------- | -------------------------------------------- | ------------------------------------------------------- |
-| comment-checker             | [omo](https://github.com/omo/oh-my-opencode) | 检测 Java/Vue/Shell 代码中的 AI 风格注释                |
-| edit-error-recovery         | omo                                          | 监听 Edit 工具错误，注入恢复提醒                         |
-| delegate-task-retry         | omo                                          | 监听 Task 工具错误，注入即时重试指导                     |
-| question-label-truncator    | omo                                          | 在 AskUserQuestion 执行前自动截断过长的 option label     |
-| windows-notification        | 本地开发                                     | 在事件触发时弹出 Windows 系统通知                         |
-| ralph-loop                  | omo                                          | 自引用开发循环，让 Agent 自动继续工作（实验性）          |
+| Plugin                   | 来源                                         | 描述                                                 |
+| ------------------------ | -------------------------------------------- | ---------------------------------------------------- |
+| comment-checker          | [omo](https://github.com/omo/oh-my-opencode) | 检测 Java/Vue/Shell 代码中的 AI 风格注释             |
+| edit-error-recovery      | omo                                          | 监听 Edit 工具错误，注入恢复提醒                     |
+| delegate-task-retry      | omo                                          | 监听 Task 工具错误，注入即时重试指导                 |
+| question-label-truncator | omo                                          | 在 AskUserQuestion 执行前自动截断过长的 option label |
+| windows-notification     | 本地开发                                     | 在事件触发时弹出 Windows 系统通知                    |
+| ralph-loop               | omo                                          | 自引用开发循环，让 Agent 自动继续工作（实验性）      |
 
 ### OpenCode Plugins
 
-| Plugin                      | 来源                                                 | 描述                                              |
-| --------------------------- | ---------------------------------------------------- | ------------------------------------------------- |
-| user-agent                  | [elfgzp](https://github.com/elfgzp/opencode-configs) | 模拟 KimiCLI 请求头以支持用量翻倍活动             |
-| edit-error-recovery         | omo                                                  | 监听 Edit 工具错误，注入恢复提醒                   |
-| comment-checker             | omo                                                  | 检测 Java/Vue/Shell 代码中的 AI 风格注释           |
-| compaction-context-injector | omo                                                  | 在 session compaction 时注入结构化摘要提示词       |
-| delegate-task-retry         | omo                                                  | 监听 Task 工具错误，注入即时重试指导               |
+| Plugin                      | 来源                                                 | 描述                                         |
+| --------------------------- | ---------------------------------------------------- | -------------------------------------------- |
+| user-agent                  | [elfgzp](https://github.com/elfgzp/opencode-configs) | 模拟 KimiCLI 请求头以支持用量翻倍活动        |
+| edit-error-recovery         | omo                                                  | 监听 Edit 工具错误，注入恢复提醒             |
+| comment-checker             | omo                                                  | 检测 Java/Vue/Shell 代码中的 AI 风格注释     |
+| compaction-context-injector | omo                                                  | 在 session compaction 时注入结构化摘要提示词 |
+| delegate-task-retry         | omo                                                  | 监听 Task 工具错误，注入即时重试指导         |
 
 > 更多插件开发细节请参考 [docs/plugin-development.md](docs/plugin-development.md)。
 
