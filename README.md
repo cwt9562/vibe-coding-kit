@@ -165,6 +165,7 @@ backup/
 | [commit](commands/commit.md)                           | 创建符合内部规范的 git 提交                              |
 | [weeklog](commands/weeklog.md)                         | 本周工作总结：查询 git 提交记录，梳理工作成果           |
 | [code-review](skills/code-review/SKILL.md)             | 中文代码审查专家，多维度全面评估代码质量                 |
+| [write-readme](skills/write-readme/SKILL.md)           | 中文 README 生成器，先分析项目类型再选择对应模板生成     |
 
 ### 关于 `/weeklog` 的 YAML 配置
 

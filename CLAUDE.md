@@ -61,6 +61,7 @@ vibe-coding-kit/
 | frontend-ui-ux  | 无稿设计师型开发者，即使没有设计稿也能创建精美 UI/UX    |
 | commit          | 创建符合内部规范的 git 提交                              |
 | weeklog         | 本周工作总结：查询 git 仓库提交记录，梳理本周工作成果   |
+| write-readme    | 中文 README 生成器，先分析项目类型再选择对应模板生成     |
 
 ## Plugins
 
