@@ -10,7 +10,7 @@ hooks:
     - matcher: "Bash|Edit|WebFetch|WebSearch|Write"
       hooks:
         - type: command
-          command: "./captain-hook.js"
+          command: "./hooks/captain-hook.js"
 ---
 
 # Captain
