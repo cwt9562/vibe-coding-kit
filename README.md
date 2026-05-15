@@ -215,6 +215,32 @@ backup/
 | windows-notification     | 自研实现 | 在事件触发时弹出 Windows 系统通知                    |
 | ralph-loop               | omo      | 自引用开发循环，让 Agent 自动继续工作（实验性）      |
 
+### claude-mem 持久化记忆
+
+[claude-mem](https://github.com/thedotmack/claude-mem) 是由 [thedotmack](https://github.com/thedotmack/claude-mem) 开发的 Claude Code 持久化记忆插件（~75k Stars）。它能在编码会话期间自动捕获工具调用观察结果，使用 AI 将其压缩为语义摘要，并将相关上下文注入未来的会话中 —— 让 Claude 拥有跨会话的"长期记忆"。
+
+#### 核心特性
+
+| 特性                     | 描述                                                          |
+| ------------------------ | ------------------------------------------------------------- |
+| 跨会话持久化记忆         | 自动在会话间保留和恢复上下文，避免重复说明项目背景            |
+| 混合检索                 | Chroma 向量数据库 + SQLite FTS5 全文搜索，兼顾语义与关键词    |
+| Skill-Based 搜索         | 提供 mem-search 等技能，用自然语言直接搜索记忆                |
+| Web Viewer UI            | 本地 localhost:37777 实时查看和管理记忆内容                    |
+| 全自动运行               | 后台静默工作，无需人工干预                                    |
+| 多平台支持               | 兼容 Claude Code、OpenCode、Cursor、Gemini CLI 等             |
+
+
+#### 安装
+
+项目提供了自动化安装脚本 `publish-install-claude-men.sh`
+
+```bash
+./publish-install-claude-men.sh
+```
+
+> 更多详情见 [claude-mem 官方文档](https://docs.claude-mem.ai) 和 [GitHub 仓库](https://github.com/thedotmack/claude-mem)。
+
 ### OpenCode Plugins
 
 | Plugin                      | 来源                                                 | 描述                                         |
