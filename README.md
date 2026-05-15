@@ -1,223 +1,117 @@
 # vibe-coding-kit
 
-面向 [Claude Code](https://code.claude.com) 和 [OpenCode](https://opencode.ai) 的扩展集合，通过 Agents、Skills、Commands 和 Plugins 提升 AI 编程助手的体验与效率。
+面向 [Claude Code](https://code.claude.com) 和 [OpenCode](https://opencode.ai) 的一站式增强配置包，内置多 Agent 协作、智能 Skill、自动化插件，clone 即用。
 
 ---
 
-## 特性
+## 项目亮点
 
-### 多 Agent 协作
-主对话 Agent 只读不写，由子 Agent 负责写代码。这样既能节省上下文空间，也能避免主对话被代码操作污染。
-
-### Windows 消息提醒
-集成 Windows 系统通知，任务完成、出错等场景自动弹窗提示，不用时刻盯着终端。
-
-### 固定 settings.json 配置
-预设并锁定 `.claude/settings.json` 中的关键配置项，发布时自动同步，保持体验一致。
-
-### 智能 Git 提交
-自定义 `/commit` 指令，自动生成符合规范的 git 提交信息，并支持按文件自动拆分为多个提交。
-
-### 安全发布与一键回滚
-每次发布前自动备份现有配置到 `backup/<timestamp>/`，支持按时间戳精准回滚，改错了也能一键恢复。
-
-### 快捷启动脚本
-发布时自动安装 `cc` / `oc` 命令到 `~/.local/bin`，一键启动 Claude Code 或 OpenCode，默认带上常用参数。
+- **多 Agent 协作** — 主 Agent 只读调度，子 Agent 专注执行，上下文不污染
+- **丰富的 Skill 生态** — 10+ 个开箱即用的 Skill（代码审查、周报、TDD、README 生成等）
+- **双平台支持** — 同时支持 Claude Code 和 OpenCode，按需发布
+- **一键发布与安全回滚** — publish.sh 发布，自动备份，rollback.sh 一键恢复
 
 ---
 
 ## 快速开始
 
-### 1. 克隆仓库
-
 ```bash
 git clone <repo-url> ~/vibe-coding-kit
 cd ~/vibe-coding-kit
-```
 
-### 2. 发布配置
-
-```bash
-# 发布 Claude Code 配置
+# 发布 Claude Code 配置到 ~/.claude
 ./publish.sh
 
-# 发布 OpenCode 配置
+# 或发布 OpenCode 配置到 ~/.config/opencode
 ./publish-opencode.sh
 ```
 
-脚本会自动：
-- 备份现有配置到 `backup/<timestamp>/`
-- 将 `agents`、`commands`、`skills`、`plugins`、`config` 同步到对应目标目录
-- 合并 `settings.json`（Claude Code）或 `opencode.json`（OpenCode），保留已有配置
+发布完成后，启动脚本已安装到 `~/.local/bin`：
 
-### 3. 安装 claude-mem 持久化记忆（可选）
+```bash
+cc    # 启动 Claude Code
+oc    # 启动 OpenCode
+```
 
-> [claude-mem](https://github.com/thedotmack/claude-mem) 提供跨会话的持久化记忆，让 Claude 拥有"长期记忆"。
+开始愉快的vibe吧~~
+
+### 安装 MCP 服务（可选）
+
+根据需要安装 MCP 扩展，详细说明见各目录下的 `install.md`：
+
+| MCP              | 描述              | 安装说明                                                 |
+| ---------------- | ----------------- | -------------------------------------------------------- |
+| context7         | 查询技术文档      | [install.md](claudecode/mcp/context7/install.md)         |
+| duckduckgo       | 联网搜索          | [install.md](claudecode/mcp/duckduckgo/install.md)       |
+| mcp_server_mysql | 连接 MySQL 数据库 | [install.md](claudecode/mcp/mcp_server_mysql/install.md) |
+
+### 安装 claude-mem 持久化记忆（可选）
+
+[claude-mem](https://github.com/thedotmack/claude-mem) 提供跨会话的持久化记忆，让 Claude 拥有"长期记忆"。
 
 ```bash
 ./publish-install-claude-men.sh
 ```
 
-脚本会自动安装 claude-mem 插件并完成配置，更多详情见 [claude-mem 官方文档](https://docs.claude-mem.ai)。
-
-### 4. 配置 MCP 服务（可选）
-
-根据需要安装以下 MCP 扩展，详细安装说明参阅各目录下的 `install.md`：
-
-| MCP | 描述 | 安装说明 |$$
-| --- | --- | --- |
-| context7 | 查询技术文档 | [claudecode/mcp/context7/install.md](claudecode/mcp/context7/install.md) |
-| duckduckgo | 联网搜索 | [claudecode/mcp/duckduckgo/install.md](claudecode/mcp/duckduckgo/install.md) |
-| mcp_server_mysql | 连接 MySQL 数据库 | [claudecode/mcp/mcp_server_mysql/install.md](claudecode/mcp/mcp_server_mysql/install.md) |
-
-### 5. 开始使用
-
-发布完成后，启动脚本已安装到 `~/.local/bin`，直接在终端中使用：
-
-```bash
-# 启动 Claude Code，并默认开启 --dangerously-skip-permissions
-cc
-
-# 启动 OpenCode
-oc
-```
-
-## 回滚配置
-
-每次发布前会自动备份当前配置到 `backup/<timestamp>/` 目录。如需回退：
-
-### 交互式回滚
-
-```bash
-# 列出可用备份并选择恢复
-./rollback.sh               # Claude Code
-./rollback-opencode.sh      # OpenCode
-```
-
-### 指定时间戳回滚
-
-```bash
-./rollback.sh 20250401_234052
-./rollback-opencode.sh 20250401_234052
-```
-
-### 列出所有可用备份
-
-```bash
-./rollback.sh -l
-./rollback-opencode.sh -l
-```
-
-### 备份目录结构
-
-```
-backup/
-└── 20250401_234052/
-    ├── claudecode/          # Claude Code 备份
-    │   ├── agents/
-    │   ├── commands/
-    │   ├── skills/
-    │   ├── plugins/
-    │   └── settings.json
-    └── opencode/            # OpenCode 备份
-        ├── agents/
-        ├── commands/
-        ├── skills/
-        ├── plugins/
-        └── opencode.json
-```
+详细说明见 [claude-mem 官方文档](https://docs.claude-mem.ai)。
 
 ---
 
-## 目录结构
+## 架构概览
+
+项目同时维护两套独立的配置源（claudecode / opencode），通过发布脚本同步到对应的目标目录。关键层级如下：
 
 ```
 vibe-coding-kit/
-├── claudecode/          # Claude Code 配置
-│   ├── agents/          # SubAgent 定义（专业角色）
-│   ├── bin/             # 启动脚本
-│   ├── commands/        # Command 定义（CLI 增强）
-│   ├── config/          # Claude Code 设置
-│   ├── mcp/             # MCP (Model Context Protocol) 扩展
-│   ├── plugins/         # 插件扩展
-│   ├── rules/           # 代码规则与约束
-│   └── skills/          # Skill 定义（扩展 AI 能力）
-├── docs/                # 文档
-├── opencode/            # OpenCode 配置
-│   ├── agents/          # SubAgent 定义（专业角色）
-│   ├── bin/             # 启动脚本
-│   ├── commands/        # Command 定义（CLI 增强）
-│   ├── config/          # OpenCode 设置
-│   ├── mcp/             # MCP (Model Context Protocol) 扩展
-│   ├── plugins/         # 插件扩展
-│   ├── rules/           # 代码规则与约束
-│   └── skills/          # Skill 定义（扩展 AI 能力）
-├── CLAUDE.md
-├── publish.sh           # 发布脚本（Claude Code）
-├── publish-opencode.sh  # 发布脚本（OpenCode）
-├── rollback.sh          # 回滚脚本（Claude Code）
-└── rollback-opencode.sh # 回滚脚本（OpenCode）
+├── claudecode/          # Claude Code 配置源
+│   ├── agents/          # 7 个专业 Agent
+│   ├── skills/          # 10+ 个 Skill
+│   ├── bin/             # 启动脚本 (cc)
+│   ├── mcp/             # MCP 扩展 (context7, duckduckgo, mysql)
+│   └── config/          # settings.json
+├── opencode/            # OpenCode 配置源
+│   ├── agents/          # 7 个专业 Agent
+│   ├── skills/          # 2 个 Skill
+│   ├── plugins/         # 6 个 JS 插件
+│   ├── commands/        # 2 个 Command
+│   └── bin/             # 启动脚本 (oc, ocw)
+├── docs/                # 开发文档
+├── publish.sh           # 发布脚本 (Claude Code)
+├── publish-opencode.sh  # 发布脚本 (OpenCode)
+├── rollback.sh          # 回滚脚本 (Claude Code)
+└── rollback-opencode.sh # 回滚脚本 (OpenCode)
 ```
 
 ---
 
-## Models
-
-模型推荐
-
-- opus级别: kimi2.6 ≈ deepseek-v4-pro[1m] > glm5.1
-- sonnet级别: deepseek-v4-pro[1m] > glm5.1 > minimax2.7
-- haiku级别: deepseek-v4-flash > minimax2.7-highspeed
-
 ## Agents
 
-| Agent                            | 来源                | 模型   | 描述                                         |
-| -------------------------------- | ------------------- | ------ | -------------------------------------------- |
-| [captain](agents/captain.md)     | omo/Sisyphus        | opus   | 主控调度，协调专家 Agent 完成复杂任务        |
-| [assistant](agents/assistant.md) | omo/Sisyphus-junior | haiku  | 执行者，处理所有非代码任务（配置/文本/文档） |
-| [developer](agents/developer.md) | omo/Hephaestus      | sonnet | 执行者，专注代码实现，处理所有代码任务       |
-| [explorer](agents/explorer.md)   | omo/Explore         | haiku  | 快速定位代码、理解代码结构                   |
-| [oracle](agents/oracle.md)       | omo/Oracle          | opus   | 守护监察，架构评审、风险评估、问题诊断       |
-| [librarian](agents/librarian.md) | omo/Librarian       | sonnet | 知识检索，获取外部知识和技术信息             |
-| [designer](agents/designer.md)   | omo/Prometheus      | opus   | 体验设计，UI/UX、图像分析和前端实现          |
+| Agent     | 模型   | 描述                                     |
+| --------- | ------ | ---------------------------------------- |
+| captain   | opus   | 主控调度，协调专家 Agent 完成复杂任务    |
+| assistant | haiku  | 执行者，处理非代码任务（配置/文本/文档） |
+| developer | sonnet | 执行者，专注代码实现                     |
+| explorer  | haiku  | 快速定位代码、理解代码结构               |
+| librarian | sonnet | 知识检索，获取外部知识和技术信息         |
+| oracle    | opus   | 守护监察，架构评审、风险评估、问题诊断   |
+| designer  | opus   | 体验设计，UI/UX 设计和前端实现           |
 
 ---
 
 ## Skills
 
-| Skill                                            | 描述                                                     | 来源                  |
-| ------------------------------------------------ | -------------------------------------------------------- | --------------------- |
-| [agent-browser](skills/agent-browser/SKILL.md)   | 浏览器自动化 CLI，用于网页交互、表单填写、数据抓取等任务 | agent-browser.dev     |
-| [frontend-ui-ux](skills/frontend-ui-ux/SKILL.md) | 无稿设计师型开发者，即使没有设计稿也能创建精美 UI/UX     | omo                   |
-| [commit](commands/commit.md)                     | 创建符合内部规范的 git 提交                              | 自研实现              |
-| [weeklog](commands/weeklog.md)                   | 本周工作总结：查询 git 提交记录，梳理工作成果            | 自研实现              |
-| [code-review](skills/code-review/SKILL.md)       | 中文代码审查专家，多维度全面评估代码质量                 | claude-code-skills-zh |
-| [write-readme](skills/write-readme/SKILL.md)     | 中文 README 生成器，先分析项目类型再选择对应模板生成     | claude-code-skills-zh |
-| [caveman](skills/caveman/SKILL.md)               | 超压缩通信模式，砍掉填充词和客套话，保持完整技术准确度   | matt                  |
-| [tdd](skills/tdd/SKILL.md)                       | 测试驱动开发，遵循 red-green-refactor 循环               | matt                  |
-| [to-prd](skills/to-prd/SKILL.md)                 | 将当前对话上下文转化为 PRD 并发布到项目 issue 跟踪器     | matt                  |
-| [to-issues](skills/to-issues/SKILL.md)           | 将计划或 PRD 分解为可独立领取的垂直切片问题              | matt                  |
-
-### 关于 `/weeklog` 的 YAML 配置
-
-> 命令依赖 `weeklog.config.yaml` 文件来识别要统计的 git 仓库。
-> 
-> 配置格式示例：
-> ```yaml
-> projects:
->   - name: 项目名称A
->     repos:
->       - /path/to/repo1
->       - /path/to/repo2
-> ```
-> 
-> 文件按以下优先级查找：
-> 1) 当前工程根目录 → 2) 当前工程 `.claude/` → 3) 当前工程 `.opencode/` → 4) `~/.claude/` → 5) `~/.config/opencode/`
-> 
-> 若未找到配置文件，命令会自动检测：
-> - 当前目录是否为 git 仓库 → 直接使用
-> - 一级子目录中是否有 git 仓库 → 让用户选择
-> - 最终在当前根目录自动生成 `weeklog.config.yaml`
+| Skill          | 触发            | 描述                                          |
+| -------------- | --------------- | --------------------------------------------- |
+| code-review    | /code-review    | 中文代码审查专家，多维度全面评估代码质量      |
+| commit         | /commit         | 创建符合规范的 git 提交，支持按文件拆分       |
+| weeklog        | /weeklog        | 本周工作总结，查询 git 提交记录梳理成果       |
+| write-readme   | /write-readme   | 中文 README 生成器，先分析项目类型再选模板    |
+| frontend-ui-ux | /frontend-ui-ux | 无稿设计师型开发者，无设计稿也能创建精美 UI   |
+| tdd            | /tdd            | 测试驱动开发，遵循 red-green-refactor 循环    |
+| to-prd         | /to-prd         | 将对话上下文转化为 PRD 并发布到 issue 跟踪器  |
+| to-issues      | /to-issues      | 将计划或 PRD 分解为可独立领取的垂直切片 issue |
+| caveman        | /caveman        | 超压缩通信模式，砍掉填充词保持技术准确度      |
+| agent-browser  | /agent-browser  | 浏览器自动化 CLI，网页交互/数据抓取           |
 
 ---
 
@@ -225,73 +119,86 @@ vibe-coding-kit/
 
 ### Claude Code Plugins
 
-| Plugin                   | 来源     | 描述                                                 |
-| ------------------------ | -------- | ---------------------------------------------------- |
-| comment-checker          | omo      | 检测 Java/Vue/Shell 代码中的 AI 风格注释             |
-| edit-error-recovery      | omo      | 监听 Edit 工具错误，注入恢复提醒                     |
-| delegate-task-retry      | omo      | 监听 Task 工具错误，注入即时重试指导                 |
-| question-label-truncator | omo      | 在 AskUserQuestion 执行前自动截断过长的 option label |
-| windows-notification     | 自研实现 | 在事件触发时弹出 Windows 系统通知                    |
-| ralph-loop               | omo      | 自引用开发循环，让 Agent 自动继续工作（实验性）      |
+| Plugin                   | 描述                                        |
+| ------------------------ | ------------------------------------------- |
+| comment-checker          | 检测代码中的 AI 风格注释                    |
+| edit-error-recovery      | 监听 Edit 工具错误，注入恢复提醒            |
+| delegate-task-retry      | 监听 Task 工具错误，注入即时重试指导        |
+| question-label-truncator | 自动截断过长的 AskUserQuestion option label |
+| windows-notification     | Windows 系统通知，任务完成/出错自动弹窗     |
+| ralph-loop               | 自引用开发循环（实验性）                    |
+
+### OpenCode Plugins
+
+| Plugin                      | 描述                                      |
+| --------------------------- | ----------------------------------------- |
+| user-agent                  | 模拟 KimiCLI 请求头，支持用量翻倍活动     |
+| edit-error-recovery         | 监听 Edit 工具错误，注入恢复提醒          |
+| comment-checker             | 检测代码中的 AI 风格注释                  |
+| compaction-context-injector | session compaction 时注入结构化摘要提示词 |
+| delegate-task-retry         | 监听 Task 工具错误，注入即时重试指导      |
 
 ### claude-mem 持久化记忆
 
-[claude-mem](https://github.com/thedotmack/claude-mem) 是由 [thedotmack](https://github.com/thedotmack/claude-mem) 开发的 Claude Code 持久化记忆插件（~75k Stars）。它能在编码会话期间自动捕获工具调用观察结果，使用 AI 将其压缩为语义摘要，并将相关上下文注入未来的会话中 —— 让 Claude 拥有跨会话的"长期记忆"。
-
-#### 核心特性
-
-| 特性                     | 描述                                                          |
-| ------------------------ | ------------------------------------------------------------- |
-| 跨会话持久化记忆         | 自动在会话间保留和恢复上下文，避免重复说明项目背景            |
-| 混合检索                 | Chroma 向量数据库 + SQLite FTS5 全文搜索，兼顾语义与关键词    |
-| Skill-Based 搜索         | 提供 mem-search 等技能，用自然语言直接搜索记忆                |
-| Web Viewer UI            | 本地 localhost:37777 实时查看和管理记忆内容                    |
-| 全自动运行               | 后台静默工作，无需人工干预                                    |
-| 多平台支持               | 兼容 Claude Code、OpenCode、Cursor、Gemini CLI 等             |
-
-
-#### 安装
-
-项目提供了自动化安装脚本 `publish-install-claude-men.sh`
+[claude-mem](https://github.com/thedotmack/claude-mem) 提供跨会话的持久化记忆，让 Claude 拥有"长期记忆"。
 
 ```bash
 ./publish-install-claude-men.sh
 ```
 
-> 更多详情见 [claude-mem 官方文档](https://docs.claude-mem.ai) 和 [GitHub 仓库](https://github.com/thedotmack/claude-mem)。
-
-### OpenCode Plugins
-
-| Plugin                      | 来源                                                 | 描述                                         |
-| --------------------------- | ---------------------------------------------------- | -------------------------------------------- |
-| user-agent                  | [elfgzp](https://github.com/elfgzp/opencode-configs) | 模拟 KimiCLI 请求头以支持用量翻倍活动        |
-| edit-error-recovery         | omo                                                  | 监听 Edit 工具错误，注入恢复提醒             |
-| comment-checker             | omo                                                  | 检测 Java/Vue/Shell 代码中的 AI 风格注释     |
-| compaction-context-injector | omo                                                  | 在 session compaction 时注入结构化摘要提示词 |
-| delegate-task-retry         | omo                                                  | 监听 Task 工具错误，注入即时重试指导         |
-
-> 更多插件开发细节请参考 [docs/plugin-development.md](docs/plugin-development.md)。
+详细说明见 [claude-mem 官方文档](https://docs.claude-mem.ai)。
 
 ---
 
 ## MCP
 
-| MCP              | 描述                                        | 来源                                                                   |
-| ---------------- | ------------------------------------------- | ---------------------------------------------------------------------- |
-| context7         | 连接 Context7 查询技术文档标准的 MCP         | [upstash/context7](https://github.com/upstash/context7)                |
-| duckduckgo       | 连接 DuckDuckGo 搜索引擎的 MCP              | [nickclyde/duckduckgo-mcp-server](https://github.com/nickclyde/duckduckgo-mcp-server) |
-| mcp_server_mysql | 连接 MySQL 数据库的 MCP                     | [benborla/mcp-server-mysql](https://github.com/benborla/mcp-server-mysql) |
+| MCP              | 描述              | 安装说明                                                 |
+| ---------------- | ----------------- | -------------------------------------------------------- |
+| context7         | 查询技术文档      | [install.md](claudecode/mcp/context7/install.md)         |
+| duckduckgo       | 联网搜索          | [install.md](claudecode/mcp/duckduckgo/install.md)       |
+| mcp_server_mysql | 连接 MySQL 数据库 | [install.md](claudecode/mcp/mcp_server_mysql/install.md) |
 
-安装说明见 `claudecode/mcp/<name>/install.md`。
+---
+
+## 配置管理
+
+**发布：**
+
+```bash
+./publish.sh              # 发布 Claude Code 配置
+./publish-opencode.sh     # 发布 OpenCode 配置
+```
+
+每次发布会自动备份现有配置到 `backup/<timestamp>/`。
+
+**回滚：**
+
+```bash
+./rollback.sh             # 交互式选择备份恢复
+./rollback.sh 20250401    # 指定时间戳恢复
+./rollback.sh -l          # 列出所有备份
+```
+
+OpenCode 同理，使用 `rollback-opencode.sh`。
+
+---
+
+## 模型推荐
+
+- opus 级别: kimi2.6 ≈ deepseek-v4-pro[1m] > glm5.1
+- sonnet 级别: deepseek-v4-pro[1m] > glm5.1 > minimax2.7
+- haiku 级别: deepseek-v4-flash > minimax2.7-highspeed
 
 ---
 
 ## 特别感谢
 
-[oh-my-openagent](https://github.com/code-yeongyu/oh-my-openagent)  
-[claude-code-skills-zh](https://github.com/laolaoshiren/claude-code-skills-zh) 
-[mattpocock](https://github.com/mattpocock/skills)  
-[elfgzp](https://github.com/elfgzp/opencode-configs)
+感谢以下项目的启发和贡献：
+
+- [oh-my-openagent](https://github.com/code-yeongyu/oh-my-openagent)
+- [claude-code-skills-zh](https://github.com/laolaoshiren/claude-code-skills-zh)
+- [mattpocock/skills](https://github.com/mattpocock/skills)
+- [elfgzp/opencode-configs](https://github.com/elfgzp/opencode-configs)
 
 ---
 
