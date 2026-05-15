@@ -3,9 +3,9 @@
 /**
  * Captain Agent PreToolUse Hook
  *
- * Intercepts calls to forbidden tools (Bash, Edit, WebFetch, WebSearch, Write)
- * and outputs delegation hints via stderr. The original JSON passes through
- * stdout unchanged.
+ * Intercepts calls to forbidden tools (Bash, Edit, WebFetch, WebSearch, Write,
+ * and designated MCP tools) and outputs delegation hints via stderr.
+ * The original JSON passes through stdout unchanged.
  */
 
 const FORBIDDEN_TOOLS = ['Bash', 'Edit', 'WebFetch', 'WebSearch', 'Write'];
@@ -33,6 +33,21 @@ const DELEGATION_HINTS = {
   }
 };
 
+const MCP_DELEGATION_HINTS = {
+  'mcp__ddg-search': {
+    task: 'DuckDuckGo 搜索',
+    target: '@librarian'
+  },
+  'mcp__context7': {
+    task: 'Context7 技术文档查询',
+    target: '@oracle'
+  },
+  'mcp__mcp_server_mysql': {
+    task: 'MySQL 数据库查询',
+    target: '@assistant'
+  }
+};
+
 let input = '';
 process.stdin.setEncoding('utf8');
 process.stdin.on('data', chunk => {
@@ -43,17 +58,31 @@ process.stdin.on('end', () => {
     const data = JSON.parse(input);
     const toolName = data.tool_name;
 
+    let hint = null;
+
+    // Check built-in forbidden tools (exact match)
+    if (FORBIDDEN_TOOLS.includes(toolName)) {
+      hint = DELEGATION_HINTS[toolName];
+    }
+
+    // Check MCP tool prefixes (prefix match)
+    if (!hint) {
+      for (const [prefix, mcpHint] of Object.entries(MCP_DELEGATION_HINTS)) {
+        if (toolName.startsWith(prefix + '__')) {
+          hint = mcpHint;
+          break;
+        }
+      }
+    }
+
     // Pass through if tool is not forbidden
-    if (!FORBIDDEN_TOOLS.includes(toolName)) {
+    if (!hint) {
       console.log(input);
       return;
     }
 
     // Output delegation hint to stderr
-    const hint = DELEGATION_HINTS[toolName];
-    if (hint) {
-      process.stderr.write(`\n【策略提醒】你正在尝试调用被禁用的 ${toolName} 工具。作为 captain，你的职责是主控调度。请立即使用 Agent/Task 工具将 ${hint.task} 任务委派给 ${hint.target}。\n\n`);
-    }
+    process.stderr.write(`\n【策略提醒】你正在尝试调用被禁用的 ${toolName} 工具。作为 captain，你的职责是主控调度。请立即使用 Agent/Task 工具将 ${hint.task} 任务委派给 ${hint.target}。\n\n`);
 
     // Always pass through the original JSON
     console.log(input);

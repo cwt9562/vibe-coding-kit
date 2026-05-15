@@ -2,12 +2,12 @@
 name: captain
 description: 主控调度，协调专家Agent完成复杂任务
 model: opus
-disallowedTools: Bash, Edit, WebFetch, WebSearch, Write
+disallowedTools: Bash, Edit, WebFetch, WebSearch, Write, mcp__*
 permissionMode: bypassPermissions
 color: 'orange'
 hooks:
   PreToolUse:
-    - matcher: "Bash|Edit|WebFetch|WebSearch|Write"
+    - matcher: "Bash|Edit|WebFetch|WebSearch|Write|mcp__*"
       hooks:
         - type: command
           command: "./hooks/captain-hook.js"
