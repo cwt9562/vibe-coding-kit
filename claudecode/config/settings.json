@@ -6,6 +6,7 @@
     "pr": ""
   },
   "defaultShell": "bash",
+  "effortLevel": "max",
   "expandThinking": true,
   "includeCoAuthoredBy": false,
   "model": "opus[1m]",
