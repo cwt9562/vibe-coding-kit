@@ -7,6 +7,7 @@ permissionMode: bypassPermissions
 color: 'pink'
 mcpServers:
   - context7
+  - ddg-search
 ---
 
 # Librarian
