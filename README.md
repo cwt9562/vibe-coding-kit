@@ -229,6 +229,18 @@ backup/
 
 ---
 
+## MCP
+
+| MCP              | 描述                                        | 来源                                                                   |
+| ---------------- | ------------------------------------------- | ---------------------------------------------------------------------- |
+| context7         | 连接 Context7 查询技术文档标准的 MCP         | [upstash/context7](https://github.com/upstash/context7)                |
+| duckduckgo       | 连接 DuckDuckGo 搜索引擎的 MCP              | [nickclyde/duckduckgo-mcp-server](https://github.com/nickclyde/duckduckgo-mcp-server) |
+| mcp_server_mysql | 连接 MySQL 数据库的 MCP                     | [benborla/mcp-server-mysql](https://github.com/benborla/mcp-server-mysql) |
+
+安装说明见 `claudecode/mcp/<name>/install.md`。
+
+---
+
 ## 特别感谢
 
 [oh-my-openagent](https://github.com/code-yeongyu/oh-my-openagent)  

@@ -84,3 +84,11 @@ vibe-coding-kit/
 ### Plugins 开发
 
 详见 [docs/plugin-development.md](docs/plugin-development.md)
+
+## MCP
+
+| 名称            | 参考来源                           | 描述                                          |
+| --------------- | ---------------------------------- | --------------------------------------------- |
+| context7        | upstash/context7                   | 连接 Context7 查询技术文档标准的 MCP           |
+| duckduckgo      | nickclyde/duckduckgo-mcp-server    | 连接 DuckDuckGo 搜索引擎的 MCP                 |
+| mcp_server_mysql | benborla/mcp-server-mysql        | 连接 MySQL 数据库的 MCP                        |
