@@ -26,38 +26,6 @@
 
 ---
 
-## 目录结构
-
-```
-vibe-coding-kit/
-├── claudecode/          # Claude Code 配置
-│   ├── agents/          # SubAgent 定义（专业角色）
-│   ├── bin/             # 启动脚本
-│   ├── commands/        # Command 定义（CLI 增强）
-│   ├── config/          # Claude Code 设置
-│   ├── mcp/             # MCP (Model Context Protocol) 扩展
-│   ├── plugins/         # 插件扩展
-│   ├── rules/           # 代码规则与约束
-│   └── skills/          # Skill 定义（扩展 AI 能力）
-├── docs/                # 文档
-├── opencode/            # OpenCode 配置
-│   ├── agents/          # SubAgent 定义（专业角色）
-│   ├── bin/             # 启动脚本
-│   ├── commands/        # Command 定义（CLI 增强）
-│   ├── config/          # OpenCode 设置
-│   ├── mcp/             # MCP (Model Context Protocol) 扩展
-│   ├── plugins/         # 插件扩展
-│   ├── rules/           # 代码规则与约束
-│   └── skills/          # Skill 定义（扩展 AI 能力）
-├── CLAUDE.md
-├── publish.sh           # 发布脚本（Claude Code）
-├── publish-opencode.sh  # 发布脚本（OpenCode）
-├── rollback.sh          # 回滚脚本（Claude Code）
-└── rollback-opencode.sh # 回滚脚本（OpenCode）
-```
-
----
-
 ## 快速开始
 
 ### 1. 克隆仓库
@@ -82,7 +50,27 @@ cd ~/vibe-coding-kit
 - 将 `agents`、`commands`、`skills`、`plugins`、`config` 同步到对应目标目录
 - 合并 `settings.json`（Claude Code）或 `opencode.json`（OpenCode），保留已有配置
 
-### 3. 开始使用
+### 3. 安装 claude-mem 持久化记忆（可选）
+
+> [claude-mem](https://github.com/thedotmack/claude-mem) 提供跨会话的持久化记忆，让 Claude 拥有"长期记忆"。
+
+```bash
+./publish-install-claude-men.sh
+```
+
+脚本会自动安装 claude-mem 插件并完成配置，更多详情见 [claude-mem 官方文档](https://docs.claude-mem.ai)。
+
+### 4. 配置 MCP 服务（可选）
+
+根据需要安装以下 MCP 扩展，详细安装说明参阅各目录下的 `install.md`：
+
+| MCP | 描述 | 安装说明 |$$
+| --- | --- | --- |
+| context7 | 查询技术文档 | [claudecode/mcp/context7/install.md](claudecode/mcp/context7/install.md) |
+| duckduckgo | 联网搜索 | [claudecode/mcp/duckduckgo/install.md](claudecode/mcp/duckduckgo/install.md) |
+| mcp_server_mysql | 连接 MySQL 数据库 | [claudecode/mcp/mcp_server_mysql/install.md](claudecode/mcp/mcp_server_mysql/install.md) |
+
+### 5. 开始使用
 
 发布完成后，启动脚本已安装到 `~/.local/bin`，直接在终端中使用：
 
@@ -93,7 +81,6 @@ cc
 # 启动 OpenCode
 oc
 ```
-
 
 ## 回滚配置
 
@@ -138,6 +125,38 @@ backup/
         ├── skills/
         ├── plugins/
         └── opencode.json
+```
+
+---
+
+## 目录结构
+
+```
+vibe-coding-kit/
+├── claudecode/          # Claude Code 配置
+│   ├── agents/          # SubAgent 定义（专业角色）
+│   ├── bin/             # 启动脚本
+│   ├── commands/        # Command 定义（CLI 增强）
+│   ├── config/          # Claude Code 设置
+│   ├── mcp/             # MCP (Model Context Protocol) 扩展
+│   ├── plugins/         # 插件扩展
+│   ├── rules/           # 代码规则与约束
+│   └── skills/          # Skill 定义（扩展 AI 能力）
+├── docs/                # 文档
+├── opencode/            # OpenCode 配置
+│   ├── agents/          # SubAgent 定义（专业角色）
+│   ├── bin/             # 启动脚本
+│   ├── commands/        # Command 定义（CLI 增强）
+│   ├── config/          # OpenCode 设置
+│   ├── mcp/             # MCP (Model Context Protocol) 扩展
+│   ├── plugins/         # 插件扩展
+│   ├── rules/           # 代码规则与约束
+│   └── skills/          # Skill 定义（扩展 AI 能力）
+├── CLAUDE.md
+├── publish.sh           # 发布脚本（Claude Code）
+├── publish-opencode.sh  # 发布脚本（OpenCode）
+├── rollback.sh          # 回滚脚本（Claude Code）
+└── rollback-opencode.sh # 回滚脚本（OpenCode）
 ```
 
 ---
