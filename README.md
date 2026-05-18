@@ -88,7 +88,7 @@ vibe-coding-kit/
 
 | Agent     | 模型   | 描述                                     |
 | --------- | ------ | ---------------------------------------- |
-| captain   | opus   | 主控调度，协调专家 Agent 完成复杂任务    |
+| teamleader | opus   | 主控调度，协调专家 Agent 完成复杂任务    |
 | assistant | haiku  | 执行者，处理非代码任务（配置/文本/文档） |
 | developer | sonnet | 执行者，专注代码实现                     |
 | explorer  | haiku  | 快速定位代码、理解代码结构               |

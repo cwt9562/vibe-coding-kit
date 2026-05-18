@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Captain Agent PreToolUse Hook
+ * TeamLeader Agent PreToolUse Hook
  *
  * Intercepts calls to forbidden tools (Bash, Edit, WebFetch, WebSearch, Write,
  * and designated MCP tools) and outputs delegation hints via stderr.
@@ -44,7 +44,7 @@ const MCP_DELEGATION_HINTS = {
   },
   'mcp__mcp_server_mysql': {
     task: 'MySQL 数据库查询',
-    target: '@assistant'
+    target: '@developer'
   }
 };
 
@@ -82,7 +82,7 @@ process.stdin.on('end', () => {
     }
 
     // Output delegation hint to stderr
-    process.stderr.write(`\n【策略提醒】你正在尝试调用被禁用的 ${toolName} 工具。作为 captain，你的职责是主控调度。请立即使用 Agent/Task 工具将 ${hint.task} 任务委派给 ${hint.target}。\n\n`);
+    process.stderr.write(`\n【策略提醒】你正在尝试调用被禁用的 ${toolName} 工具。作为 teamleader，你的职责是主控调度。请立即使用 Agent/Task 工具将 ${hint.task} 任务委派给 ${hint.target}。\n\n`);
 
     // Always pass through the original JSON
     console.log(input);

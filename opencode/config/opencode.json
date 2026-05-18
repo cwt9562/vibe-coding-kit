@@ -1,6 +1,6 @@
 {
   "agent": {
-    "captain": {
+    "teamleader": {
       "description": "主控调度，理解意图、拆解任务、委派执行",
       "mcps": [],
       "mode": "primary",
@@ -19,7 +19,7 @@
         "websearch": "deny",
         "codesearch": "deny"
       },
-      "prompt": "{file:./agents/captain.md}",
+      "prompt": "{file:./agents/teamleader.md}",
       "temperature": 0.1
     },
     "assistant": {

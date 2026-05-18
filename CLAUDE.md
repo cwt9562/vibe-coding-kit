@@ -45,7 +45,7 @@ vibe-coding-kit/
 
 | 名称      | 参考来源                           | 模型   | 描述                                                |
 | --------- | ---------------------------------- | ------ | --------------------------------------------------- |
-| captain   | omo/Sisyphus                       | opus   | 主控调度，协调专家Agent完成复杂任务；验证执行者输出 |
+| teamleader | omo/Sisyphus                       | opus   | 主控调度，协调专家Agent完成复杂任务；验证执行者输出 |
 | assistant | omo/Sisyphus-junior                | haiku  | 执行者，处理所有非代码任务（配置/文本/格式/文档）   |
 | developer | omo/Hephaistus                     | sonnet | 执行者，专注代码实现，处理所有代码任务              |
 | explorer  | omo/Explore                        | haiku  | 快速定位代码、理解代码结构                          |
