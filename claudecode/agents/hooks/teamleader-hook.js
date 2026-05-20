@@ -8,7 +8,7 @@
  * The original JSON passes through stdout unchanged.
  */
 
-const FORBIDDEN_TOOLS = ['Bash', 'Edit', 'WebFetch', 'WebSearch', 'Write'];
+const FORBIDDEN_TOOLS = ['Bash', 'Edit', 'EnterPlanMode', 'ExitPlanMode', 'WebFetch', 'WebSearch', 'Write'];
 
 const DELEGATION_HINTS = {
   Bash: {
@@ -18,6 +18,14 @@ const DELEGATION_HINTS = {
   Edit: {
     task: '文件编辑',
     target: '@developer（代码修改）或 @assistant（配置/文档修改）'
+  },
+  EnterPlanMode: {
+    task: '进入计划模式',
+    target: '应由具体执行 Agent（如 @developer、@assistant）根据任务复杂度自行决定，你不应直接调用'
+  },
+  ExitPlanMode: {
+    task: '退出计划模式',
+    target: '应由具体执行 Agent（如 @developer、@assistant）根据任务复杂度自行决定，你不应直接调用'
   },
   Write: {
     task: '文件写入',
