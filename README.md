@@ -90,6 +90,7 @@ vibe-coding-kit/
 | Skill                 | 触发                   | 描述                                                                                | 参考来源                                      |
 | --------------------- | ---------------------- | ----------------------------------------------------------------------------------- | --------------------------------------------- |
 | agent-browser         | /agent-browser         | 浏览器自动化 CLI，网页交互/数据抓取                                                 | vercel-labs/agent-browser                     |
+| ascii-art-diagrams    | /ascii-art-diagrams    | 创建对齐 ASCII 艺术图表的强制工作流（PLAN/DRAW/VERIFY 三阶段）                      | jasnell/opencode-skill-ascii-art-diagrams     |
 | caveman               | /caveman               | 超压缩通信模式，砍掉填充词保持技术准确度                                            | mattpocock/skills                             |
 | chinese-code-review   | /chinese-code-review   | 中文 review 沟通参考——话术模板、分级标注、国内团队常见反模式应对                    | jnMetaCode/superpowers-zh                     |
 | chinese-documentation | /chinese-documentation | 中文文档排版参考——中英文空格、全半角标点、术语保留、链接格式                        | jnMetaCode/superpowers-zh                     |
@@ -182,6 +183,7 @@ vibe-coding-kit/
 - [mattpocock/skills](https://github.com/mattpocock/skills)
 - [jnMetaCode/superpowers-zh](https://github.com/jnMetaCode/superpowers-zh)
 - [daymade/claude-code-skills](https://github.com/daymade/claude-code-skills)
+- [jasnell/opencode-skill-ascii-art-diagrams](https://github.com/jasnell/opencode-skill-ascii-art-diagrams)
 
 ---
 
