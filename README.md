@@ -96,6 +96,7 @@ vibe-coding-kit/
 | chinese-documentation | /chinese-documentation | 中文文档排版参考——中英文空格、全半角标点、术语保留、链接格式                        | jnMetaCode/superpowers-zh                     |
 | commit                | /commit                | 创建符合规范的 git 提交，支持按文件拆分                                             | 自研                                          |
 | docx                  | /docx                  | 创建/读取/编辑/操作 Word 文档（.docx），包括报告、备忘录、信件、模板等              | anthropics/skills                             |
+| frontend-ascii-previewer | /frontend-ascii-previewer | 修改前端 UI 前先通过 ASCII 原型预览确认视觉需求                                    | kuops                                         |
 | frontend-ui-ux        | /frontend-ui-ux        | 无稿设计师型开发者，无设计稿也能创建精美 UI                                         | omo                                           |
 | humanizer             | /humanizer             | 将 AI 生成的文本转化为自然流畅的人类语言                                            | op7418/Humanizer-zh                           |
 | mermaid-tools         | /mermaid-tools         | 从 Markdown 中提取 Mermaid 图表并生成高质量 PNG 图片                                | daymade/claude-code-skills                    |
@@ -184,6 +185,7 @@ vibe-coding-kit/
 - [jnMetaCode/superpowers-zh](https://github.com/jnMetaCode/superpowers-zh)
 - [daymade/claude-code-skills](https://github.com/daymade/claude-code-skills)
 - [jasnell/opencode-skill-ascii-art-diagrams](https://github.com/jasnell/opencode-skill-ascii-art-diagrams)
+- [kuops](https://github.com/kuops)
 
 ---
 
