@@ -1,6 +1,6 @@
 # vibe-coding-kit
 
-面向 [Claude Code](https://code.claude.com) 和 [OpenCode](https://opencode.ai) 的一站式增强配置包，内置多 Agent 协作、智能 Skill、自动化插件，clone 即用。
+面向 [Claude Code](https://code.claude.com) 的一站式增强配置包，内置多 Agent 协作、智能 Skill、自动化插件，clone 即用。
 
 ---
 
@@ -8,7 +8,6 @@
 
 - **多 Agent 协作** — 主 Agent 只读调度，子 Agent 专注执行，上下文不污染
 - **丰富的 Skill 生态** — 10+ 个开箱即用的 Skill（代码审查、周报、TDD、README 生成等）
-- **双平台支持** — 同时支持 Claude Code 和 OpenCode，按需发布
 - **一键发布与安全回滚** — publish.sh 发布，自动备份，rollback.sh 一键恢复
 
 ---
@@ -21,16 +20,12 @@ cd ~/vibe-coding-kit
 
 # 发布 Claude Code 配置到 ~/.claude
 ./publish.sh
-
-# 或发布 OpenCode 配置到 ~/.config/opencode
-./publish-opencode.sh
 ```
 
 发布完成后，启动脚本已安装到 `~/.local/bin`：
 
 ```bash
 cc    # 启动 Claude Code
-oc    # 启动 OpenCode
 ```
 
 开始愉快的vibe吧~~
@@ -59,7 +54,7 @@ oc    # 启动 OpenCode
 
 ## 架构概览
 
-项目同时维护两套独立的配置源（claudecode / opencode），通过发布脚本同步到对应的目标目录。关键层级如下：
+项目维护 Claude Code 配置源，通过发布脚本同步到对应的目标目录。关键层级如下：
 
 ```
 vibe-coding-kit/
@@ -69,17 +64,9 @@ vibe-coding-kit/
 │   ├── bin/             # 启动脚本 (cc)
 │   ├── mcp/             # MCP 扩展 (context7, duckduckgo, mysql)
 │   └── config/          # settings.json
-├── opencode/            # OpenCode 配置源
-│   ├── agents/          # 7 个专业 Agent
-│   ├── skills/          # 2 个 Skill
-│   ├── plugins/         # 6 个 JS 插件
-│   ├── commands/        # 2 个 Command
-│   └── bin/             # 启动脚本 (oc, ocw)
 ├── docs/                # 开发文档
 ├── publish.sh           # 发布脚本 (Claude Code)
-├── publish-opencode.sh  # 发布脚本 (OpenCode)
-├── rollback.sh          # 回滚脚本 (Claude Code)
-└── rollback-opencode.sh # 回滚脚本 (OpenCode)
+└── rollback.sh          # 回滚脚本 (Claude Code)
 ```
 
 ---
@@ -128,16 +115,6 @@ vibe-coding-kit/
 | windows-notification     | Windows 系统通知，任务完成/出错自动弹窗     |
 | ralph-loop               | 自引用开发循环（实验性）                    |
 
-### OpenCode Plugins
-
-| Plugin                      | 描述                                      |
-| --------------------------- | ----------------------------------------- |
-| user-agent                  | 模拟 KimiCLI 请求头，支持用量翻倍活动     |
-| edit-error-recovery         | 监听 Edit 工具错误，注入恢复提醒          |
-| comment-checker             | 检测代码中的 AI 风格注释                  |
-| compaction-context-injector | session compaction 时注入结构化摘要提示词 |
-| delegate-task-retry         | 监听 Task 工具错误，注入即时重试指导      |
-
 ### claude-mem 持久化记忆
 
 [claude-mem](https://github.com/thedotmack/claude-mem) 提供跨会话的持久化记忆，让 Claude 拥有"长期记忆"。
@@ -166,7 +143,6 @@ vibe-coding-kit/
 
 ```bash
 ./publish.sh              # 发布 Claude Code 配置
-./publish-opencode.sh     # 发布 OpenCode 配置
 ```
 
 每次发布会自动备份现有配置到 `backup/<timestamp>/`。
@@ -178,8 +154,6 @@ vibe-coding-kit/
 ./rollback.sh 20250401    # 指定时间戳恢复
 ./rollback.sh -l          # 列出所有备份
 ```
-
-OpenCode 同理，使用 `rollback-opencode.sh`。
 
 ---
 
@@ -198,7 +172,6 @@ OpenCode 同理，使用 `rollback-opencode.sh`。
 - [oh-my-openagent](https://github.com/code-yeongyu/oh-my-openagent)
 - [claude-code-skills-zh](https://github.com/laolaoshiren/claude-code-skills-zh)
 - [mattpocock/skills](https://github.com/mattpocock/skills)
-- [elfgzp/opencode-configs](https://github.com/elfgzp/opencode-configs)
 
 ---
 

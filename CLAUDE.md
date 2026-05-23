@@ -1,15 +1,13 @@
 # vibe-coding-kit
 
-这是vibe-coding的拓展集合，主要面向claudecode和opencode进行拓展，增强用户使用体验，主要包含各式专业的 command、skill、subagent、rule、mcp
+这是vibe-coding的拓展集合，主要面向 claudecode 进行拓展，增强用户使用体验，主要包含各式专业的 command、skill、subagent、rule、mcp
 
 ## 脚本工具
 
 | 名称                 | 描述                                            |
 | -------------------- | ----------------------------------------------- |
 | publish.sh           | 发布脚本：将本地配置同步到 `~/.claude`          |
-| publish-opencode.sh  | 发布脚本：将本地配置同步到 `~/.config/opencode` |
 | rollback.sh          | 回滚脚本：从备份恢复 Claude Code 配置           |
-| rollback-opencode.sh | 回滚脚本：从备份恢复 OpenCode 配置              |
 
 ## 目录结构
 
@@ -24,21 +22,10 @@ vibe-coding-kit/
 │   ├── rules/           # 代码规则与约束
 │   └── skills/          # Skill 定义（扩展 AI 能力）
 ├── docs/                # 文档
-├── opencode/            # OpenCode 配置
-│   ├── agents/          # SubAgent 定义（专业角色）
-│   ├── bin/             # 启动脚本
-│   ├── commands/        # Command 定义（CLI 增强）
-│   ├── config/          # OpenCode 设置
-│   ├── mcp/             # MCP (Model Context Protocol) 扩展
-│   ├── plugins/         # 插件扩展
-│   ├── rules/           # 代码规则与约束
-│   └── skills/          # Skill 定义（扩展 AI 能力）
 ├── CLAUDE.md
 ├── CLAUDE.local.md
 ├── publish.sh
-├── publish-opencode.sh
-├── rollback.sh
-└── rollback-opencode.sh
+└── rollback.sh
 ```
 
 ## Agents
@@ -72,10 +59,8 @@ vibe-coding-kit/
 
 | 名称                        | 参考来源                        | 描述                                                        |
 | --------------------------- | ------------------------------- | ----------------------------------------------------------- |
-| user-agent                  | elfgzp/opencode-configs         | 开源的 OpenCode 插件，模拟 KimiCLI 请求头以支持用量翻倍活动 |
 | edit-error-recovery         | omo/edit-error-recovery         | 监听 Edit 工具错误，注入恢复提醒                            |
 | comment-checker             | omo/comment-checker             | 检测 Java/Vue/Shell 代码中的 AI 风格注释，纯 JS 重写        |
-| compaction-context-injector | omo/compaction-context-injector | 在 OpenCode 的 session compaction 时注入结构化摘要提示词    |
 | delegate-task-retry         | omo/delegate-task-retry         | 监听 Task 工具错误，注入即时重试指导                        |
 | ralph-loop                  | omo                             | 自引用开发循环，让 Agent 自动继续工作（实验性）             |
 | windows-notification        | 本地开发                        | 在事件触发时弹出 Windows 系统通知                           |
