@@ -73,32 +73,33 @@ vibe-coding-kit/
 
 ## Agents
 
-| Agent     | 模型   | 描述                                     |
-| --------- | ------ | ---------------------------------------- |
-| teamleader | opus   | 主控调度，协调专家 Agent 完成复杂任务    |
-| assistant | haiku  | 执行者，处理非代码任务（配置/文本/文档） |
-| developer | sonnet | 执行者，专注代码实现                     |
-| explorer  | haiku  | 快速定位代码、理解代码结构               |
-| librarian | sonnet | 知识检索，获取外部知识和技术信息         |
-| oracle    | opus   | 守护监察，架构评审、风险评估、问题诊断   |
-| designer  | opus   | 体验设计，UI/UX 设计和前端实现           |
+| Agent      | 模型   | 描述                                     | 参考来源                           |
+| ---------- | ------ | ---------------------------------------- | ---------------------------------- |
+| teamleader | opus   | 主控调度，协调专家 Agent 完成复杂任务    | omo/Sisyphus                       |
+| assistant  | haiku  | 执行者，处理非代码任务（配置/文本/文档） | omo/Sisyphus-junior                |
+| developer  | sonnet | 执行者，专注代码实现                     | omo/Hephaistus                     |
+| explorer   | haiku  | 快速定位代码、理解代码结构               | omo/Explore                        |
+| librarian  | sonnet | 知识检索，获取外部知识和技术信息         | omo/Librarian                      |
+| oracle     | opus   | 守护监察，架构评审、风险评估、问题诊断   | omo/Oracle                         |
+| designer   | opus   | 体验设计，UI/UX 设计和前端实现           | omo/Prometheus + multimodal-looker |
 
 ---
 
 ## Skills
 
-| Skill          | 触发            | 描述                                          |
-| -------------- | --------------- | --------------------------------------------- |
-| code-review    | /code-review    | 中文代码审查专家，多维度全面评估代码质量      |
-| commit         | /commit         | 创建符合规范的 git 提交，支持按文件拆分       |
-| weeklog        | /weeklog        | 本周工作总结，查询 git 提交记录梳理成果       |
-| write-readme   | /write-readme   | 中文 README 生成器，先分析项目类型再选模板    |
-| frontend-ui-ux | /frontend-ui-ux | 无稿设计师型开发者，无设计稿也能创建精美 UI   |
-| tdd            | /tdd            | 测试驱动开发，遵循 red-green-refactor 循环    |
-| to-prd         | /to-prd         | 将对话上下文转化为 PRD 并发布到 issue 跟踪器  |
-| to-issues      | /to-issues      | 将计划或 PRD 分解为可独立领取的垂直切片 issue |
-| caveman        | /caveman        | 超压缩通信模式，砍掉填充词保持技术准确度      |
-| agent-browser  | /agent-browser  | 浏览器自动化 CLI，网页交互/数据抓取           |
+| Skill          | 触发            | 描述                                          | 参考来源                                             |
+| -------------- | --------------- | --------------------------------------------- | ---------------------------------------------------- |
+| code-review    | /code-review    | 中文代码审查专家，多维度全面评估代码质量      | zh-code-reviewer @laolaoshiren/claude-code-skills-zh |
+| commit         | /commit         | 创建符合规范的 git 提交，支持按文件拆分       | 本地开发                                             |
+| weeklog        | /weeklog        | 本周工作总结，查询 git 提交记录梳理成果       | 本地开发                                             |
+| write-readme   | /write-readme   | 中文 README 生成器，先分析项目类型再选模板    | zh-readme @laolaoshiren/claude-code-skills-zh        |
+| frontend-ui-ux | /frontend-ui-ux | 无稿设计师型开发者，无设计稿也能创建精美 UI   | omo                                                     |
+| tdd            | /tdd            | 测试驱动开发，遵循 red-green-refactor 循环    | tdd @mattpocock/skills                               |
+| to-prd         | /to-prd         | 将对话上下文转化为 PRD 并发布到 issue 跟踪器  | to-prd @mattpocock/skills                            |
+| to-issues      | /to-issues      | 将计划或 PRD 分解为可独立领取的垂直切片 issue | to-issues @mattpocock/skills                         |
+| caveman        | /caveman        | 超压缩通信模式，砍掉填充词保持技术准确度      | caveman @mattpocock/skills                           |
+| agent-browser  | /agent-browser  | 浏览器自动化 CLI，网页交互/数据抓取           | vercel-labs/agent-browser                            |
+| humanizer      | /humanizer      | 将 AI 生成的文本转化为自然流畅的人类语言      | op7418/Humanizer-zh                                  |
 
 ---
 
@@ -106,14 +107,14 @@ vibe-coding-kit/
 
 ### Claude Code Plugins
 
-| Plugin                   | 描述                                        |
-| ------------------------ | ------------------------------------------- |
-| comment-checker          | 检测代码中的 AI 风格注释                    |
-| edit-error-recovery      | 监听 Edit 工具错误，注入恢复提醒            |
-| delegate-task-retry      | 监听 Task 工具错误，注入即时重试指导        |
-| question-label-truncator | 自动截断过长的 AskUserQuestion option label |
-| windows-notification     | Windows 系统通知，任务完成/出错自动弹窗     |
-| ralph-loop               | 自引用开发循环（实验性）                    |
+| Plugin                   | 描述                                        | 参考来源                     |
+| ------------------------ | ------------------------------------------- | ---------------------------- |
+| comment-checker          | 检测代码中的 AI 风格注释                    | omo/comment-checker          |
+| edit-error-recovery      | 监听 Edit 工具错误，注入恢复提醒            | omo/edit-error-recovery      |
+| delegate-task-retry      | 监听 Task 工具错误，注入即时重试指导        | omo/delegate-task-retry      |
+| question-label-truncator | 自动截断过长的 AskUserQuestion option label | omo/question-label-truncator |
+| windows-notification     | Windows 系统通知，任务完成/出错自动弹窗     | 自研                         |
+| ralph-loop               | 自引用开发循环（实验性）                    | omo                          |
 
 ### claude-mem 持久化记忆
 
@@ -129,11 +130,11 @@ vibe-coding-kit/
 
 ## MCP
 
-| MCP              | 描述              | 安装说明                                                 |
-| ---------------- | ----------------- | -------------------------------------------------------- |
-| context7         | 查询技术文档      | [install.md](claudecode/mcp/context7/install.md)         |
-| duckduckgo       | 联网搜索          | [install.md](claudecode/mcp/duckduckgo/install.md)       |
-| mcp_server_mysql | 连接 MySQL 数据库 | [install.md](claudecode/mcp/mcp_server_mysql/install.md) |
+| MCP              | 描述              | 参考来源                        | 安装说明                                                 |
+| ---------------- | ----------------- | ------------------------------- | -------------------------------------------------------- |
+| context7         | 查询技术文档      | upstash/context7                | [install.md](claudecode/mcp/context7/install.md)         |
+| duckduckgo       | 联网搜索          | nickclyde/duckduckgo-mcp-server | [install.md](claudecode/mcp/duckduckgo/install.md)       |
+| mcp_server_mysql | 连接 MySQL 数据库 | benborla/mcp-server-mysql       | [install.md](claudecode/mcp/mcp_server_mysql/install.md) |
 
 ---
 
