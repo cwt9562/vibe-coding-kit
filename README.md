@@ -97,6 +97,7 @@ vibe-coding-kit/
 | docx                  | /docx                  | 创建/读取/编辑/操作 Word 文档（.docx），包括报告、备忘录、信件、模板等              | anthropics/skills                             |
 | frontend-ui-ux        | /frontend-ui-ux        | 无稿设计师型开发者，无设计稿也能创建精美 UI                                         | omo                                           |
 | humanizer             | /humanizer             | 将 AI 生成的文本转化为自然流畅的人类语言                                            | op7418/Humanizer-zh                           |
+| mermaid-tools         | /mermaid-tools         | 从 Markdown 中提取 Mermaid 图表并生成高质量 PNG 图片                                | daymade/claude-code-skills                    |
 | pdf                   | /pdf                   | 读取/提取/合并/拆分/创建/操作 PDF 文件，支持文本、表格、图片、OCR、表单等           | anthropics/skills                             |
 | pptx                  | /pptx                  | 创建/读取/编辑/操作 PowerPoint 演示文稿（.pptx），包括幻灯片、deck、presentation 等 | anthropics/skills                             |
 | tdd                   | /tdd                   | 测试驱动开发，遵循 red-green-refactor 循环                                          | mattpocock/skills                             |
@@ -180,6 +181,7 @@ vibe-coding-kit/
 - [yunshu0909/yunshu_skillshub](https://github.com/yunshu0909/yunshu_skillshub)
 - [mattpocock/skills](https://github.com/mattpocock/skills)
 - [jnMetaCode/superpowers-zh](https://github.com/jnMetaCode/superpowers-zh)
+- [daymade/claude-code-skills](https://github.com/daymade/claude-code-skills)
 
 ---
 
