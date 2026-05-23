@@ -100,6 +100,10 @@ vibe-coding-kit/
 | caveman        | /caveman        | 超压缩通信模式，砍掉填充词保持技术准确度      | caveman @mattpocock/skills                           |
 | agent-browser  | /agent-browser  | 浏览器自动化 CLI，网页交互/数据抓取           | vercel-labs/agent-browser                            |
 | humanizer      | /humanizer      | 将 AI 生成的文本转化为自然流畅的人类语言      | op7418/Humanizer-zh                                  |
+| docx           | /docx           | 创建/读取/编辑/操作 Word 文档（.docx），包括报告、备忘录、信件、模板等 | anthropics/skills |
+| pptx           | /pptx           | 创建/读取/编辑/操作 PowerPoint 演示文稿（.pptx），包括幻灯片、deck、presentation 等 | anthropics/skills |
+| xlsx           | /xlsx           | 创建/读取/编辑/操作 Excel 电子表格（.xlsx/.csv/.tsv），包括格式化、图表、数据处理等 | anthropics/skills |
+| pdf            | /pdf            | 读取/提取/合并/拆分/创建/操作 PDF 文件，支持文本、表格、图片、OCR、表单等 | anthropics/skills |
 
 ---
 
