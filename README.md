@@ -45,7 +45,7 @@ cc    # 启动 Claude Code
 [claude-mem](https://github.com/thedotmack/claude-mem) 提供跨会话的持久化记忆，让 Claude 拥有"长期记忆"。
 
 ```bash
-./publish-install-claude-men.sh
+sh claudecode/extends/publish-install-claude-men.sh
 ```
 
 详细说明见 [claude-mem 官方文档](https://docs.claude-mem.ai)。
@@ -87,27 +87,27 @@ vibe-coding-kit/
 
 ## Skills
 
-| Skill                 | 触发                   | 描述                                                                                | 参考来源                                      |
-| --------------------- | ---------------------- | ----------------------------------------------------------------------------------- | --------------------------------------------- |
-| agent-browser         | /agent-browser         | 浏览器自动化 CLI，网页交互/数据抓取                                                 | vercel-labs/agent-browser                     |
-| ascii-art-diagrams    | /ascii-art-diagrams    | 创建对齐 ASCII 艺术图表的强制工作流（PLAN/DRAW/VERIFY 三阶段）                      | jasnell/opencode-skill-ascii-art-diagrams     |
-| caveman               | /caveman               | 超压缩通信模式，砍掉填充词保持技术准确度                                            | mattpocock/skills                             |
-| chinese-code-review   | /chinese-code-review   | 中文 review 沟通参考——话术模板、分级标注、国内团队常见反模式应对                    | jnMetaCode/superpowers-zh                     |
-| chinese-documentation | /chinese-documentation | 中文文档排版参考——中英文空格、全半角标点、术语保留、链接格式                        | jnMetaCode/superpowers-zh                     |
-| commit                | /commit                | 创建符合规范的 git 提交，支持按文件拆分                                             | 自研                                          |
-| docx                  | /docx                  | 创建/读取/编辑/操作 Word 文档（.docx），包括报告、备忘录、信件、模板等              | anthropics/skills                             |
-| frontend-ascii-previewer | /frontend-ascii-previewer | 修改前端 UI 前先通过 ASCII 原型预览确认视觉需求                                    | kuops                                         |
-| frontend-ui-ux        | /frontend-ui-ux        | 无稿设计师型开发者，无设计稿也能创建精美 UI                                         | omo                                           |
-| humanizer             | /humanizer             | 将 AI 生成的文本转化为自然流畅的人类语言                                            | op7418/Humanizer-zh                           |
-| mermaid-tools         | /mermaid-tools         | 从 Markdown 中提取 Mermaid 图表并生成高质量 PNG 图片                                | daymade/claude-code-skills                    |
-| pdf                   | /pdf                   | 读取/提取/合并/拆分/创建/操作 PDF 文件，支持文本、表格、图片、OCR、表单等           | anthropics/skills                             |
-| pptx                  | /pptx                  | 创建/读取/编辑/操作 PowerPoint 演示文稿（.pptx），包括幻灯片、deck、presentation 等 | anthropics/skills                             |
-| tdd                   | /tdd                   | 测试驱动开发，遵循 red-green-refactor 循环                                          | mattpocock/skills                             |
-| to-issues             | /to-issues             | 将计划或 PRD 分解为可独立领取的垂直切片 issue                                       | mattpocock/skills                             |
-| to-prd                | /to-prd                | 将对话上下文转化为 PRD 并发布到 issue 跟踪器                                        | mattpocock/skills                             |
-| weeklog               | /weeklog               | 本周工作总结，查询 git 提交记录梳理成果                                             | 自研                                          |
-| write-readme          | /write-readme          | 中文 README 生成器，先分析项目类型再选模板                                          | zh-readme @laolaoshiren/claude-code-skills-zh |
-| xlsx                  | /xlsx                  | 创建/读取/编辑/操作 Excel 电子表格（.xlsx/.csv/.tsv），包括格式化、图表、数据处理等 | anthropics/skills                             |
+| Skill                    | 触发                      | 描述                                                                                | 参考来源                                      |
+| ------------------------ | ------------------------- | ----------------------------------------------------------------------------------- | --------------------------------------------- |
+| agent-browser            | /agent-browser            | 浏览器自动化 CLI，网页交互/数据抓取                                                 | vercel-labs/agent-browser                     |
+| ascii-art-diagrams       | /ascii-art-diagrams       | 创建对齐 ASCII 艺术图表的强制工作流（PLAN/DRAW/VERIFY 三阶段）                      | jasnell/opencode-skill-ascii-art-diagrams     |
+| caveman                  | /caveman                  | 超压缩通信模式，砍掉填充词保持技术准确度                                            | mattpocock/skills                             |
+| chinese-code-review      | /chinese-code-review      | 中文 review 沟通参考——话术模板、分级标注、国内团队常见反模式应对                    | jnMetaCode/superpowers-zh                     |
+| chinese-documentation    | /chinese-documentation    | 中文文档排版参考——中英文空格、全半角标点、术语保留、链接格式                        | jnMetaCode/superpowers-zh                     |
+| commit                   | /commit                   | 创建符合规范的 git 提交，支持按文件拆分                                             | 自研                                          |
+| docx                     | /docx                     | 创建/读取/编辑/操作 Word 文档（.docx），包括报告、备忘录、信件、模板等              | anthropics/skills                             |
+| frontend-ascii-previewer | /frontend-ascii-previewer | 修改前端 UI 前先通过 ASCII 原型预览确认视觉需求                                     | kuops                                         |
+| frontend-ui-ux           | /frontend-ui-ux           | 无稿设计师型开发者，无设计稿也能创建精美 UI                                         | omo                                           |
+| humanizer                | /humanizer                | 将 AI 生成的文本转化为自然流畅的人类语言                                            | op7418/Humanizer-zh                           |
+| mermaid-tools            | /mermaid-tools            | 从 Markdown 中提取 Mermaid 图表并生成高质量 PNG 图片                                | daymade/claude-code-skills                    |
+| pdf                      | /pdf                      | 读取/提取/合并/拆分/创建/操作 PDF 文件，支持文本、表格、图片、OCR、表单等           | anthropics/skills                             |
+| pptx                     | /pptx                     | 创建/读取/编辑/操作 PowerPoint 演示文稿（.pptx），包括幻灯片、deck、presentation 等 | anthropics/skills                             |
+| tdd                      | /tdd                      | 测试驱动开发，遵循 red-green-refactor 循环                                          | mattpocock/skills                             |
+| to-issues                | /to-issues                | 将计划或 PRD 分解为可独立领取的垂直切片 issue                                       | mattpocock/skills                             |
+| to-prd                   | /to-prd                   | 将对话上下文转化为 PRD 并发布到 issue 跟踪器                                        | mattpocock/skills                             |
+| weeklog                  | /weeklog                  | 本周工作总结，查询 git 提交记录梳理成果                                             | 自研                                          |
+| write-readme             | /write-readme             | 中文 README 生成器，先分析项目类型再选模板                                          | zh-readme @laolaoshiren/claude-code-skills-zh |
+| xlsx                     | /xlsx                     | 创建/读取/编辑/操作 Excel 电子表格（.xlsx/.csv/.tsv），包括格式化、图表、数据处理等 | anthropics/skills                             |
 
 ---
 
