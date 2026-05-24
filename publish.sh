@@ -153,8 +153,15 @@ if [ -f "$LOCAL_CC_CONFIG" ]; then
             console.log('创建新的 settings.json');
         }
 
-        // 只替换本地配置中存在的字段，保留其他所有配置
-        Object.assign(settings, localSettings);
+        // 合并配置：env 字段追加合并（本地优先），其他字段直接覆盖
+        const merged = { ...settings };
+        for (const key of Object.keys(localSettings)) {
+            if (key === 'env' && typeof settings[key] === 'object' && typeof localSettings[key] === 'object') {
+                merged[key] = { ...settings[key], ...localSettings[key] };
+            } else {
+                merged[key] = localSettings[key];
+            }
+        }
 
         // 递归排序对象的键（数组元素顺序保持不变）
         function sortKeys(obj) {
@@ -168,7 +175,7 @@ if [ -f "$LOCAL_CC_CONFIG" ]; then
             return obj;
         }
 
-        fs.writeFileSync(settingsPath, JSON.stringify(sortKeys(settings), null, 2));
+        fs.writeFileSync(settingsPath, JSON.stringify(sortKeys(merged), null, 2));
     "
 else
     echo "[警告] 本地 claudecode/config/settings.json 不存在，跳过配置合并"

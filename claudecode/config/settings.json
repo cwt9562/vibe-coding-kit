@@ -7,6 +7,10 @@
   },
   "defaultShell": "bash",
   "effortLevel": "max",
+  "env": {
+    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
+    "CLAUDE_CODE_WORKFLOWS": "1"
+  },
   "expandThinking": true,
   "includeCoAuthoredBy": false,
   "model": "opus[1m]",
