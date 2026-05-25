@@ -9,12 +9,12 @@
   "effortLevel": "xhigh",
   "env": {
     "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
-    "CLAUDE_CODE_WORKFLOWS": "1",
-    "ENABLE_TOOL_SEARCH": "true"
+    "CLAUDE_CODE_WORKFLOWS": "1"
   },
   "expandThinking": true,
   "includeCoAuthoredBy": false,
   "model": "opus",
   "skipDangerousModePermissionPrompt": true,
-  "skipWebFetchPreflight": true
+  "skipWebFetchPreflight": true,
+  "tui": "fullscreen"
 }

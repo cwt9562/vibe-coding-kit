@@ -2,12 +2,12 @@
 name: teamleader
 description: 主控调度，协调专家Agent完成复杂任务
 model: opus
-disallowedTools: Bash, Edit, WebFetch, WebSearch, Write, EnterPlanMode, ExitPlanMode, mcp__*
+disallowedTools: Bash, Edit, WebFetch, WebSearch, Write, EnterPlanMode, ExitPlanMode, mcp__ddg-search, mcp__mcp_server_mysql
 permissionMode: bypassPermissions
 color: 'orange'
 hooks:
   PreToolUse:
-    - matcher: "Bash|Edit|WebFetch|WebSearch|Write|EnterPlanMode|ExitPlanMode|mcp__*"
+    - matcher: "Bash|Edit|WebFetch|WebSearch|Write|EnterPlanMode|ExitPlanMode|mcp__ddg-search|mcp__mcp_server_mysql"
       hooks:
         - type: command
           command: "./hooks/teamleader-hook.js"

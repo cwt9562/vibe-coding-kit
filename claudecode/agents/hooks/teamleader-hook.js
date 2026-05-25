@@ -46,10 +46,6 @@ const MCP_DELEGATION_HINTS = {
     task: 'DuckDuckGo 搜索',
     target: '@librarian'
   },
-  'mcp__context7': {
-    task: 'Context7 技术文档查询',
-    target: '@oracle'
-  },
   'mcp__mcp_server_mysql': {
     task: 'MySQL 数据库查询',
     target: '@developer'
