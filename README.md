@@ -94,8 +94,9 @@ vibe-coding-kit/
 | caveman                  | /caveman                  | 超压缩通信模式，砍掉填充词保持技术准确度                                            | mattpocock/skills                             |
 | chinese-code-review      | /chinese-code-review      | 中文 review 沟通参考——话术模板、分级标注、国内团队常见反模式应对                    | jnMetaCode/superpowers-zh                     |
 | chinese-documentation    | /chinese-documentation    | 中文文档排版参考——中英文空格、全半角标点、术语保留、链接格式                        | jnMetaCode/superpowers-zh                     |
-| gitcommit                | /gitcommit                | 创建符合规范的 git 提交，支持按文件拆分                                                                               | 自研                                              |
-| gitpull                  | /gitpull                  | 使用 rebase 方式安全拉取远程更新，自动暂存本地变更并处理冲突                                                                   | 自研                                              |
+| commit                   | /commit                   | 创建符合规范的 git 提交，支持按文件拆分                                                                               | 自研                                              |
+| pull                     | /pull                     | 使用 rebase 方式安全拉取远程更新，自动暂存本地变更并处理冲突                                                                   | 自研                                              |
+| push                     | /push                     | 安全推送，只 fast-forward，远端有更新时先 pull --rebase 再等待用户确认                                          | 自研                                              |
 | docx                     | /docx                     | 创建/读取/编辑/操作 Word 文档（.docx），包括报告、备忘录、信件、模板等              | anthropics/skills                             |
 | frontend-ascii-previewer | /frontend-ascii-previewer | 修改前端 UI 前先通过 ASCII 原型预览确认视觉需求                                     | kuops                                         |
 | frontend-ui-ux           | /frontend-ui-ux           | 无稿设计师型开发者，无设计稿也能创建精美 UI                                         | omo                                           |

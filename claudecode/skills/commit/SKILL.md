@@ -1,5 +1,5 @@
 ---
-name: gitcommit
+name: commit
 description: 创建符合内部规范的 git 提交。当用户需要"提交代码"、"创建 commit"、"git commit"、"生成提交信息"等涉及 git 提交相关任务时自动触发
 ---
 
