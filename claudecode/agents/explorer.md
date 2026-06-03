@@ -1,7 +1,7 @@
 ---
 name: explorer
 description: 快速定位代码、理解代码结构
-model: sonnet
+model: haiku
 disallowedTools: Agent, Edit, WebFetch, WebSearch, Write
 permissionMode: bypassPermissions
 color: 'green'
