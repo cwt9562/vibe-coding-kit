@@ -13,6 +13,7 @@
   },
   "expandThinking": true,
   "includeCoAuthoredBy": false,
+  "language": "chinese",
   "model": "opus",
   "skipDangerousModePermissionPrompt": true,
   "skipWebFetchPreflight": true,
