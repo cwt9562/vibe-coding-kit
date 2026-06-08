@@ -5,6 +5,7 @@ model: sonnet
 disallowedTools: Agent, WebFetch, WebSearch
 permissionMode: bypassPermissions
 color: 'purple'
+effort: high
 mcpServers:
   - context7
   - mcp_server_mysql

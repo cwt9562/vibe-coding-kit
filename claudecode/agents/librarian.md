@@ -5,6 +5,7 @@ model: haiku
 disallowedTools: Agent, Bash, Edit, Write
 permissionMode: bypassPermissions
 color: 'pink'
+effort: medium
 mcpServers:
   - context7
   - ddg-search

@@ -5,6 +5,7 @@ model: opus
 disallowedTools: Agent, Bash, Edit, WebFetch, WebSearch, Write
 permissionMode: bypassPermissions
 color: 'yellow'
+effort: xhigh
 skills:
   - agent-browser
   - frontend-ui-ux

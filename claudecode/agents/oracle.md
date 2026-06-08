@@ -5,8 +5,11 @@ model: opus
 disallowedTools: Agent, Bash, Edit, Write
 permissionMode: bypassPermissions
 color: 'cyan'
+effort: xhigh
 mcpServers:
   - context7
+skills:
+  - chinese-code-review
 ---
 
 # Oracle

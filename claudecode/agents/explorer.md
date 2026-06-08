@@ -5,6 +5,7 @@ model: haiku
 disallowedTools: Agent, Edit, WebFetch, WebSearch, Write
 permissionMode: bypassPermissions
 color: 'green'
+effort: medium
 mcpServers:
   - mcp_server_mysql
 ---
