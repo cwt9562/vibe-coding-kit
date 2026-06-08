@@ -11,17 +11,6 @@
         ]
       }
     ],
-    "Stop": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File \"${CLAUDE_PLUGIN_ROOT}/windows-notification.ps1\""
-          }
-        ]
-      }
-    ],
     "StopFailure": [
       {
         "matcher": "",
