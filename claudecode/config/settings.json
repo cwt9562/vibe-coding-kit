@@ -16,6 +16,7 @@
   "includeCoAuthoredBy": false,
   "language": "chinese",
   "model": "opus",
+  "showThinkingSummaries": true,
   "skipDangerousModePermissionPrompt": true,
   "skipWebFetchPreflight": true,
   "tui": "fullscreen"
