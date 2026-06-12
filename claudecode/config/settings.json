@@ -9,8 +9,7 @@
   "effortLevel": "xhigh",
   "env": {
     "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
-    "CLAUDE_CODE_WORKFLOWS": "1",
-    "CLAUDE_AUTOCOMPACT_PCT_OVERRIDE": "80"
+    "CLAUDE_CODE_WORKFLOWS": "1"
   },
   "expandThinking": true,
   "includeCoAuthoredBy": false,
