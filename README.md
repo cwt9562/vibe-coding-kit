@@ -26,6 +26,7 @@ cd ~/vibe-coding-kit
 
 ```bash
 cc    # 启动 Claude Code
+ccc   # 启动 Claude Code，并启用agent team模式
 ```
 
 开始愉快的vibe吧~~
