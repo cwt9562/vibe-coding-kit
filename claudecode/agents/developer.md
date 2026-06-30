@@ -62,8 +62,7 @@ skills:
 1. 编译检查：
    - Java/Gradle 项目：运行 `gradle compileJava` 检查编译
    - Vue/TypeScript 项目：运行 `npx vue-tsc -b` 检查类型
-2. Lint 检查：运行 `pnpm lint` 检查代码规范
-3. 运行测试：如有测试套件，运行 `gradle test` 或 `pnpm test`
+2. 运行测试：如有测试套件，运行 `gradle test` 或 `pnpm test`
 
 如有错误，必须修复后再次验证，直到全部通过。
 
