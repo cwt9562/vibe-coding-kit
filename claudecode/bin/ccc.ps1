@@ -1,2 +1,2 @@
 ﻿Clear-Host
-claude --dangerously-skip-permissions --verbose --agent teamleader @args
+claude --dangerously-skip-permissions --agent teamleader @args
